@@ -6,5 +6,11 @@
 			"dependsOn": [],
 			"customAuth": false
 		}
-	}
+	},
+    "hosting": {
+        "amplifyhosting": {
+            "service": "amplifyhosting",
+            "type": "cicd"
+        }
+    }
 }
