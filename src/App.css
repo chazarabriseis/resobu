@@ -36,3 +36,198 @@
     transform: rotate(360deg);
   }
 }
+
+:root {
+  --amplify-primary-color: white;
+  --amplify-primary-tint: thistle;
+  --amplify-primary-shade: purple;
+  --amplify-white: purple;
+}
+
+
+/* classes used by all pages */
+
+.heading1 {
+  font-size: 45px;
+  font-weight: normal;
+  margin-bottom: 18px;
+}
+
+.heading2 {
+  font-size: 25px;
+  font-weight: lighter;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 30px;
+}
+
+.heading3 {
+  font-size: larger;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+
+.topSection {
+  text-align: center;
+  align-items: center;
+  padding-top: 160px;
+  padding-bottom: 60px;
+}
+
+.actionButton {
+  background-color: purple !important;
+  color:white !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
+}
+
+.actionButton:hover {
+  background-color: #B395B3 !important;
+}
+
+.actionButton:disabled {
+  background-color: gray !important;
+}
+
+.ghostButton {
+  background-color: white !important;
+  color:purple !important;
+  border-color: purple !important;
+  border-radius: 5px !important;
+  border-style: solid !important;
+  margin: 5px !important;
+}
+
+.ghostButton:disabled {
+  background-color: gray !important;
+  color: white !important;
+}
+
+.ghostButton:hover {
+  color: #B395B3!important;
+}
+
+.raisedButton {
+  background-color: white !important;
+  color:purple !important;
+  border-radius: 5px !important;
+  box-shadow: thistle;
+  margin: 5px !important;
+}
+
+.textButton {
+  color:purple !important;
+  margin: 5px !important;
+}
+
+.textButton:hover {
+  background-color: white !important;
+  color: #B395B3 !important;
+}
+
+.headerButton {
+  margin: 0px;
+}
+
+.headerButton:hover {
+  background-color: white !important;
+}
+
+.container {
+  display: flex; /* or inline-flex */
+}
+
+.buttonExplantion {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.actionButtonAnimated {
+  color:white !important;
+  border-radius: 5px !important;
+  margin: 5px !important;
+  -webkit-animation: backgroundAnimated 3s ease infinite;
+  -moz-animation: backgroundAnimated 3s ease infinite;
+  animation: backgroundAnimated 3s ease infinite !important;
+}
+
+@-webkit-keyframes backgroundAnimated {
+  0% {background-color: purple}
+  50% {background-color: #b148d2}
+  100% {background-color: purple}
+}
+@-moz-keyframes backgroundAnimated {
+  0% {background-color: purple}
+  50% {background-color: #b148d2}
+  100% {background-color: purple}
+}
+
+@keyframes backgroundAnimated {
+  0% {background-color: purple}
+  50% {background-color: #b148d2}
+  100% {background-color: purple}
+}
+
+.actionButtonAnimated:hover {
+  background-color: #B395B3 !important;
+}
+
+.actionButtonAnimated:disabled {
+  background-color: gray !important;
+}
+
+.butterflyBackground {
+  background-image: url("/public/butterfly.png");
+}
+
+.flier {
+	pointer-events: none;
+}
+
+.flier > * {
+/* Adjust animation duration to change the element’s speed */
+        animation: fly 50s linear infinite;
+        pointer-events: none !important;
+	top: 0;
+	left: 0;
+	transform: translateX(-120%) translateY(-120%) rotateZ(0);
+	position: fixed;
+	animation-delay: 1s;
+	z-index: 999999;
+}
+
+@keyframes fly {
+
+	98.001%, 0% {
+                display: block;
+		transform: translateX(-200%) translateY(100vh) rotateZ(0deg)
+	}
+
+	15% {
+		transform: translateX(100vw) translateY(-100%) rotateZ(15deg)
+	}
+
+	15.001%, 18% {
+		transform: translateX(100vw) translateY(-30%) rotateZ(0deg)
+	}
+
+	40% {
+		transform: translateX(-200%) translateY(3vh) rotateZ(-15deg)
+	}
+
+	40.001%, 43% {
+		transform: translateX(-200%) translateY(-100%) rotateZ(0deg)
+	}
+
+	65% {
+		transform: translateX(100vw) translateY(50vh) rotateZ(15deg)
+	}
+
+	65.001%, 68% {
+		transform: translateX(20vw) translateY(-200%) rotateZ(0deg)
+	}
+
+	95% {
+		transform: translateX(10vw) translateY(100vh) rotateZ(-15deg)
+	}
+}

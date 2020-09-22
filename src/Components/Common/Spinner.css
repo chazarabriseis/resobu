@@ -1,0 +1,20 @@
+.loadingSpinner{
+    text-align: center;
+    color: #0E253A;
+    margin-bottom: 500px;
+}
+
+.spinner {
+    animation: spin 2s infinite linear;
+    font-size: 50px;
+    margin-top: 150px;
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}

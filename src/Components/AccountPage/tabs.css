@@ -1,0 +1,65 @@
+.tab {
+    background-color: white !important;
+    padding: 10px;
+    display: flex;
+}
+
+.tabContent {
+    width: 90%;
+    height: 700px;
+}
+
+.meetingPlanner {
+    padding: 20px;
+}
+
+.frequency{
+    display: none;
+    margin: 10px;    
+}
+
+.frequency+ label{
+    display: inline-block;
+    margin: -2px;
+    padding: 4px 12px;
+    background-color: transparent;
+    border-color: #0E253A;    
+}
+
+.frequency:checked + label{
+    background-color : thistle;
+    color: purple;
+}
+
+.frequency:disabled:checked + label{
+    background-color : gray;
+    color: white;
+}
+
+.frequency:disabled + label{
+    background-color : lightgray;
+    color: white;
+}
+
+.settings-title{
+    margin: 0px 0px 10px 0px;
+    font-weight: 600;
+}
+
+.display-options{
+    margin: 5px 0px 15px 0px; 
+}
+
+.display-options > label{
+    display: block;
+    padding-bottom: 5px; 
+}
+
+.inputDisabled {
+    color: lightgray !important;
+}
+
+.p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

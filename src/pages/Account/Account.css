@@ -1,0 +1,27 @@
+.sections {
+    padding-bottom: 40px;
+}
+
+.section1 {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.section2 {
+    background-color: rgb(228, 225, 225);
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.sectionContent {
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+}
+
+.sectionHeader {
+    font-size: larger;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+}

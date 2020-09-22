@@ -1,0 +1,222 @@
+.infoBoxes {
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+.infoBox {
+    padding-bottom: 70px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.infoBoxGray {
+    background-color: linear-gradient(gray, white);
+}
+
+.infoBoxWhite {
+    background-color: white;
+    padding-bottom: 60px;
+}
+
+.infoBoxWhitePlans {
+    background-color: white;
+    padding-bottom: 60px;
+    padding-top: 0px;
+}
+
+.infoBoxWhiteWorkflow {
+    background-color: white;
+    padding-bottom: 90px;
+}
+
+.infoBoxContent {
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+}
+
+.infoBoxImage {
+    padding: 0px;
+}
+
+.infoBoxInfo {
+    margin-left: 15px;
+    width: 95%;
+}
+
+.infoBoxHeader {
+    font-size: larger;
+    margin-bottom: 50px;
+    margin-left: 30px;
+}
+
+.infoBoxText {
+    margin-bottom: 15px;
+}
+
+.stepContainer {
+    justify-content: center;
+}
+
+.step {
+    width: 150px;
+    font-size: x-large;
+    text-align: center;
+}
+
+.stepText {
+    font-size: medium;
+    padding-top: 10px;
+}
+
+.connector {
+    width: 70px;
+}
+
+.button {
+    width: 70px;
+    padding-left: 30px;
+}
+
+.imgBw {
+	filter: grayscale(1);
+}
+
+.planContainer {
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.plan {
+    padding: 30px;
+}
+
+.planThistle {
+    background-color: thistle;
+    padding: 30px;
+}
+
+.planBorder {
+    padding: 30px;
+    border-color: thistle;
+    border-left-style: solid;
+}
+
+.planHeading {
+    font-size: xxx-large;
+    padding-bottom: 30px;
+    font-weight: 200;
+}
+
+.planText {
+    font-size: large;
+    font-weight: lighter;
+    padding-bottom: 20px;
+}
+
+.planPrice {
+    text-align: center;
+    font-size: xx-large;
+}
+
+.planInfo {
+    border-color: thistle;
+    border-top-style: solid;
+}
+
+.planPriceInfoExtra {
+    padding-bottom: 40px;
+    font-size: small;
+}
+
+.planPriceInfo {
+    padding-bottom: 40px;
+    font-size: small;
+}
+
+.planTitle {
+    padding-top: 20px;
+    flex: 1;
+}
+
+.planPricing {
+    padding-top: 20px;
+    flex: 1;
+}
+
+.planCTA {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex: 1;
+}
+
+.whyContent {
+    justify-content: center;
+}
+
+.whyImage {
+    flex-grow: 1;
+}
+
+.whyText {
+    flex-grow: 2;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: medium;
+    font-weight: lighter;
+}
+
+.whyLabel {
+    font-size: medium;
+    font-weight: 500; 
+}
+
+.imgWhy {
+    height: 230px;
+}
+
+.imgCard {
+    height: 140;
+}
+
+.whyCard {
+    height: 300;
+}
+
+.endCOA {
+    justify-content: center;
+}
+
+.card {
+    flex-grow: 1;
+    padding: 20px;
+    border-color: thistle;
+    border-style: solid;
+    border-width: thin;
+    margin-right: 20px;
+}
+
+.cardTitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: large;
+}
+
+.cardTitle2 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cardText {
+    font-size: medium;
+    font-weight: lighter;
+}
+
+.cardImage {
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.grayBackground {
+    background-color:linear-gradient(90deg, rgba(169,169,169,1) 0%, rgba(255,255,255,1) 100%);
+}
