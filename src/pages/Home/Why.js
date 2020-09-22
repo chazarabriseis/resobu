@@ -25,7 +25,7 @@ class Why extends React.Component {
           </div>              
         </div>
         <div className="whyImage"> 
-          <img alt="github" className='imgWhy' src="homeoffice.jpeg" />
+          <img alt="github" className='imgWhy' src="homeoffice.png" />
         </div>
       </div>
     )
