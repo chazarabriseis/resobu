@@ -33,7 +33,8 @@ class App extends React.Component {
       isAuthenticated: false,
       userInfo: {},
       goToEnterCode: null,
-      groupType: '-'
+      groupType: '-',
+      subscription: '-'
     }
   }
 
@@ -67,6 +68,10 @@ class App extends React.Component {
     this.setState({groupType: value})
   }
 
+  setSubscription = (value) => {
+    this.setState({subscription: value})
+  }
+
   render () {
     return (
       <div>
@@ -85,16 +90,19 @@ class App extends React.Component {
                 <Route exact path="/business" > 
                   <HomeBusiness
                     onsetGroupType = {this.setGroupType}
+                    onSetSubscription = {this.setSubscription}
                   />
                 </Route>
                 <Route exact path="/conference" > 
                   <HomeConference
                    onsetGroupType = {this.setGroupType}
+                   onSetSubscription = {this.setSubscription}
                   />
                 </Route>
                 <Route exact path="/tradeshow" > 
                   <HomeTradeshow
                     onsetGroupType = {this.setGroupType}
+                    onSetSubscription = {this.setSubscription}
                   />
                 </Route>
                 <Route exact path="/aboutus" > 
@@ -105,6 +113,7 @@ class App extends React.Component {
                     goToEnterCode = {this.state.goToEnterCode}
                     onSetGoToEnterCode = {this.setGoToEnterCode}
                     groupType = {this.state.groupType}
+                    subscription = {this.state.subscription}
                   />
                 </Route>
                 <Route exact path="/signin" > 

@@ -11,8 +11,9 @@ import '../../App.css'
 
 class HomeConference extends React.Component {
 
-  gotoSignUp = () => {
+  gotoSignUp = (value) => {
     this.props.onsetGroupType('Conference')
+    this.props.onSetSubscription(value)
     this.props.history.push('/signup/')
   }
 
@@ -22,7 +23,7 @@ class HomeConference extends React.Component {
         <div className="topSection">
           <div className="heading1"> Let's enable networking at your conference</div>
           <div className="heading2">Remote Social Butterfly automatically organises random or tailored chats to enable networking, knowledge transfer and an innovative culture.</div>
-          <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp}>GET STARTED</Button>  
+          <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
           <WhatDiagram />  

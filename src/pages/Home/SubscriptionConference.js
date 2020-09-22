@@ -31,10 +31,10 @@ class SubscriptionConference extends React.Component {
         </div>
         <div className="container planContainer">
           <div className="planCTA plan">
-            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp}>Get started</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Standard')}>Get started</Button>  
           </div>
           <div className="planCTA planThistle">
-            <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp}>Get started</Button>  
+            <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Premium')}>Get started</Button>  
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from "react-router";
 import { Button} from '@material-ui/core'
 import './Home.css'
 
@@ -46,16 +47,16 @@ class SubscriptionBusiness extends React.Component {
         </div>
         <div className="container planContainer">
           <div className="planCTA plan">
-            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp}>Get started</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Free')}>Get started</Button>  
           </div>
           <div className="planCTA planThistle">
-            <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp}>Get started</Button>  
+            <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Premium')}>Get started</Button>  
           </div>
           <div className="planCTA plan">
-            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp}>Get started</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Business')}>Get started</Button>  
           </div> 
           <div className="planCTA planBorder">
-            <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp}>Get in contact</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/contact/')}}>Get in contact</Button>  
           </div>
         </div>
       </div>
@@ -63,4 +64,4 @@ class SubscriptionBusiness extends React.Component {
   }
 }
 
-export default SubscriptionBusiness;
+export default withRouter(SubscriptionBusiness);

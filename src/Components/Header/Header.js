@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Button, Menu, MenuItem } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -27,21 +28,6 @@ class Header extends React.Component {
 
   handleMenuClick = (event) => {
     this.setState({ anchorEl: event.currentTarget })
-  }
-
-  handleBusiness = () => {
-    this.props.history.push('/business')
-    this.setState({ anchorEl: null})
-  }
-
-  handleConference = () => {
-    this.props.history.push('/conference')
-    this.setState({ anchorEl: null})
-  }
-
-  handleTradeshow = () => {
-    this.props.history.push('/tradeshow')
-    this.setState({ anchorEl: null})
   }
 
   closeMenu= () => {
@@ -77,18 +63,20 @@ class Header extends React.Component {
                   keepMounted
                   open={Boolean(this.state.anchorEl)}
                   anchorOrigin={{
-                    vertical: 'bottom'
+                    vertical: 'bottom',
+                    horizontal: 'left'
                   }}
                   getContentAnchorEl={null}
                   transformOrigin={{
-                    vertical: 'top'
+                    vertical: 'top',
+                    horizontal: 'left'
                   }}
                   elevation={0}
                   onClose={this.closeMenu}
                 >
-                  <MenuItem onClick={this.handleBusiness}>for Businesses</MenuItem>
-                  <MenuItem onClick={this.handleConference}>for Conferences</MenuItem>
-                  <MenuItem onClick={this.handleTradeshow}>for Tradeshows</MenuItem>
+                  <MenuItem component={Link} to="/business" onClick={this.closeMenu}> for Businesses</MenuItem>
+                  <MenuItem component={Link} to="/conference" onClick={this.closeMenu}>for Conferences</MenuItem>
+                  <MenuItem component={Link} to="/tradeshow" onClick={this.closeMenu}>for Tradeshows</MenuItem>
                 </Menu>
               </div>
               <Button 

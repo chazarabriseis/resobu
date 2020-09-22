@@ -43,7 +43,11 @@ class SignUp extends React.Component {
             })
             this.props.onSetGoToEnterCode(null)
         }
-        this.setState({groupType: this.props.groupType})
+        // these props will be set when coming from a button from the subscription offers and prefilled
+        this.setState({
+            groupType: this.props.groupType,
+            subscription: this.props.subscription
+        })
     }  
 
     gotoCode = () => {
@@ -172,7 +176,7 @@ class SignUp extends React.Component {
     render () {
         return (
             <div className="contact">
-                <div class="flier"><img alt="appIcon" width="50" src="butterfly.png" /></div>
+                <div className="flier"><img alt="appIcon" width="50" src="butterfly.png" /></div>
                 <div className="topSection">
                     <div className="heading1"> Create a new account </div>
                 </div>
