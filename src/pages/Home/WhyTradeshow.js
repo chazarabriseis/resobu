@@ -4,7 +4,7 @@ import './WhyDetails.css'
 import '../../App.css'
 
 
-class WhyBusiness extends React.Component {
+class WhyTradeshow extends React.Component {
     constructor(props) {
         super(props);
 
@@ -54,7 +54,7 @@ class WhyBusiness extends React.Component {
   }
 }
 
-export default WhyBusiness;
+export default WhyTradeshow;
 
 // {this.theme.direction === 'rtl' ? <FontAwesomeIcon icon='chevron-left'/>  : <FontAwesomeIcon icon='chevron-right'/>}
 // {this.theme.direction === 'rtl' ? <FontAwesomeIcon icon='chevron-right'/>: <FontAwesomeIcon icon='chevron-left'/>}

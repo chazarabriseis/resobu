@@ -3,7 +3,8 @@ import { Button} from '@material-ui/core'
 import { withRouter } from "react-router";
 
 import SubscriptionTradeshow from './SubscriptionTradeshow'
-import WhatDiagram from './WhatDiagram'
+import WhatDiagramConference from './WhatDiagramConference'
+import WhyTradeshow from './WhyTradeshow'
 
 import './Home.css'
 import '../../App.css'
@@ -26,7 +27,10 @@ class HomeTradeshow extends React.Component {
           <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
-          <WhatDiagram />  
+          <WhyTradeshow />  
+        </div>
+        <div className="infoBox infoBoxWhiteWorkflow"> 
+          <WhatDiagramConference />  
         </div>
         <div className="infoBox infoBoxWhitePlans"> 
           <SubscriptionTradeshow 

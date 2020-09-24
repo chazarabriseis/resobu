@@ -33,22 +33,24 @@ class WhyBusiness extends React.Component {
   render () {
     return (
     <div>
-      <div className='heading3 planContainer'>We belive that these chats lead to communication and new connections which will ultimatley result in success and innovation</div>
-        <div className='container planContainer planInfo'>
+      <div className='heading3'>We belive that these chats lead to communication and new connections which will ultimatley result in success and innovation</div>
+      <Tabs style={{ width: '90%'}}>
+        <TabList>
           {this.whySteps.map((step) => {
-            return <div className='plan planTitle'><div className='whyLabel'>{step.label}</div></div>
+            return <Tab> <div className='whyLabel'>{step.label}</div> </Tab>
           })}
-        </div>
-        <div className='container'>
-          {this.whySteps.map((step) => {
-            return <div className='plan planTitle'><img className='img imgBw' src={step.imgPath} alt={step.label} /></div>
+        </TabList>
+        {this.whySteps.map((step) => {
+            return ( 
+              <TabPanel> 
+                <div className='container'> 
+                  <img className='img imgBw' src={step.imgPath} alt={step.label} />
+                  <div className='whyText'>{step.text}</div>
+                  </div>
+              </TabPanel>
+            );
           })}
-        </div>
-        <div className='container'>
-          {this.whySteps.map((step) => {
-            return <div className='plan planTitle'><div className='whyText'>{step.text}</div></div>
-          })}
-        </div>
+      </Tabs>
     </div>
     )
   }
