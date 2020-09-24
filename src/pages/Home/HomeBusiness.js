@@ -6,6 +6,7 @@ import '../../App.css'
 
 import SubscriptionBusiness from './SubscriptionBusiness'
 import WhatDiagram from './WhatDiagram'
+import WhyBusiness from './WhyBusiness'
 
 class HomeBusiness extends React.Component {
 
@@ -22,6 +23,9 @@ class HomeBusiness extends React.Component {
           <div className="heading1"> Let's connect your team</div>
           <div className="heading2">Remote Social Butterfly automatically organises random or tailored chats to enable networking, knowledge transfer and an innovative culture.</div>
           <Button value= '-' className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
+        </div>
+        <div className="infoBox infoBoxWhite"> 
+          <WhyBusiness />           
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
           <WhatDiagram />  

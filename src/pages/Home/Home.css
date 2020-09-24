@@ -4,7 +4,7 @@
 }
 
 .infoBox {
-    padding-bottom: 70px;
+    padding-bottom: 90px;
     padding-left: 3%;
     padding-right: 3%;
 }
@@ -15,7 +15,7 @@
 
 .infoBoxWhite {
     background-color: white;
-    padding-bottom: 60px;
+    padding-bottom: 90px;
 }
 
 .infoBoxWhitePlans {
@@ -152,6 +152,7 @@
 
 .whyContent {
     justify-content: center;
+    align-items: center;
 }
 
 .whyImage {
@@ -162,8 +163,9 @@
     flex-grow: 2;
     margin-left: 20px;
     margin-right: 20px;
-    font-size: medium;
+    font-size: large;
     font-weight: lighter;
+    text-align: justify;
 }
 
 .whyLabel {
@@ -210,6 +212,7 @@
 .cardText {
     font-size: medium;
     font-weight: lighter;
+    margin-bottom: 5px;
 }
 
 .cardImage {

@@ -10,10 +10,9 @@ class WhatDiagram extends React.Component {
 
   render () {
     return(
+      <div>
+        <div className="heading3">What is involved:</div>
         <div className="container stepContainer">
-          <div className="step">
-            <div className="stepText" style={{ marginRight: '40px' }}>What is involved:</div>
-          </div>
           <div className="step">
             <FontAwesomeIcon icon='table'/> 
             <div className="stepText">Upload emails</div>
@@ -47,6 +46,7 @@ class WhatDiagram extends React.Component {
             <div className="stepText">Let us do the rest to connect people</div>
           </div>
         </div>
+      </div>
     )
   }
 }

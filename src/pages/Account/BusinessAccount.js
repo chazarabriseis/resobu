@@ -28,12 +28,12 @@ class BusinessAccount extends React.Component {
     this.state = {
       initialState: {},
 
-      employeeList: [{employeeId: 1, employeeEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'] , userSubId: ''},
-                     {employeeId: 2, employeeEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [] , userSubId: ''},
-                     {employeeId: 3, employeeEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [] , userSubId: ''},
-                     {employeeId: 4, employeeEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'] , userSubId: ''},
-                     {employeeId: 5, employeeEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [] , userSubId: ''},
-                     {employeeId: 6, employeeEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'] , userSubId: ''}],
+      employeeList: [{employeeId: 1, employeeEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'], connectedColleagues  : [], userSubId: ''},
+                     {employeeId: 2, employeeEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+                     {employeeId: 3, employeeEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+                     {employeeId: 4, employeeEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'], connectedColleagues  : [] , userSubId: ''},
+                     {employeeId: 5, employeeEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+                     {employeeId: 6, employeeEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'], connectedColleagues  : [] , userSubId: ''}],
       isLoadingEmployeeList: false,
       meetingInfo : { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01",
                       weekday: 'friday', time: '11:30', weekOfMonth: 'last', userSubId: '', 
@@ -70,20 +70,18 @@ class BusinessAccount extends React.Component {
   }
 
   async fetchEmployeeList() {  
-    // backend call to get employee list  
     console.log('Fetching Employee List')
+    // backend call to get employee list 
     /*
     this.setState({
       isLoadingEmployeeList: true
     })
 
-    // POST request to get employee DB
+    // POST request to get employee DB - tested
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
           usertoken: this.state.userInfo.userSubId,
-          request_type: 'fetch',
-          table_name: 'employees',
-          columns_to_get: []
+          request_type: 'listemployees'
       }
     })
     .then(response => {
@@ -114,9 +112,7 @@ class BusinessAccount extends React.Component {
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
           usertoken: this.state.userInfo.userSubId,
-          request_type: 'fetch',
-          table_name: 'meetings',
-          columns_to_get: []
+          request_type: 'listmeeting'
       }
     })
     .then(response => {
@@ -192,8 +188,8 @@ class BusinessAccount extends React.Component {
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
                 usertoken: this.state.userInfo.userSubId,
-                request_type: 'insert',
-                table_name: 'employees'
+                request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+                table_name: 'EmployeesTable'
                 list_to_insert: emailList
             }
         })
@@ -226,7 +222,6 @@ class BusinessAccount extends React.Component {
       })
     }
   } 
-
 
   triggerOpenEditDialog = () => {
     const currentState = _.cloneDeep(this.state)
@@ -397,34 +392,27 @@ class BusinessAccount extends React.Component {
     this.setState({showEditEmployeeeDialog: false})
   }
 
-  async editTableEntry(tableName, changes){   
+  async editTableEntry(tableName, change){   
     console.log('editing table entry')
     /*
         // POST to edit table entry in DB   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
+                request_type: 'changerowvalue',
                 usertoken: this.state.userInfo.userSubId,
-                request_type: 'edit',
-                table_name: tableName,
-                changes: changes
+                table_name: tableName, // either EmployeesTable or SocialButterflyChatsTable
+                col_id: colId,  // either employeeId or userSubId
+                changes: changes // dictionary wit column names as key and new values as value
+                // changes: changes // again check if the for loop should take here or there to pass on several changes
             }
         })
         .then(response => {
-              if (response['errorType'] === 'Key already exists') {
-                  toast.warning("Sorry, there was a problem connecting to the DB.", {
+              if (response['errorMessage'] === 'Add successful') {
+                  toast.success("Changes added to DB.", {
                     position: toast.POSITION.TOP_RIGHT
                   })  
-              } else if (response['errorType'] === 'Delete successful') {
-                  toast.success("Email was succesfully deleted ", {
-                    position: toast.POSITION.TOP_RIGHT
-                  })
-                  this.setState({
-                    showDeleteEmployeeeDialog: false,
-                    selectedEmail: '',
-                    selectedEmailId: []
-                  })
+
                   this.fetchEmployeeList();
-              }
         })
         .catch(e => {
             toast.warning("Sorry, there was a problem connecting to the DB.", {
@@ -454,38 +442,27 @@ class BusinessAccount extends React.Component {
     // backened call to delete employee
     console.log(`delete employee ${this.state.selectedEmail}`) 
     /*
-        // POST to delete emails to DB   
+        // POST to delete emails to DB - tested   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
-                usertoken: this.state.userInfo.userSubId,
-                request_type: 'delete',
-                table_name: 'employees',
-                column_name: 'email_id',
-                email_id_to_delete: this.state.selectedEmailId,
-                email_to_delete: this.state.selectedEmail
+              requesttype: "deleterow",
+              usertoken: this.state.userInfo.userSubId,
+              tableName: 'EmployeesTable',
+              usertokenColumnName: "userSubId",
+              uid: this.state.selectedEmailId,
+              uidColumnName:  "employeeId"
             }
         })
-        .then(response => {
-              if (response['errorType'] === 'Key already exists') {
-                  toast.warning("Sorry, there was a problem connecting to the DB.", {
-                    position: toast.POSITION.TOP_RIGHT
-                  })  
-              } else if (response['errorType'] === 'Delete successful') {
-                  toast.success("Email was succesfully deleted ", {
-                    position: toast.POSITION.TOP_RIGHT
-                  })
-                  this.setState({
-                    showDeleteEmployeeeDialog: false,
-                    selectedEmail: '',
-                    selectedEmailId: []
-                  })
-                  this.fetchEmployeeList();
-              }
-        })
-        .catch(e => {
-            toast.warning("Sorry, there was a problem connecting to the DB.", {
+        then(response => {
+          try { 
+            toast.success("Employee was succesfully deleted", {
               position: toast.POSITION.TOP_RIGHT
-            })  
+            })
+          } catch(e) {
+            toast.warning("There was a problem deleting this employee", {
+              position: toast.POSITION.TOP_RIGHT
+            })
+          }
         })
       */
     this.closeDeleteDialog()

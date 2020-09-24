@@ -15,9 +15,9 @@ class Why extends React.Component {
           Therfore no more unplanned watercooler discussions happen which are known to lead to connections and new ideas.
           </div>
           <div style={{marginBottom: '10px'}}>
-          The same applies to conferences and tradeshows, in the modern times these will be carried out more often in the digital world.
+          The same applies to conferences and tradeshows, in the modern times. These will be carried out more often in the digital world.
           Therfore people cannot mingle anymore in the breaks and in front of exhibition booths to exchange knowledge and build networks,
-          a major reason why to attend them.
+          a major reason why people attend them.
           </div>
           <div>
           Remote Social Butterfly makes sure that people stay connected in the digital world by

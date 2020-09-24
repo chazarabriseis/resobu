@@ -3,7 +3,6 @@ import { Button } from '@material-ui/core'
 import { withRouter } from "react-router";
 
 import Why from './Why'
-import WhyDetails from './WhyDetails'
 import How from './How'
 import WhatDiagram from './WhatDiagram'
 
@@ -19,9 +18,9 @@ class Home extends React.Component {
         <div className="topSection">
           <div className="heading1"> Let's create networks</div>
           <div className="heading2">
-            We believe that diverse and cohesive teams and networks are the cornerstone to success and innovation. 
+            We believe that diverse, connected and cohesive teams and networks are the cornerstone to success and innovation. 
             Remote Social Butterfly enables the formation of such teams and networks through chance or tailored encounters across the people 
-            eg. in your company, at your conference or tradeshow.
+            in your company, at your conference or tradeshow.
           </div>
  
           <Button className="actionButtonAnimated" variant='contained' size="large" onClick={() => {this.props.history.push('/signup/')}}>GET STARTED</Button>  
@@ -29,10 +28,6 @@ class Home extends React.Component {
 
         <div className="infoBox infoBoxWhite"> 
           <Why />         
-        </div>
-
-        <div className="infoBox infoBoxWhite"> 
-          <WhyDetails />           
         </div>
         
         <div className="infoBox infoBoxwhite"> 
