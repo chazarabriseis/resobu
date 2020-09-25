@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 
 import SubscriptionTradeshow from './SubscriptionTradeshow'
 import WhatDiagramConference from './WhatDiagramConference'
-import WhyConference from './WhyConference'
+import WhyTradeshow from './WhyTradeshow'
 
 import './Home.css'
 import '../../App.css'
@@ -22,12 +22,12 @@ class HomeTradeshow extends React.Component {
     return (
       <div>
         <div className="topSection">
-          <div className="heading1"> Let's make sure people mingle at your tradeshow</div>
+          <div className="heading1"> Let's make sure people connnect at your tradeshow</div>
           <div className="heading2">Remote Social Butterfly automatically organises random or coordinated chats to enable networking, knowledge transfer and an innovative culture.</div>
           <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
-          <WhyConference />  
+          <WhyTradeshow />  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
           <WhatDiagramConference />  
