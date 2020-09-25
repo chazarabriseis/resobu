@@ -180,7 +180,7 @@ def lambda_handler(event, context):
                 print("SQLAlchemyError")
                 raise
 
-        if command_to_perform == 'changerowvalue':
+        if command_to_perform == 'changerowvalues':
             # Insert specific columns to the DB
             try:
                 table_name = event['table_name']

@@ -14,6 +14,7 @@ import _ from "lodash"
 import 'react-tabs/style/react-tabs.css'
 import './Account.css'
 import '../../App.css'
+import Spinner from '../../Components/Common/Spinner';
 
 
 class BusinessAccount extends React.Component {
@@ -24,24 +25,15 @@ class BusinessAccount extends React.Component {
     this.addEmployeeList = this.addEmployeeList.bind(this);
     this.deleteEmployee = this.deleteEmployee.bind(this);
     this.editTableEntry = this.editTableEntry.bind(this);
+    this.createEmployeeTableEntries = this.createEmployeeTableEntries.bind(this)
 
     this.state = {
       initialState: {},
 
-      employeeList: [{employeeId: 1, employeeEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'], connectedColleagues  : [], userSubId: ''},
-                     {employeeId: 2, employeeEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-                     {employeeId: 3, employeeEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-                     {employeeId: 4, employeeEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'], connectedColleagues  : [] , userSubId: ''},
-                     {employeeId: 5, employeeEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-                     {employeeId: 6, employeeEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'], connectedColleagues  : [] , userSubId: ''}],
-      isLoadingEmployeeList: false,
-      meetingInfo : { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01",
-                      weekday: 'friday', time: '11:30', weekOfMonth: 'last', userSubId: '', 
-                      todo_list: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false},
-                      inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
-                      todoList: {enteredEmails: false, personalisedInvite: true, scheduledMeeting: false, choseMeetingTime: false}
-                    },
-      isLoadingMeetingInfoList: false,
+      employeeList: null,
+      isLoadingEmployeeList: true,
+      meetingInfo: null,
+      isLoadingMeetingInfoList: true,
 
       showAddEmployeeeDialog: false,
       emailList: '',
@@ -65,12 +57,17 @@ class BusinessAccount extends React.Component {
   }
 
   async componentDidMount () {
-    // await this.fetchEmployeeList();  
-    // await this.fetchMeetingInfo();
+    await this.fetchEmployeeList();  
+    await this.fetchMeetingInfo();
   }
 
   async fetchEmployeeList() {  
-    console.log('Fetching Employee List')
+    const body = {
+      usertoken: this.props.userInfo.userSubId,
+      request_type: 'listemployees'
+    }
+    // console.log('Fetching Employee List')
+    // console.log(body)
     // backend call to get employee list 
     /*
     this.setState({
@@ -80,7 +77,7 @@ class BusinessAccount extends React.Component {
     // POST request to get employee DB - tested
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
-          usertoken: this.state.userInfo.userSubId,
+          usertoken: this.props.userInfo.userSubId,
           request_type: 'listemployees'
       }
     })
@@ -93,44 +90,122 @@ class BusinessAccount extends React.Component {
           position: toast.POSITION.TOP_RIGHT
       })
     })
-
-    this.setState({
-      isLoadingEmployeeList: false
-    })
     */
+    this.setState({
+      isLoadingEmployeeList: false,
+      employeeList: [
+        {employeeId: 11, employeeEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'], connectedColleagues  : [], userSubId: ''},
+        {employeeId: 22, employeeEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+        {employeeId: 33, employeeEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+        {employeeId: 44, employeeEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'], connectedColleagues  : [] , userSubId: ''},
+        {employeeId: 55, employeeEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+        {employeeId: 66, employeeEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'], connectedColleagues  : [] , userSubId: ''}
+      ]
+    })
+    
   }
 
   async fetchMeetingInfo() {  
-    // backend call to get Meeting info 
-    console.log('Fetching Meeting Info')
-    /*
     this.setState({
       isLoadingMeetingInfoList: true
     })
-    
+    const body = {
+      usertoken: this.props.userInfo.userSubId,
+      request_type: 'listmeeting'
+    }
+    // console.log('Fetching Meeting Info')
+    // console.log(body)
+    /*
     // POST request to get meetingInfo from DB
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
-          usertoken: this.state.userInfo.userSubId,
+          usertoken: this.props.userInfo.userSubId,
           request_type: 'listmeeting'
       }
     })
     .then(response => {
       const resultList = response['meeting_info']
       this.setState({meetingInfo: resultList})
+
+      if (!resultList) {
+        await this.createMeeting()
+      } else {
+        this.setState({
+          isLoadingMeetingInfoList: false
+        })
+      }
     }) 
     .catch(e => {
       toast.warning("Sorry, there was a problem connecting to the DB.", {
           position: toast.POSITION.TOP_RIGHT
       })
-    })
+    })    
+    */
+    if (!this.state.meetingInfo) {
+      await this.createMeeting()
+    }
+    
+  }
+
+  async createMeeting() {
+    const meetingInfo = { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01", duration: '30',
+      weekday: 'friday', time: '11:30', weekOfMonth: 'last',
+      inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
+      todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false},
+      readyToGo: false
+    }
+    const meetingList = [{
+      userSubId: this.props.userInfo.userSubId,
+      meetingInfo: meetingInfo,
+      groupType: this.props.userInfo.groupType,
+      subscription: this.props.userInfo.subscription
+    }]
+
+    const body = {
+      usertoken: this.props.userInfo.userSubId,
+      request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+      table_name: 'SocialButterflyChatsTable',
+      list_to_insert: meetingList
+    }
+
+    // console.log('Creating initial meeting')
+    // console.log(body)
 
     this.setState({
+      meetingInfo: meetingInfo,
       isLoadingMeetingInfoList: false
     })
-    
-    */
-    
+
+    /*
+    // POST to create a meeting in DB   
+    API.post('resobu_api_endpoint', '/rds-request', {
+      body: {
+          usertoken: this.props.userInfo.userSubId,
+          request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+          table_name: 'SocialButterflyChatsTable'
+          list_to_insert: meetingList
+      }
+    })
+    .then(response => {
+          if (response['errorType'] === 'Key already exists') {
+              toast.warning("Sorry, there was a problem connecting to the DB.", {
+                position: toast.POSITION.TOP_RIGHT
+              })  
+          } else if (response['errorType'] === 'Add successful') {
+              toast.success("Emails were succesfully added ", {
+                position: toast.POSITION.TOP_RIGHT
+              })
+              this.setState({
+                meetingInfo: meetingInfo
+              })
+          }
+    })
+    .catch(e => {
+        toast.warning("Sorry, there was a problem connecting to the DB.", {
+          position: toast.POSITION.TOP_RIGHT
+        })  
+    })
+  */
   }
 
 
@@ -143,6 +218,7 @@ class BusinessAccount extends React.Component {
   }
 
   checkEnteredEmails = () => {
+    // also check if the same email was entered twice
     if (this.state.emailList=== '') {
       toast.warning("Oops, you haven't entered any emails yet.", {
         position: toast.POSITION.TOP_RIGHT
@@ -157,39 +233,41 @@ class BusinessAccount extends React.Component {
           })
           return []
         }
-      }  
-      return emails
+      } 
+      // returning a list that removes duplicates 
+      return [ ...new Set(emails) ];
     }
   } 
 
   createEmployeeTableEntries = (emails) => {
-    const emailList = emails.map(function(item) {
-      return {email: item.toLowerCase(),
-              projectColleagues: [],
-              teamColleagues: [],
-              connectedColleagues: [],
-              userSubId: this.state.userInfo.userSubId}
+    const emailList = emails.map((item) => {
+      return {email: item.toLowerCase(), userSubId: this.props.userInfo.userSubId};
     })
-    
     return emailList
   }
 
   async addEmployeeList () {   
     // backened call to add employee list
     const emails = this.checkEnteredEmails()
-    console.log('adding', emails)
     if (emails.length === 0) {
       return
     } else {
-      /*
       const emailList = this.createEmployeeTableEntries(emails)
-      
+      const body = {
+        usertoken: this.props.userInfo.userSubId,
+        request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+        table_name: 'EmployeesTable',
+        list_to_insert: emailList
+      }
+      // console.log('adding emails')
+      // console.log(body)
+      /*
         // POST toadd emails to DB   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
-                usertoken: this.state.userInfo.userSubId,
+                usertoken: this.props.userInfo.userSubId,
                 request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-                table_name: 'EmployeesTable'
+                table_name: 'EmployeesTable',
                 list_to_insert: emailList
             }
         })
@@ -222,6 +300,7 @@ class BusinessAccount extends React.Component {
       })
     }
   } 
+
 
   triggerOpenEditDialog = () => {
     const currentState = _.cloneDeep(this.state)
@@ -387,23 +466,41 @@ class BusinessAccount extends React.Component {
   }
 
   sendEmployeeChangesToDB = () => {
-    console.log('saving employees changes to DB')
-    // editTableEntry('employees', {})
+    // also need to change all the other entries of the connected ones...should be collected in the change event
+    // console.log('triggering to send emplyee changes to DB')
+    const changes = {
+      projectColleagues: this.state.employeeList[this.state.selectedEmailTableId].projectColleagues,
+      teamColleagues: this.state.employeeList[this.state.selectedEmailTableId].teamColleagues
+    }
+    this.editTableEntry('EmployeesTable', changes)
     this.setState({showEditEmployeeeDialog: false})
   }
 
-  async editTableEntry(tableName, change){   
-    console.log('editing table entry')
+  async editTableEntry(tableName, changes){ 
+    let colId = -1
+    if (tableName === 'EmployeesTable') {
+      colId = this.state.selectedEmailId[0]
+    } else if (tableName === 'SocialButterflyChatsTable')  {
+      colId = this.props.userInfo.userSubId
+    }
+    const body = {
+      request_type: 'changerowvalues',
+      usertoken: this.props.userInfo.userSubId,
+      table_name: tableName, // either EmployeesTable or SocialButterflyChatsTable
+      col_id: colId,  // either employeeId or userSubId
+      changes: changes // dictionary wit column names as key and new values as value
+    } 
+    // console.log('editing table entry')
+    // console.log(body)
     /*
         // POST to edit table entry in DB   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
-                request_type: 'changerowvalue',
-                usertoken: this.state.userInfo.userSubId,
+                request_type: 'changerowvalues',
+                usertoken: this.props.userInfo.userSubId,
                 table_name: tableName, // either EmployeesTable or SocialButterflyChatsTable
                 col_id: colId,  // either employeeId or userSubId
                 changes: changes // dictionary wit column names as key and new values as value
-                // changes: changes // again check if the for loop should take here or there to pass on several changes
             }
         })
         .then(response => {
@@ -439,14 +536,22 @@ class BusinessAccount extends React.Component {
   }
 
   async deleteEmployee () {   
-    // backened call to delete employee
-    console.log(`delete employee ${this.state.selectedEmail}`) 
+    const body = {
+      requesttype: "deleterow",
+      usertoken: this.props.userInfo.userSubId,
+      tableName: 'EmployeesTable',
+      usertokenColumnName: "userSubId",
+      uid: this.state.selectedEmailId[0],
+      uidColumnName:  "employeeId"
+    }
+    // console.log(`delete employee`) 
+    // console.log(body)
     /*
         // POST to delete emails to DB - tested   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
               requesttype: "deleterow",
-              usertoken: this.state.userInfo.userSubId,
+              usertoken: this.props.userInfo.userSubId,
               tableName: 'EmployeesTable',
               usertokenColumnName: "userSubId",
               uid: this.state.selectedEmailId,
@@ -470,6 +575,7 @@ class BusinessAccount extends React.Component {
 
 
   setMeetingInfo = (e) => {
+    // console.log(this.state.meetingInfo)
     let newValue = e.target.value
     let infoToChange = e.target.id
     if (e.target.className === "frequency") { infoToChange = "frequency" } 
@@ -499,9 +605,9 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeMeeting = () => {
-    // submit changes to backend
-    console.log('sending changes to DB')
-    this.editTableEntry('meetingInfo', {userSubId: this.state.userInfo.userSubId}, this.state.meetingInfo)
+    // console.log('triggering to send meeting changes to DB')
+    const changes = {meetingInfo: this.state.meetingInfo}
+    this.editTableEntry('SocialButterflyChatsTable', changes)
     this.setState({changeMeetingTime: false})
   }
 
@@ -515,8 +621,9 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeInviteText = () => {
-    // submit changes to backend
-    console.log('sending changes to DB')
+    // console.log('triggering to send meeting changes to DB')
+    const changes = {meetingInfo: this.state.meetingInfo}
+    this.editTableEntry('SocialButterflyChatsTable', changes)
     this.setState({changeInvite: false})
   }
 
@@ -530,8 +637,9 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeTodoList = () => {
-    // submit changes to backend
-    console.log('sending changes to DB')
+    // console.log('triggering to send meeting changes to DB')
+    const changes = {meetingInfo: this.state.meetingInfo}
+    this.editTableEntry('SocialButterflyChatsTable', changes)
     this.setState({changeTodoList: false})
   }
 
@@ -540,7 +648,7 @@ class BusinessAccount extends React.Component {
     return (
       <div>
         <div className="topSection">
-          <div className="heading1"> Your social butterfly chats</div>
+          <div className="heading1"> Your remote social butterfly chats</div>
         </div>
         <div className="sections"> 
           <div className="section1">
@@ -565,6 +673,9 @@ class BusinessAccount extends React.Component {
                   />
                 </TabPanel>
                 <TabPanel>
+                {this.state.isLoadingMeetingInfoList ?
+                  <Spinner /> 
+                  :
                   <MeetingTab
                     changeMeetingTime={this.state.changeMeetingTime}
                     meetingInfo={this.state.meetingInfo}
@@ -573,9 +684,13 @@ class BusinessAccount extends React.Component {
                     onCancelChangeMeeting={this.cancelChange}
                     onSetMeetingInfo={this.setMeetingInfo}
                   />
+                }
                 </TabPanel>
                 <TabPanel>
-                  <InviteTab
+                  {this.state.isLoadingMeetingInfoList ?
+                    <Spinner /> 
+                    :
+                    <InviteTab
                     changeInvite={this.state.changeInvite}
                     inviteText={this.state.meetingInfo.inviteText}
                     onChangeInviteText={this.changeInviteText}
@@ -583,8 +698,12 @@ class BusinessAccount extends React.Component {
                     onCancelChangeInviteText={this.cancelChange}
                     onSetInviteText={this.setMeetingInfo}
                   />
+                  }
                 </TabPanel>
                 <TabPanel>
+                {this.state.isLoadingMeetingInfoList ?
+                  <Spinner /> 
+                    :
                   <TodoTab
                     changeTodoList={this.state.changeTodoList}
                     todoList={this.state.meetingInfo.todoList}
@@ -593,6 +712,7 @@ class BusinessAccount extends React.Component {
                     onCancelChangeTodoList={this.cancelChange}
                     onSetTodoList={this.setMeetingInfo}
                   />
+                }
                 </TabPanel>
               </Tabs>
             </div>

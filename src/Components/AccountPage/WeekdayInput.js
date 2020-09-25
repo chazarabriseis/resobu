@@ -5,6 +5,7 @@ import { FormControl, Select } from '@material-ui/core'
 export default class WeekdayInput extends Component {
 
     render() {  
+        const optionValues = ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday']
         return (
             <div>
                 <FormControl disabled={!this.props.changeMeetingTime}>
@@ -14,11 +15,7 @@ export default class WeekdayInput extends Component {
                         onChange={this.props.onSetWeekday}
                         id='weekday'
                     >
-                    <option value={'monday'}>Monday</option>
-                    <option value={'tuesday'}>Tuesday</option>
-                    <option value={'wednesday'}>Wednesday</option>
-                    <option value={'thursday'}>Thursday</option>
-                    <option value={'friday'}>Friday</option>
+                    {optionValues.map((item) => <option key={item} value={item}>{item}</option>)}
                     </Select>
                 </FormControl>
             </div>          

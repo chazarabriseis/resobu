@@ -49,6 +49,8 @@ class SocialButterflyChatsTable(Base):
     userSubId = Column(String, primary_key=True)
     meetingId = Column(Integer, Sequence("meeting_Id_sequence"))
     meetingInfo = Column(JSONB)
+    groupType = Column(String)
+    subscription = Column(String)
 
 
 class ChatsTable(Base):

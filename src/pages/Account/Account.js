@@ -44,17 +44,25 @@ class Account extends React.Component {
             {this.props.isAuthenticated ? (
               <div>
                 {this.props.userInfo.groupType === 'Business' ? (
-                  <BusinessAccount />
+                  <BusinessAccount 
+                    userInfo={this.props.userInfo}
+                  />
                 ) : (
                   <div>
                     {this.props.userInfo.groupType === 'Conference' ? (
-                      <ConferenceAccount />
+                      <ConferenceAccount 
+                        userInfo={this.props.userInfo}
+                      />
                     ) : (
                       <div>
                         {this.props.userInfo.groupType === 'Tradeshow' ? (
-                          <TradeshowAccount />
+                          <TradeshowAccount 
+                            userInfo={this.props.userInfo}
+                          />
                         ) : (
-                          <BusinessAccount />
+                          <TradeshowAccount 
+                            userInfo={this.props.userInfo}
+                          />
                         )
                       }
                       </div> 
