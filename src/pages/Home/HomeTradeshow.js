@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 
 import SubscriptionTradeshow from './SubscriptionTradeshow'
 import WhatDiagramConference from './WhatDiagramConference'
-import WhyTradeshow from './WhyTradeshow'
+import WhyConference from './WhyConference'
 
 import './Home.css'
 import '../../App.css'
@@ -27,7 +27,7 @@ class HomeTradeshow extends React.Component {
           <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
-          <WhyTradeshow />  
+          <WhyConference />  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 
           <WhatDiagramConference />  

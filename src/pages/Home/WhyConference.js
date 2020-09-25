@@ -1,5 +1,4 @@
 import React from 'react'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import './WhyDetails.css'
 import '../../App.css'
 
@@ -10,22 +9,16 @@ class WhyConference extends React.Component {
 
         this.whySteps = [
           {
-            label: 'From Communication Emerges Connection',
+            label: 'From Connections Emerge Networks',
             imgPath:
-              'caterpillar_transformation.png',
-            text: 'While online platforms have got the formal chat in the digital age organised, the informal conversations are lost. The remote social butterfly acts to stimulate the informal communication culture in organisation or at conferences. By doing the work behind the scenes to recreate those chance encounters that support formation of strong networks. Remote Social Butterfly connects people either on a random or data-driven basis. Remote Social Butterfly helps to replace those chance encounters before and after meetings, in the hallways and at the water cooler, by arranging short chats in the calendar between two or more people.'
-          },
+            'caterpillar_transformation.png',
+            text: 'A key place for creating connections is tradeshows and conferences. Through digitalisation and global pandemics, the opportunity to come together to meet in person and build networks are reducing. But that should not mean that the possibility to attend conferences or tradeshow to meet new connections is lost. Remote Social Butterfly provides the opportunity to reconnect with attendees and create the kind of chance or deliberate encounters experienced at trade shows and conferences to create new connections.'
+            },
           {
-            label: 'From Connection Emerges Collaboration',
-            imgPath:
-              'pupa_transformation.png',
-            text: ' Successful organizations around the world understand the value of collaboration. It brings cohesive teams, improved performance, efficient solutions, satisfied clients and innovation. Communication is the cornerstone to effective collaboration. Teams and groups that can communicate openly, purposefully and effectively will create the environment in which collaboration can thrive. The digital era, working from home and global pandemics are transforming and disrupting the way communication in organisations and at conference functions. Maintaining effective integrated communication is key to fostering and maintaining a collaborative environment.'
-          },
-          {
-            label: 'From Collaboration Emerges Innovation',
+            label: 'From Networks Emerge Possibilities',
             imgPath:
               'butterfly_transformation.png',
-            text: 'The right conditions for innovation to occur are varied, but one place it definitely won’t occur is where the right people are not communicating. The overwhelming majority of successful innovation stories come from teams. Teams that work not just within departments but across departments to understand the full picture from marketing to finance, from research to production, from legal to post sales supports. The ability to engage in a collaborative environment across the business improves the likelihood that successful innovation and performance will follow. Conversely, studies have shown, the incidence of communication drops sharply within an organisation, even with increased distance between departments and across multiple building levels. Imagine how it suffers in the time of working from home. Introducing Remote Social Butterfly chats will reintroduce those encounters.'
+            text: 'The importance of a strong network is almost universal across all businesses. But how do networks form, it is through connections. Connections that grow and evolve over time to create individual networks across industries, sectors and the world. It is through building a strong network of business partners, suppliers, clients, potential employees or employers and academia that we can build that type of networks that we need to support endless possibilities.'
           }
         ]
       }

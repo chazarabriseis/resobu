@@ -23,18 +23,16 @@ class How extends React.Component {
               <div>
                 <div className='cardTitle2'>Connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance</div>
                 <div className='cardText'> 
-                <div style={{fontWeight: '500', display: 'inline'}}>For Businesses:</div> Feeding the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance with data, chats can be organised more purposefully.
+                  <div style={{fontWeight: '500', display: 'inline'}}>For Businesses: </div> Feeding the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance with data, chats can be organised more purposefully.
                   For example, we can make sure that team and project colleagues don't meet since they are already in contact. 
                   Or if exiting communication problems between departements are known, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can target specific encounters.
                   You can also just plug in your Teams, Trello etc and the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance will learn from the metadata which connections already exists or where they are lacking.
                   Possibilities are endless, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can be tailored exaxtly to your needs.
                 </div>
                 <div className='cardText'> 
-                <div style={{fontWeight: '500' , display: 'inline'}}>For Conferences and Tradeshows:</div> Feeding the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance with data, chats can be organised more purposefully.
-                  For example, we can make sure that team and project colleagues don't meet since they are already in contact. 
-                  Or if exiting communication problems between departements are known, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can target specific encounters.
-                  You can also just plug in your Teams, Trello etc and the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance will learn from the metadata which connections already exists or where they are lacking.
-                  Possibilities are endless, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can be tailored exaxtly to your needs.
+                  <div style={{fontWeight: '500' , display: 'inline'}}>For Conferences and Tradeshows: </div> When additional data exists the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can work to develop encounters between attendees at conferences or 
+                  tradeshows based on areas of expertise, locations, business areas and other relevant data to make sure the meetings organised are as meaningful and as beneficial as possible. 
+                  It will avoid organising meetings that do not make sense, such as meetings between people who work at the same company or for competitors.
                 </div>
               </div>
               <div>
