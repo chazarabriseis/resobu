@@ -20,11 +20,11 @@ class SubscriptionTradeshow extends React.Component {
         </div>
         <div className="container planContainer">
           <div className="planPricing plan">
-            <div className="planPrice"> 0.50 &euro;</div>
+            <div className="planPrice"> XX &euro;</div>
             <div className="planPriceInfo"> Per attendee, per chat</div>
           </div>
           <div className="planPricing planThistle">
-            <div className="planPrice"> 1 &euro; </div>
+            <div className="planPrice"> XX &euro; </div>
             <div className="planPriceInfo"> Per attendee, per chat </div>
             <div className="planPriceInfoExtra"> 2chats already included </div>
           </div>

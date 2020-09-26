@@ -29,17 +29,17 @@ class WhyConference extends React.Component {
       <div className='heading3 planContainer'>We belive that these chats lead to new connections and networks, essential for sucessful people and businesses </div>
         <div className='container planContainer planInfo'>
           {this.whySteps.map((step) => {
-            return <div className='plan planTitle'><div className='whyLabel'>{step.label}</div></div>
+            return <div key={step.label} className='plan planTitle'><div className='whyLabel'>{step.label}</div></div>
           })}
         </div>
         <div className='container'>
           {this.whySteps.map((step) => {
-            return <div className='plan planTitle'><img className='img imgBw' src={step.imgPath} alt={step.label} /></div>
+            return <div key={step.imgPath} className='plan planTitle'><img className='img imgBw' src={step.imgPath} alt={step.label} /></div>
           })}
         </div>
         <div className='container'>
           {this.whySteps.map((step) => {
-            return <div className='plan planTitle'><div className='whyText'>{step.text}</div></div>
+            return <div key={step.text} className='plan planTitle'><div className='whyText'>{step.text}</div></div>
           })}
         </div>
     </div>
