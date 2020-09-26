@@ -3,6 +3,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { Dialog, DialogActions, Button, DialogTitle, DialogContent,TextField, DialogContentText } from '@material-ui/core'
 import { withRouter } from "react-router";
 import { ToastContainer, toast } from 'react-toastify';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import EmployeesTab from '../../Components/AccountPage/EmployeesTab'
 import MeetingTab from '../../Components/AccountPage/MeetingTab'
@@ -152,7 +154,7 @@ class BusinessAccount extends React.Component {
       weekday: 'friday', time: '11:30', weekOfMonth: 'last',
       inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
       todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false},
-      readyToGo: false
+      activated: false
     }
     const meetingList = [{
       userSubId: this.props.userInfo.userSubId,
@@ -576,8 +578,13 @@ class BusinessAccount extends React.Component {
 
   setMeetingInfo = (e) => {
     // console.log(this.state.meetingInfo)
+    console.log(e.target)
+    console.log(e.target.value)
     let newValue = e.target.value
     let infoToChange = e.target.id
+    if (e.target.id === "activated") { newValue = Boolean(Number(e.target.value)) 
+    console.log(newValue)
+  console.log(infoToChange)} 
     if (e.target.className === "frequency") { infoToChange = "frequency" } 
     if (e.target.className === "todoList") { 
       infoToChange = "todoList"
@@ -586,7 +593,8 @@ class BusinessAccount extends React.Component {
       newValue = { ...this.state.meetingInfo.todoList, [todoListItemToChange] : !currentValue}
       infoToChange = "todoList"
     }
-    const newMeetingInfo = { ...this.state.meetingInfo, [infoToChange] : newValue}
+    let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
+    newMeetingInfo[infoToChange] = newValue
     this.setState({meetingInfo: newMeetingInfo})  
   }
 
@@ -647,8 +655,21 @@ class BusinessAccount extends React.Component {
   render() {
     return (
       <div>
-        <div className="topSection">
+        <div className="topSectionAccount">
           <div className="heading1"> Your remote social butterfly chats</div>
+        </div>
+        <div className='container whyContent'>
+          {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.activated ?
+          <div className='accountStatus accountActivated'> Activated, Invites are being sent out </div>
+          :
+          <div className='accountStatus accountDeactivated'>Not activated, no invites are being sent out</div>
+          }
+          {!this.state.isLoadingMeetingInfoList && 
+          <FormControlLabel
+            control={<Switch id='activated' checked={this.state.meetingInfo.activated} onChange={this.setMeetingInfo} name="activated" value={this.state.meetingInfo.activated  ? 0 : 1}/>}
+            label={this.state.meetingInfo.activated  ? 'Turn off' : 'Turn on'}
+          />
+          }
         </div>
         <div className="sections"> 
           <div className="section1">

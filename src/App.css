@@ -74,6 +74,28 @@
   padding-bottom: 90px;
 }
 
+.topSectionAccount{
+  text-align: center;
+  align-items: center;
+  padding-top: 160px;
+  padding-bottom: 40px;
+}
+
+.accountStatus {
+  text-align: center;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.accountActivated {
+  color: green;
+
+}
+
+.accountDeactivated {
+  color: red
+}
+
 .actionButton {
   background-color: purple !important;
   color:white !important;
