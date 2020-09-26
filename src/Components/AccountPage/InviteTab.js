@@ -13,10 +13,10 @@ export default class InviteTab extends Component {
                 <Button variant="contained" size="large" className="actionButton" disabled={this.props.changeInvite} onClick={this.props.onChangeInviteText}>Change Invite Text</Button>   
                 <Button variant="contained" size="large" className="actionButton"  disabled={!this.props.changeInvite} onClick={this.props.onSaveChangeInviteText}>Save</Button>   
                 <Button variant="contained" size="large" className="ghostButton"  disabled={!this.props.changeInvite} onClick={this.props.onCancelChangeInviteText}>Cancel</Button>
-                <p>
-                  Here you can set the tone of the meeting, should it be purly random what people talk about or do you want to guide the meeting with a few questions they should discuss, 
+                <div className='heading4'>
+                  Here you can set the tone of the Remote Social Butterfly chats, should it be purly random what people talk about or do you want to guide the chat with a few questions they should discuss, 
                   e.g. What are you struggeling with at the moment? What is the tool that makes your work more efficient? How do you think we can help our clients the most?
-                </p>
+                </div>
                 <div className="p">
                   <TextField 
                       id="inviteText" 

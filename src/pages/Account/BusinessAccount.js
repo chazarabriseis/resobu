@@ -5,6 +5,8 @@ import { withRouter } from "react-router";
 import { ToastContainer, toast } from 'react-toastify';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/core/styles';
+import { purple } from '@material-ui/core/colors';
 
 import EmployeesTab from '../../Components/AccountPage/EmployeesTab'
 import MeetingTab from '../../Components/AccountPage/MeetingTab'
@@ -153,7 +155,7 @@ class BusinessAccount extends React.Component {
     const meetingInfo = { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01", duration: '30',
       weekday: 'friday', time: '11:30', weekOfMonth: 'last',
       inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
-      todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false},
+      todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
       activated: false
     }
     const meetingList = [{
@@ -577,21 +579,14 @@ class BusinessAccount extends React.Component {
 
 
   setMeetingInfo = (e) => {
-    // console.log(this.state.meetingInfo)
-    console.log(e.target)
-    console.log(e.target.value)
     let newValue = e.target.value
     let infoToChange = e.target.id
-    if (e.target.id === "activated") { newValue = Boolean(Number(e.target.value)) 
-    console.log(newValue)
-  console.log(infoToChange)} 
+    if (e.target.id === "activated") { newValue = Boolean(Number(e.target.value)) }
     if (e.target.className === "frequency") { infoToChange = "frequency" } 
-    if (e.target.className === "todoList") { 
-      infoToChange = "todoList"
+    if (e.target.id === "todoList") { 
       const todoListItemToChange = e.target.value
       const currentValue = this.state.meetingInfo.todoList[todoListItemToChange]
       newValue = { ...this.state.meetingInfo.todoList, [todoListItemToChange] : !currentValue}
-      infoToChange = "todoList"
     }
     let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
     newMeetingInfo[infoToChange] = newValue
@@ -653,6 +648,20 @@ class BusinessAccount extends React.Component {
 
 
   render() {
+
+    const PurpleSwitch = withStyles({
+      switchBase: {
+        '&$checked': {
+          color: purple[500],
+        },
+        '&$checked + $track': {
+          backgroundColor: purple[500],
+        },
+      },
+      checked: {},
+      track: {},
+    })(Switch);
+
     return (
       <div>
         <div className="topSectionAccount">
@@ -660,14 +669,20 @@ class BusinessAccount extends React.Component {
         </div>
         <div className='container whyContent'>
           {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.activated ?
-          <div className='accountStatus accountActivated'> Activated, Invites are being sent out </div>
+          <div className='accountStatus accountActivated'> Activated, your invites are being sent out </div>
           :
           <div className='accountStatus accountDeactivated'>Not activated, no invites are being sent out</div>
           }
           {!this.state.isLoadingMeetingInfoList && 
           <FormControlLabel
-            control={<Switch id='activated' checked={this.state.meetingInfo.activated} onChange={this.setMeetingInfo} name="activated" value={this.state.meetingInfo.activated  ? 0 : 1}/>}
-            label={this.state.meetingInfo.activated  ? 'Turn off' : 'Turn on'}
+            control={
+              <PurpleSwitch size='medium' disableRipple id='activated' 
+                checked={this.state.meetingInfo.activated} onChange={this.setMeetingInfo} 
+                name="activated" value={this.state.meetingInfo.activated  ? 0 : 1}
+                classes={{switchBase: 'switchBase'}}
+              />
+            }
+            // label={this.state.meetingInfo.activated  ? 'Turn off' : 'Turn on'}
           />
           }
         </div>
