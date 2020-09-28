@@ -48,6 +48,7 @@ class BusinessAccount extends React.Component {
       teamListStates: [],
       projectListStates: [],
       allEmails: [],
+      collateralChanges: [],
       
       showDeleteDialog: false,
       selectedEmailId: [],
@@ -404,7 +405,10 @@ class BusinessAccount extends React.Component {
       
       let newEmployeeData = _.cloneDeep(this.state.employeeList[this.state.selectedEmailTableId])
       let newEmployeeList = _.cloneDeep(this.state.employeeList)
-      const indexConnectingEmail = newEmployeeList.findIndex(data => data.employeeEmail === connectedEmail)
+      let newCollateralChanges = _.cloneDeep(this.state.collateralChanges)
+      const tableIndexConnectingEmail = newEmployeeList.findIndex(data => data.employeeEmail === connectedEmail)
+      const indexConnectingEmail = newEmployeeList[tableIndexConnectingEmail].employeeId
+      const collateralIndex = newCollateralChanges.findIndex(data => data.colId === indexConnectingEmail)
 
       if (table === "project") {
           // update the checkbox state
@@ -422,7 +426,7 @@ class BusinessAccount extends React.Component {
           }
           newEmployeeList[this.state.selectedEmailTableId].projectColleagues = newProjectColleagues
           // update the projectColleagues List in employeeList state for the email that is selected
-          let newConnectingEmployeeData = newEmployeeList[indexConnectingEmail]
+          let newConnectingEmployeeData = newEmployeeList[tableIndexConnectingEmail]
           newProjectColleagues = newConnectingEmployeeData.projectColleagues
           if (newProjectColleagues.includes(employeeEmail)) {
             const indexProject = newProjectColleagues.findIndex(data => data === employeeEmail)
@@ -430,11 +434,19 @@ class BusinessAccount extends React.Component {
           } else {
             newProjectColleagues.push(employeeEmail)
           }
-          newEmployeeList[indexConnectingEmail].projectColleagues = newProjectColleagues
+          newEmployeeList[tableIndexConnectingEmail].projectColleagues = newProjectColleagues
+
+          // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
+          if (collateralIndex === -1) {
+            newCollateralChanges.push({colId: indexConnectingEmail, changes: {projectColleagues: newProjectColleagues}})
+          } else {
+            newCollateralChanges[collateralIndex].changes.projectColleagues = newProjectColleagues
+          }
 
           this.setState({
             employeeList: newEmployeeList,
-            projectListStates: newProjectListStates
+            projectListStates: newProjectListStates,
+            collateralChanges: newCollateralChanges
           })                  
       } else if (table === "team") {
           // update the checkbox state
@@ -452,7 +464,7 @@ class BusinessAccount extends React.Component {
           }
           newEmployeeList[this.state.selectedEmailTableId].teamColleagues = newTeamColleagues
           // update the teamColleagues List in employeeList state for the email that is selected
-          let newConnectingEmployeeData = newEmployeeList[indexConnectingEmail]
+          let newConnectingEmployeeData = newEmployeeList[tableIndexConnectingEmail]
           newTeamColleagues = newConnectingEmployeeData.teamColleagues
           if (newTeamColleagues.includes(employeeEmail)) {
             const indexProject = newTeamColleagues.findIndex(data => data === employeeEmail)
@@ -460,11 +472,18 @@ class BusinessAccount extends React.Component {
           } else {
             newTeamColleagues.push(employeeEmail)
           }
-          newEmployeeList[indexConnectingEmail].teamColleagues = newTeamColleagues
+          newEmployeeList[tableIndexConnectingEmail].teamColleagues = newTeamColleagues
+          // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
+          if (collateralIndex === -1) {
+            newCollateralChanges.push({colId: indexConnectingEmail, changes: {teamColleagues: newTeamColleagues }})
+          } else {
+            newCollateralChanges[collateralIndex].changes.teamColleagues = newTeamColleagues
+          }
 
           this.setState({
             employeeList: newEmployeeList,
-            teamListStates: newTeamListStates
+            teamListStates: newTeamListStates,
+            collateralChanges: newCollateralChanges
           })
       }
   }
@@ -476,22 +495,20 @@ class BusinessAccount extends React.Component {
       projectColleagues: this.state.employeeList[this.state.selectedEmailTableId].projectColleagues,
       teamColleagues: this.state.employeeList[this.state.selectedEmailTableId].teamColleagues
     }
-    this.editTableEntry('EmployeesTable', changes)
+    this.editTableEntry('EmployeesTable', this.state.selectedEmailId[0], changes)
+    const collateralChanges = this.state.collateralChanges
+    for (let i =0; i<collateralChanges.length; i++) {
+      this.editTableEntry('EmployeesTable', collateralChanges[i].colId, collateralChanges[i].changes)
+    }
     this.setState({showEditEmployeeeDialog: false})
   }
 
-  async editTableEntry(tableName, changes){ 
-    let colId = -1
-    if (tableName === 'EmployeesTable') {
-      colId = this.state.selectedEmailId[0]
-    } else if (tableName === 'SocialButterflyChatsTable')  {
-      colId = this.props.userInfo.userSubId
-    }
+  async editTableEntry(tableName, colId, changes){ 
     const body = {
       request_type: 'changerowvalues',
       usertoken: this.props.userInfo.userSubId,
       table_name: tableName, // either EmployeesTable or SocialButterflyChatsTable
-      col_id: colId,  // either employeeId or userSubId
+      col_id: colId,  // either employeeId or userSubId depeding on the table
       changes: changes // dictionary wit column names as key and new values as value
     } 
     // console.log('editing table entry')
@@ -610,7 +627,7 @@ class BusinessAccount extends React.Component {
   saveChangeMeeting = () => {
     // console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
-    this.editTableEntry('SocialButterflyChatsTable', changes)
+    this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeMeetingTime: false})
   }
 
@@ -626,7 +643,7 @@ class BusinessAccount extends React.Component {
   saveChangeInviteText = () => {
     // console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
-    this.editTableEntry('SocialButterflyChatsTable', changes)
+    this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeInvite: false})
   }
 
@@ -642,7 +659,7 @@ class BusinessAccount extends React.Component {
   saveChangeTodoList = () => {
     // console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
-    this.editTableEntry('SocialButterflyChatsTable', changes)
+    this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeTodoList: false})
   }
 
