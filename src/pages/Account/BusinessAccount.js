@@ -216,7 +216,11 @@ class BusinessAccount extends React.Component {
 
 
   openAddEmployeeeDialog = () => {
-    this.setState({showAddEmployeeeDialog: true})
+    const currentState = _.cloneDeep(this.state)
+    this.setState({
+      showAddEmployeeeDialog: true,
+      initialState: currentState
+    })
   }
 
   closeAddEmployeeeDialog = () => {
@@ -708,6 +712,7 @@ class BusinessAccount extends React.Component {
 
     const PurpleSwitch = withStyles({
       switchBase: {
+        color: purple[300],
         '&$checked': {
           color: purple[500],
         },
@@ -726,9 +731,9 @@ class BusinessAccount extends React.Component {
         </div>
         <div className='container whyContent'>
           {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.activated ?
-          <div className='accountStatus accountActivated'> Activated, your invites are being sent out </div>
+          <div className='accountStatus accountActivated'> Activated, move switch to stop sending invites out </div>
           :
-          <div className='accountStatus accountDeactivated'>Not activated, no invites are being sent out</div>
+          <div className='accountStatus accountDeactivated'>Not activated, move switch to start sending invites out</div>
           }
           {!this.state.isLoadingMeetingInfoList && 
           <FormControlLabel
@@ -749,7 +754,7 @@ class BusinessAccount extends React.Component {
             <div className="sectionContent">
               <Tabs style={{ width: '90%'}}>
                 <TabList>
-                  <Tab> People List </Tab>
+                  <Tab> Employee List </Tab>
                   <Tab> Chat Time </Tab>
                   <Tab> Chat Invite </Tab>
                   <Tab> To Do List </Tab>
@@ -814,10 +819,10 @@ class BusinessAccount extends React.Component {
         <Dialog 
           open={this.state.showAddEmployeeeDialog} 
         >
-          <DialogTitle>Add People</DialogTitle>
+          <DialogTitle>Add Employee</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Either enter a list of emails separated by a comma or just a single one. You cann add project and team colleagues later by editing entries. 
+              Either enter a list of emails separated by a comma or just a single one. You cann add project and team colleagues later by editing single entries. 
             </DialogContentText>
             <TextField
               autoFocus
@@ -834,7 +839,7 @@ class BusinessAccount extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.addEmployeeList} className="actionButton">
-              Add People
+              Add Employees
             </Button>
             <Button onClick={this.cancelChange} className="ghostButton">
               Cancel
