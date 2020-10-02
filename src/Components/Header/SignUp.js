@@ -35,6 +35,7 @@ class SignUp extends React.Component {
       }
     
     componentDidMount() {
+        window.scrollTo(0, 0);
         if (Boolean(this.props.goToEnterCode)) {
             this.setState({
                 submitted: true,

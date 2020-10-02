@@ -32,6 +32,7 @@ class SignIn extends React.Component {
       }
 
     componentDidMount () {
+        window.scrollTo(0, 0);
         if (Boolean(this.props.goToEnterCode)) {
             this.setState({
                 email: this.props.goToEnterCode
