@@ -4,11 +4,15 @@ import { withRouter } from "react-router";
 import './Home.css'
 import '../../App.css'
 
-import SubscriptionBusiness from './SubscriptionBusiness'
-import WhatDiagram from './WhatDiagram'
-import WhyBusiness from './WhyBusiness'
+import SubscriptionBusiness from '../../Components/HomePage/SubscriptionBusiness'
+import WhatDiagram from '../../Components/HomePage/WhatDiagram'
+import WhyBusiness from '../../Components/HomePage/WhyBusiness'
 
 class HomeBusiness extends React.Component {
+
+  componentDidMount () {
+    window.scrollTo(0, 0);
+  }
 
   gotoSignUp = (value) => {
     this.props.onsetGroupType('Business')

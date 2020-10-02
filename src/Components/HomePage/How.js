@@ -1,5 +1,5 @@
 import React from 'react'
-import './Home.css'
+import '../../Pages/Home/Home.css'
 
 class How extends React.Component {
 

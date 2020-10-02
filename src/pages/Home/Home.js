@@ -2,15 +2,19 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { withRouter } from "react-router";
 
-import Why from './Why'
-import How from './How'
-import WhatDiagram from './WhatDiagram'
+import Why from '../../Components/HomePage/Why'
+import How from '../../Components/HomePage/How'
+import WhatDiagram from '../../Components/HomePage/WhatDiagram'
 
 import './Home.css'
 import '../../App.css'
 
 
 class Home extends React.Component {
+
+  componentDidMount () {
+    window.scrollTo(0, 0);
+  }
 
   render () {
     return (

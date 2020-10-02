@@ -2,16 +2,20 @@ import React from 'react'
 import { Button} from '@material-ui/core'
 import { withRouter } from "react-router";
 
-import SubscriptionTradeshow from './SubscriptionTradeshow'
-import WhatDiagramConference from './WhatDiagramConference'
-import WhyTradeshow from './WhyTradeshow'
+import SubscriptionTradeshow from '../../Components/HomePage/SubscriptionTradeshow'
+import WhatDiagramConference from '../../Components/HomePage/WhatDiagramConference'
+import WhyTradeshow from '../../Components/HomePage/WhyTradeshow'
 
 import './Home.css'
 import '../../App.css'
 
 
 class HomeTradeshow extends React.Component {
-  
+
+  componentDidMount () {
+    window.scrollTo(0, 0);
+  }
+
   gotoSignUp = (value) => {
     this.props.onsetGroupType('Tradeshow')
     this.props.onSetSubscription(value)

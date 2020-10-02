@@ -26,6 +26,7 @@ class Account extends React.Component {
       const groupType = userInfoAll.attributes['custom:groupType']
       await this.props.onSignIn(username, userSubId, groupType, subscription)
       this.waitingDone()
+      window.scrollTo(0, 0);
     } 
   }
 

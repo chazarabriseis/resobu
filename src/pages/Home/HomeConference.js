@@ -2,15 +2,19 @@ import React from 'react'
 import { Button} from '@material-ui/core'
 import { withRouter } from "react-router";
 
-import SubscriptionConference from './SubscriptionConference'
-import WhatDiagramConference from './WhatDiagramConference'
-import WhyConference from './WhyConference'
+import SubscriptionConference from '../../Components/HomePage/SubscriptionConference'
+import WhatDiagramConference from '../../Components/HomePage/WhatDiagramConference'
+import WhyConference from '../../Components/HomePage/WhyConference'
 
 import './Home.css'
 import '../../App.css'
 
 
 class HomeConference extends React.Component {
+
+  componentDidMount () {
+    window.scrollTo(0, 0);
+  }
 
   gotoSignUp = (value) => {
     this.props.onsetGroupType('Conference')

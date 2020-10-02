@@ -27,6 +27,7 @@ class Contact extends React.Component {
   }
   
   componentDidMount () {
+    window.scrollTo(0, 0);
     this.setState({submitted: false});
     if (this.props.isAuthenticated) { 
       this.setState({email : this.props.userInfo.email})

@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from "react-router";
 import { Button} from '@material-ui/core'
-import './Home.css'
+import '../../Pages/Home/Home.css'
 
 
 class SubscriptionBusiness extends React.Component {

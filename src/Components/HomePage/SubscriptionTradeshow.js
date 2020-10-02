@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button} from '@material-ui/core'
-import './Home.css'
+import '../../Pages/Home/Home.css'
 
 
-class SubscriptionConference extends React.Component {
+class SubscriptionTradeshow extends React.Component {
 
   render () {
     return(
@@ -11,11 +11,11 @@ class SubscriptionConference extends React.Component {
         <div className="container planContainer planInfo">
           <div className="planTitle plan">
             <div className="planHeading"> Standard</div>
-            <div className="planText"> For conferences with a very diverse range of attendees so random matching of chat partners is sufficient.</div>
+            <div className="planText"> For tradeshows with a very diverse range of attendees so random matching of chat partners is sufficient.</div>
           </div>
           <div className="planTitle planThistle">
             <div className="planHeading"> Premium</div>
-            <div className="planText">For conferences with existing networks so tailored matching ensures that people meet strangers.</div>
+            <div className="planText">For tradeshos with many participants so tailored matching ensures that people meet relevant chat partners.</div>
           </div>
         </div>
         <div className="container planContainer">
@@ -42,4 +42,4 @@ class SubscriptionConference extends React.Component {
   }
 }
 
-export default SubscriptionConference;
+export default SubscriptionTradeshow;
