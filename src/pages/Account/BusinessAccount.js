@@ -62,6 +62,7 @@ class BusinessAccount extends React.Component {
   }
 
   async componentDidMount () {
+    window.scrollTo(0, 0);
     await this.fetchEmployeeList();  
     await this.fetchMeetingInfo();
   }
@@ -71,8 +72,8 @@ class BusinessAccount extends React.Component {
       usertoken: this.props.userInfo.userSubId,
       request_type: 'listemployees'
     }
-    // console.log('Fetching Employee List')
-    // console.log(body)
+   // console.log('Fetching Employee List')
+   // console.log(body)
     // backend call to get employee list 
     /*
     this.setState({
@@ -118,8 +119,8 @@ class BusinessAccount extends React.Component {
       usertoken: this.props.userInfo.userSubId,
       request_type: 'listmeeting'
     }
-    // console.log('Fetching Meeting Info')
-    // console.log(body)
+   // console.log('Fetching Meeting Info')
+   // console.log(body)
     /*
     // POST request to get meetingInfo from DB
     API.post('resobu_api_endpoint', '/rds-request', {
@@ -173,8 +174,8 @@ class BusinessAccount extends React.Component {
       list_to_insert: meetingList
     }
 
-    // console.log('Creating initial meeting')
-    // console.log(body)
+   // console.log('Creating initial meeting')
+   // console.log(body)
 
     this.setState({
       meetingInfo: meetingInfo,
@@ -264,8 +265,8 @@ class BusinessAccount extends React.Component {
         table_name: 'EmployeesTable',
         list_to_insert: emailList
       }
-      // console.log('adding emails')
-      // console.log(body)
+     // console.log('adding emails')
+     // console.log(body)
       /*
         // POST toadd emails to DB   
         API.post('resobu_api_endpoint', '/rds-request', {
@@ -490,7 +491,7 @@ class BusinessAccount extends React.Component {
 
   sendEmployeeChangesToDB = () => {
     // also need to change all the other entries of the connected ones...should be collected in the change event
-    // console.log('triggering to send emplyee changes to DB')
+   // console.log('triggering to send emplyee changes to DB')
     const changes = {
       projectColleagues: this.state.employeeList[this.state.selectedEmailTableId].projectColleagues,
       teamColleagues: this.state.employeeList[this.state.selectedEmailTableId].teamColleagues
@@ -511,8 +512,8 @@ class BusinessAccount extends React.Component {
       col_id: colId,  // either employeeId or userSubId depeding on the table
       changes: changes // dictionary wit column names as key and new values as value
     } 
-    // console.log('editing table entry')
-    // console.log(body)
+   // console.log('editing table entry')
+   // console.log(body)
     /*
         // POST to edit table entry in DB   
         API.post('resobu_api_endpoint', '/rds-request', {
@@ -556,7 +557,46 @@ class BusinessAccount extends React.Component {
     this.setState({showDeleteDialog: false})
   }
 
-  async deleteEmployee () {   
+  removeDeletedFromEmployeeList = (columnName, collateralList, newEmployeeList) => {
+    const emailToDelete = this.state.selectedEmail[0]
+    for (const email in collateralList) {
+      const emailIndex = newEmployeeList.findIndex(data => data.employeeEmail === collateralList[email])
+      const employeeID = newEmployeeList[emailIndex].employeeId
+      let newColumn = newEmployeeList[emailIndex][columnName]
+      if (newColumn.includes(emailToDelete)) {
+        const indexToDelete = newColumn.findIndex(data => data === emailToDelete)
+        newColumn.splice(indexToDelete,1)
+      } 
+      newEmployeeList[emailIndex][columnName] = newColumn
+
+      // send changes to DB as well
+      this.editTableEntry('EmployeesTable', employeeID, {[columnName]: newColumn})
+    }
+    return newEmployeeList;
+  }
+
+  deleteEmployeeEverywhere = () => {
+    let newEmployeeList = _.cloneDeep(this.state.employeeList)
+    const employeeTableId= this.state.selectedEmailTableId
+
+    // change the employeeList and the teamList/projectListStates accordingly by removing the deleted employee
+    let projectColleagues = newEmployeeList[employeeTableId].projectColleagues
+    let teamColleagues =  newEmployeeList[employeeTableId].teamColleagues
+    let connectedColleagues =  newEmployeeList[employeeTableId].connectedColleagues
+    
+    newEmployeeList = this.removeDeletedFromEmployeeList('projectColleagues', projectColleagues, newEmployeeList)
+    newEmployeeList = this.removeDeletedFromEmployeeList('teamColleagues', teamColleagues, newEmployeeList)
+    newEmployeeList = this.removeDeletedFromEmployeeList('connectedColleagues', connectedColleagues, newEmployeeList)   
+
+    // delete the employee itself from the list 
+    newEmployeeList.splice(employeeTableId, 1)
+
+    this.setState({employeeList: newEmployeeList})
+  }
+
+  async deleteEmployee () {  
+    // change all the entries that had the selected employee as a team/project/connected colleague
+    this.deleteEmployeeEverywhere()
     const body = {
       requesttype: "deleterow",
       usertoken: this.props.userInfo.userSubId,
@@ -565,8 +605,8 @@ class BusinessAccount extends React.Component {
       uid: this.state.selectedEmailId[0],
       uidColumnName:  "employeeId"
     }
-    // console.log(`delete employee`) 
-    // console.log(body)
+   // console.log(`delete employee`) 
+   // console.log(body)
     /*
         // POST to delete emails to DB - tested   
         API.post('resobu_api_endpoint', '/rds-request', {
@@ -625,7 +665,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeMeeting = () => {
-    // console.log('triggering to send meeting changes to DB')
+   // console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeMeetingTime: false})
@@ -641,7 +681,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeInviteText = () => {
-    // console.log('triggering to send meeting changes to DB')
+   // console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeInvite: false})
@@ -657,7 +697,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeTodoList = () => {
-    // console.log('triggering to send meeting changes to DB')
+   // console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeTodoList: false})
