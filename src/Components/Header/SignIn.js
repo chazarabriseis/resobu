@@ -223,7 +223,7 @@ class SignIn extends React.Component {
                                         error={this.state.password.length < 8}
                                         helperText={this.state.password.length < 8 && 'Password needs to be at least 8 characters long'} 
                                         InputProps={{
-                                            startAdornment: <InputAdornment position="end">
+                                            endAdornment: <InputAdornment position="end">
                                                 <IconButton
                                                     onClick={this.handleShowPassword}
                                                     >
@@ -290,7 +290,7 @@ class SignIn extends React.Component {
                                         error={this.state.password.length < 8}
                                         helperText={this.state.password.length < 8 && 'Password needs to be at least 8 character long'} 
                                         InputProps={{
-                                            startAdornment: <InputAdornment position="end">
+                                            endAdornment: <InputAdornment position="end">
                                                 <IconButton
                                                     onClick={this.handleShowPassword}
                                                     >
