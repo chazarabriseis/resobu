@@ -24,7 +24,7 @@ class Home extends React.Component {
           <div className="heading2">
             We believe that diverse, connected and cohesive teams and networks are the cornerstone to success and innovation. 
             Remote Social Butterfly enables the formation of such teams and networks through chance or tailored encounters across the people 
-            in your company, at your conference or tradeshow.
+            in your company, at your workshops, your conference or tradeshow.
           </div>
  
           <Button className="actionButtonAnimated" variant='contained' size="large" onClick={() => {this.props.history.push('/signup/')}}>GET STARTED</Button>  
