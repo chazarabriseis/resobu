@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withStyles } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 
-import EmployeesTab from '../../Components/AccountPage/EmployeesTab'
+import PeopleTab from '../../Components/AccountPage/PeopleTab'
 import MeetingTab from '../../Components/AccountPage/MeetingTab'
 import InviteTab from '../../Components/AccountPage/InviteTab'
 import TodoTab from '../../Components/AccountPage/TodoTab'
@@ -24,25 +24,25 @@ import Spinner from '../../Components/Common/Spinner';
 class BusinessAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.fetchEmployeeList = this.fetchEmployeeList.bind(this);
+    this.fetchPeopleList = this.fetchPeopleList.bind(this);
     this.fetchMeetingInfo = this.fetchMeetingInfo.bind(this);
-    this.addEmployeeList = this.addEmployeeList.bind(this);
-    this.deleteEmployee = this.deleteEmployee.bind(this);
+    this.addPeople = this.addPeople.bind(this);
+    this.deletePerson = this.deletePerson.bind(this);
     this.editTableEntry = this.editTableEntry.bind(this);
-    this.createEmployeeTableEntries = this.createEmployeeTableEntries.bind(this)
+    this.createPeopleTableEntries = this.createPeopleTableEntries.bind(this)
 
     this.state = {
       initialState: {},
 
-      employeeList: null,
-      isLoadingEmployeeList: true,
+      peopleList: null,
+      isLoadingPeopleList: true,
       meetingInfo: null,
       isLoadingMeetingInfoList: true,
 
-      showAddEmployeeeDialog: false,
+      showAddPeopleDialog: false,
       emailList: '',
 
-      showEditEmployeeeDialog: false,
+      showEditPersonDialog: false,
       teamListHTML: '',
       projectListHTML: '',
       teamListStates: [],
@@ -63,28 +63,28 @@ class BusinessAccount extends React.Component {
 
   async componentDidMount () {
     window.scrollTo(0, 0);
-    await this.fetchEmployeeList();  
+    await this.fetchPeopleList();  
     await this.fetchMeetingInfo();
   }
 
-  async fetchEmployeeList() {  
+  async fetchPeopleList() {  
     const body = {
       usertoken: this.props.userInfo.userSubId,
-      request_type: 'listemployees'
+      request_type: 'listpeople'
     }
-   // console.log('Fetching Employee List')
-   // console.log(body)
-    // backend call to get employee list 
+   console.log('Fetching People List')
+   console.log(body)
+    // backend call to get people list 
     /*
     this.setState({
-      isLoadingEmployeeList: true
+      isLoadingPeopleList: true
     })
 
-    // POST request to get employee DB - tested
+    // POST request to get people DB - tested
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
           usertoken: this.props.userInfo.userSubId,
-          request_type: 'listemployees'
+          request_type: 'listpeoples'
       }
     })
     .then(response => {
@@ -98,14 +98,14 @@ class BusinessAccount extends React.Component {
     })
     */
     this.setState({
-      isLoadingEmployeeList: false,
-      employeeList: [
-        {employeeId: 11, employeeEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'], connectedColleagues  : [], userSubId: ''},
-        {employeeId: 22, employeeEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-        {employeeId: 33, employeeEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-        {employeeId: 44, employeeEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'], connectedColleagues  : [] , userSubId: ''},
-        {employeeId: 55, employeeEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-        {employeeId: 66, employeeEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'], connectedColleagues  : [] , userSubId: ''}
+      isLoadingPeopleList: false,
+      peopleList: [
+        {personId: 11, personEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'], connectedColleagues  : [], userSubId: ''},
+        {personId: 22, personEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+        {personId: 33, personEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+        {personId: 44, personEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'], connectedColleagues  : [] , userSubId: ''},
+        {personId: 55, personEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
+        {personId: 66, personEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'], connectedColleagues  : [] , userSubId: ''}
       ]
     })
     
@@ -119,8 +119,8 @@ class BusinessAccount extends React.Component {
       usertoken: this.props.userInfo.userSubId,
       request_type: 'listmeeting'
     }
-   // console.log('Fetching Meeting Info')
-   // console.log(body)
+   console.log('Fetching Meeting Info')
+   console.log(body)
     /*
     // POST request to get meetingInfo from DB
     API.post('resobu_api_endpoint', '/rds-request', {
@@ -174,8 +174,8 @@ class BusinessAccount extends React.Component {
       list_to_insert: meetingList
     }
 
-   // console.log('Creating initial meeting')
-   // console.log(body)
+   console.log('Creating initial meeting')
+   console.log(body)
 
     this.setState({
       meetingInfo: meetingInfo,
@@ -215,16 +215,12 @@ class BusinessAccount extends React.Component {
   }
 
 
-  openAddEmployeeeDialog = () => {
+  openAddPersonDialog = () => {
     const currentState = _.cloneDeep(this.state)
     this.setState({
-      showAddEmployeeeDialog: true,
+      showAddPeopleDialog: true,
       initialState: currentState
     })
-  }
-
-  closeAddEmployeeeDialog = () => {
-    this.setState({showAddEmployeeeDialog: false})
   }
 
   checkEnteredEmails = () => {
@@ -249,35 +245,35 @@ class BusinessAccount extends React.Component {
     }
   } 
 
-  createEmployeeTableEntries = (emails) => {
+  createPeopleTableEntries = (emails) => {
     const emailList = emails.map((item) => {
       return {email: item.toLowerCase(), userSubId: this.props.userInfo.userSubId};
     })
     return emailList
   }
 
-  async addEmployeeList () {   
-    // backened call to add employee list
+  async addPeople () {   
+    // backened call to add people list
     const emails = this.checkEnteredEmails()
     if (emails.length === 0) {
       return
     } else {
-      const emailList = this.createEmployeeTableEntries(emails)
+      const emailList = this.createPeopleTableEntries(emails)
       const body = {
         usertoken: this.props.userInfo.userSubId,
         request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-        table_name: 'EmployeesTable',
+        table_name: 'PeopleTable',
         list_to_insert: emailList
       }
-     // console.log('adding emails')
-     // console.log(body)
+     console.log('adding emails')
+     console.log(body)
       /*
         // POST toadd emails to DB   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
                 usertoken: this.props.userInfo.userSubId,
                 request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-                table_name: 'EmployeesTable',
+                table_name: 'PeopleTable',
                 list_to_insert: emailList
             }
         })
@@ -291,10 +287,10 @@ class BusinessAccount extends React.Component {
                     position: toast.POSITION.TOP_RIGHT
                   })
                   this.setState({
-                    showAddEmployeeeDialog: false,
+                    showAddPeopleDialog: false,
                     emailList: ''
                   })
-                  this.fetchEmployeeList();
+                  this.fetchPeopleList();
               }
         })
         .catch(e => {
@@ -305,7 +301,7 @@ class BusinessAccount extends React.Component {
       */ 
     
       this.setState({
-        showAddEmployeeeDialog: false,
+        showAddPeopleDialog: false,
         emailList: ''
       })
     }
@@ -321,13 +317,13 @@ class BusinessAccount extends React.Component {
       return 
     }
     // get list of all emails
-    const employeeList = [...this.state.employeeList]
-    const emails = employeeList.map(function(item) {
-      return item.employeeEmail
+    const peopleList = [...this.state.peopleList]
+    const emails = peopleList.map(function(item) {
+      return item.personEmail
     })
     
-    const teamList = employeeList[this.state.selectedEmailTableId].teamColleagues
-    const projectList = employeeList[this.state.selectedEmailTableId].projectColleagues
+    const teamList = peopleList[this.state.selectedEmailTableId].teamColleagues
+    const projectList = peopleList[this.state.selectedEmailTableId].projectColleagues
 
     const teamListStates = emails.map((item, index) => {
       if (item === this.state.selectedEmail[0]) {
@@ -358,7 +354,7 @@ class BusinessAccount extends React.Component {
       projectListStates: projectListStates,
       initialState: currentState,
       allEmails: emails
-    }, () => this.openEditEmployeeeDialog())
+    }, () => this.openEditPersonDialog())
   }
 
   createTeamHTML = () => {
@@ -367,7 +363,7 @@ class BusinessAccount extends React.Component {
         return null
       } else {
         return <li key= {item}> 
-                  <input id='team' type="checkbox" value={item} checked={this.state.teamListStates[index]} onChange={this.editEmployeeEntry}/>
+                  <input id='team' type="checkbox" value={item} checked={this.state.teamListStates[index]} onChange={this.editPersonEntry}/>
                   <label> {item} </label> 
                 </li>
       }
@@ -381,7 +377,7 @@ class BusinessAccount extends React.Component {
         return null
       } else {
         return <li key= {item}>  
-                  <input id='project' type="checkbox" value={item} checked={this.state.projectListStates[index]} onChange={this.editEmployeeEntry}/>
+                  <input id='project' type="checkbox" value={item} checked={this.state.projectListStates[index]} onChange={this.editPersonEntry}/>
                   <label> {item} </label> 
                 </li>
       }
@@ -389,12 +385,12 @@ class BusinessAccount extends React.Component {
     return projectListHTML
   }
 
-  openEditEmployeeeDialog = () => {
-    this.setState({showEditEmployeeeDialog: true})
+  openEditPersonDialog = () => {
+    this.setState({showEditPersonDialog: true})
   }
 
   updateSelectedEmailId = (selectedEmailId, selectedEmail) => {
-    const selectedEmailTableId = this.state.employeeList.findIndex(data => data.employeeId === selectedEmailId[0])
+    const selectedEmailTableId = this.state.peopleList.findIndex(data => data.personId === selectedEmailId[0])
     this.setState({ 
       selectedEmailId: selectedEmailId,
       selectedEmail: selectedEmail,
@@ -402,17 +398,17 @@ class BusinessAccount extends React.Component {
     })
   }
 
-  editEmployeeEntry = (e) => {
-      // change the employeeList and the teamList/projectListStates accordingly
-      const employeeEmail = this.state.selectedEmail[0]
+  editPersonEntry = (e) => {
+      // change the peopleList and the teamList/projectListStates accordingly
+      const personEmail = this.state.selectedEmail[0]
       const connectedEmail = e.target.value
       const table = e.target.id
       
-      let newEmployeeData = _.cloneDeep(this.state.employeeList[this.state.selectedEmailTableId])
-      let newEmployeeList = _.cloneDeep(this.state.employeeList)
+      let newPersonData = _.cloneDeep(this.state.peopleList[this.state.selectedEmailTableId])
+      let newPeopleList = _.cloneDeep(this.state.peopleList)
       let newCollateralChanges = _.cloneDeep(this.state.collateralChanges)
-      const tableIndexConnectingEmail = newEmployeeList.findIndex(data => data.employeeEmail === connectedEmail)
-      const indexConnectingEmail = newEmployeeList[tableIndexConnectingEmail].employeeId
+      const tableIndexConnectingEmail = newPeopleList.findIndex(data => data.personEmail === connectedEmail)
+      const indexConnectingEmail = newPeopleList[tableIndexConnectingEmail].personId
       const collateralIndex = newCollateralChanges.findIndex(data => data.colId === indexConnectingEmail)
 
       if (table === "project") {
@@ -421,25 +417,25 @@ class BusinessAccount extends React.Component {
           const teamListIndex = this.state.allEmails.findIndex(data => data === connectedEmail)
           let currentValue = newProjectListStates[teamListIndex]
           newProjectListStates[teamListIndex] = !currentValue
-          // update the projectColleagues List in employeeList state for the email that is edited
-          let newProjectColleagues = newEmployeeData.projectColleagues
+          // update the projectColleagues List in peopleList state for the email that is edited
+          let newProjectColleagues = newPersonData.projectColleagues
           if (newProjectColleagues.includes(connectedEmail)) {
             const indexProject = newProjectColleagues.findIndex(data => data === connectedEmail)
             newProjectColleagues.splice(indexProject,1)
           } else {
             newProjectColleagues.push(connectedEmail)
           }
-          newEmployeeList[this.state.selectedEmailTableId].projectColleagues = newProjectColleagues
-          // update the projectColleagues List in employeeList state for the email that is selected
-          let newConnectingEmployeeData = newEmployeeList[tableIndexConnectingEmail]
-          newProjectColleagues = newConnectingEmployeeData.projectColleagues
-          if (newProjectColleagues.includes(employeeEmail)) {
-            const indexProject = newProjectColleagues.findIndex(data => data === employeeEmail)
+          newPeopleList[this.state.selectedEmailTableId].projectColleagues = newProjectColleagues
+          // update the projectColleagues List in peopleList state for the email that is selected
+          let newConnectingPersonData = newPeopleList[tableIndexConnectingEmail]
+          newProjectColleagues = newConnectingPersonData.projectColleagues
+          if (newProjectColleagues.includes(personEmail)) {
+            const indexProject = newProjectColleagues.findIndex(data => data === personEmail)
             newProjectColleagues.splice(indexProject,1)
           } else {
-            newProjectColleagues.push(employeeEmail)
+            newProjectColleagues.push(personEmail)
           }
-          newEmployeeList[tableIndexConnectingEmail].projectColleagues = newProjectColleagues
+          newPeopleList[tableIndexConnectingEmail].projectColleagues = newProjectColleagues
 
           // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
           if (collateralIndex === -1) {
@@ -449,7 +445,7 @@ class BusinessAccount extends React.Component {
           }
 
           this.setState({
-            employeeList: newEmployeeList,
+            peopleList: newPeopleList,
             projectListStates: newProjectListStates,
             collateralChanges: newCollateralChanges
           })                  
@@ -459,25 +455,25 @@ class BusinessAccount extends React.Component {
           const teamListIndex = this.state.allEmails.findIndex(data => data === connectedEmail)
           let currentValue = newTeamListStates[teamListIndex]
           newTeamListStates[teamListIndex] = !currentValue
-          // update the employeeList state
-          let newTeamColleagues = newEmployeeData.teamColleagues
+          // update the peopleList state
+          let newTeamColleagues = newPersonData.teamColleagues
           if (newTeamColleagues.includes(connectedEmail)) {
             const indexProject = newTeamColleagues.findIndex(data => data === connectedEmail)
             newTeamColleagues.splice(indexProject,1)
           } else {
             newTeamColleagues.push(connectedEmail)
           }
-          newEmployeeList[this.state.selectedEmailTableId].teamColleagues = newTeamColleagues
-          // update the teamColleagues List in employeeList state for the email that is selected
-          let newConnectingEmployeeData = newEmployeeList[tableIndexConnectingEmail]
-          newTeamColleagues = newConnectingEmployeeData.teamColleagues
-          if (newTeamColleagues.includes(employeeEmail)) {
-            const indexProject = newTeamColleagues.findIndex(data => data === employeeEmail)
+          newPeopleList[this.state.selectedEmailTableId].teamColleagues = newTeamColleagues
+          // update the teamColleagues List in peopleList state for the email that is selected
+          let newConnectingPersonData = newPeopleList[tableIndexConnectingEmail]
+          newTeamColleagues = newConnectingPersonData.teamColleagues
+          if (newTeamColleagues.includes(personEmail)) {
+            const indexProject = newTeamColleagues.findIndex(data => data === personEmail)
             newTeamColleagues.splice(indexProject,1)
           } else {
-            newTeamColleagues.push(employeeEmail)
+            newTeamColleagues.push(personEmail)
           }
-          newEmployeeList[tableIndexConnectingEmail].teamColleagues = newTeamColleagues
+          newPeopleList[tableIndexConnectingEmail].teamColleagues = newTeamColleagues
           // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
           if (collateralIndex === -1) {
             newCollateralChanges.push({colId: indexConnectingEmail, changes: {teamColleagues: newTeamColleagues }})
@@ -486,46 +482,46 @@ class BusinessAccount extends React.Component {
           }
 
           this.setState({
-            employeeList: newEmployeeList,
+            peopleList: newPeopleList,
             teamListStates: newTeamListStates,
             collateralChanges: newCollateralChanges
           })
       }
   }
 
-  sendEmployeeChangesToDB = () => {
+  sendPersonChangesToDB = () => {
     // also need to change all the other entries of the connected ones...should be collected in the change event
-   // console.log('triggering to send emplyee changes to DB')
+   console.log('triggering to send emplyee changes to DB')
     const changes = {
-      projectColleagues: this.state.employeeList[this.state.selectedEmailTableId].projectColleagues,
-      teamColleagues: this.state.employeeList[this.state.selectedEmailTableId].teamColleagues
+      projectColleagues: this.state.peopleList[this.state.selectedEmailTableId].projectColleagues,
+      teamColleagues: this.state.peopleList[this.state.selectedEmailTableId].teamColleagues
     }
-    this.editTableEntry('EmployeesTable', this.state.selectedEmailId[0], changes)
+    this.editTableEntry('PeopleTable', this.state.selectedEmailId[0], changes)
     const collateralChanges = this.state.collateralChanges
     for (let i =0; i<collateralChanges.length; i++) {
-      this.editTableEntry('EmployeesTable', collateralChanges[i].colId, collateralChanges[i].changes)
+      this.editTableEntry('PeopleTable', collateralChanges[i].colId, collateralChanges[i].changes)
     }
-    this.setState({showEditEmployeeeDialog: false})
+    this.setState({showEditPersonDialog: false})
   }
 
   async editTableEntry(tableName, colId, changes){ 
     const body = {
       request_type: 'changerowvalues',
       usertoken: this.props.userInfo.userSubId,
-      table_name: tableName, // either EmployeesTable or SocialButterflyChatsTable
-      col_id: colId,  // either employeeId or userSubId depeding on the table
+      table_name: tableName, // either PeopleTable or SocialButterflyChatsTable
+      col_id: colId,  // either personId or userSubId depeding on the table
       changes: changes // dictionary wit column names as key and new values as value
     } 
-   // console.log('editing table entry')
-   // console.log(body)
+   console.log('editing table entry')
+   console.log(body)
     /*
         // POST to edit table entry in DB   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
                 request_type: 'changerowvalues',
                 usertoken: this.props.userInfo.userSubId,
-                table_name: tableName, // either EmployeesTable or SocialButterflyChatsTable
-                col_id: colId,  // either employeeId or userSubId
+                table_name: tableName, // either PeopleTable or SocialButterflyChatsTable
+                col_id: colId,  // either personId or userSubId
                 changes: changes // dictionary wit column names as key and new values as value
             }
         })
@@ -535,7 +531,7 @@ class BusinessAccount extends React.Component {
                     position: toast.POSITION.TOP_RIGHT
                   })  
 
-                  this.fetchEmployeeList();
+                  this.fetchPeopleList();
         })
         .catch(e => {
             toast.warning("Sorry, there was a problem connecting to the DB.", {
@@ -561,75 +557,75 @@ class BusinessAccount extends React.Component {
     this.setState({showDeleteDialog: false})
   }
 
-  removeDeletedFromEmployeeList = (columnName, collateralList, newEmployeeList) => {
+  removeDeletedFromPeopleList = (columnName, collateralList, newPeopleList) => {
     const emailToDelete = this.state.selectedEmail[0]
     for (const email in collateralList) {
-      const emailIndex = newEmployeeList.findIndex(data => data.employeeEmail === collateralList[email])
-      const employeeID = newEmployeeList[emailIndex].employeeId
-      let newColumn = newEmployeeList[emailIndex][columnName]
+      const emailIndex = newPeopleList.findIndex(data => data.personEmail === collateralList[email])
+      const personId = newPeopleList[emailIndex].personId
+      let newColumn = newPeopleList[emailIndex][columnName]
       if (newColumn.includes(emailToDelete)) {
         const indexToDelete = newColumn.findIndex(data => data === emailToDelete)
         newColumn.splice(indexToDelete,1)
       } 
-      newEmployeeList[emailIndex][columnName] = newColumn
+      newPeopleList[emailIndex][columnName] = newColumn
 
       // send changes to DB as well
-      this.editTableEntry('EmployeesTable', employeeID, {[columnName]: newColumn})
+      this.editTableEntry('PeopleTable', personId, {[columnName]: newColumn})
     }
-    return newEmployeeList;
+    return newPeopleList;
   }
 
-  deleteEmployeeEverywhere = () => {
-    let newEmployeeList = _.cloneDeep(this.state.employeeList)
-    const employeeTableId= this.state.selectedEmailTableId
+  deletePersonEverywhere = () => {
+    let newPeopleList = _.cloneDeep(this.state.peopleList)
+    const peopleTableId= this.state.selectedEmailTableId
 
-    // change the employeeList and the teamList/projectListStates accordingly by removing the deleted employee
-    let projectColleagues = newEmployeeList[employeeTableId].projectColleagues
-    let teamColleagues =  newEmployeeList[employeeTableId].teamColleagues
-    let connectedColleagues =  newEmployeeList[employeeTableId].connectedColleagues
+    // change the peopleList and the teamList/projectListStates accordingly by removing the deleted people
+    let projectColleagues = newPeopleList[peopleTableId].projectColleagues
+    let teamColleagues =  newPeopleList[peopleTableId].teamColleagues
+    let connectedColleagues =  newPeopleList[peopleTableId].connectedColleagues
     
-    newEmployeeList = this.removeDeletedFromEmployeeList('projectColleagues', projectColleagues, newEmployeeList)
-    newEmployeeList = this.removeDeletedFromEmployeeList('teamColleagues', teamColleagues, newEmployeeList)
-    newEmployeeList = this.removeDeletedFromEmployeeList('connectedColleagues', connectedColleagues, newEmployeeList)   
+    newPeopleList = this.removeDeletedFromPeopleList('projectColleagues', projectColleagues, newPeopleList)
+    newPeopleList = this.removeDeletedFromPeopleList('teamColleagues', teamColleagues, newPeopleList)
+    newPeopleList = this.removeDeletedFromPeopleList('connectedColleagues', connectedColleagues, newPeopleList)   
 
-    // delete the employee itself from the list 
-    newEmployeeList.splice(employeeTableId, 1)
+    // delete the people itself from the list 
+    newPeopleList.splice(peopleTableId, 1)
 
-    this.setState({employeeList: newEmployeeList})
+    this.setState({peopleList: newPeopleList})
   }
 
-  async deleteEmployee () {  
-    // change all the entries that had the selected employee as a team/project/connected colleague
-    this.deleteEmployeeEverywhere()
+  async deletePerson () {  
+    // change all the entries that had the selected people as a team/project/connected colleague
+    this.deletePersonEverywhere()
     const body = {
       requesttype: "deleterow",
       usertoken: this.props.userInfo.userSubId,
-      tableName: 'EmployeesTable',
+      tableName: 'PeopleTable',
       usertokenColumnName: "userSubId",
       uid: this.state.selectedEmailId[0],
-      uidColumnName:  "employeeId"
+      uidColumnName:  "personId"
     }
-   // console.log(`delete employee`) 
-   // console.log(body)
+   console.log(`delete person`) 
+   console.log(body)
     /*
         // POST to delete emails to DB - tested   
         API.post('resobu_api_endpoint', '/rds-request', {
             body: {
               requesttype: "deleterow",
               usertoken: this.props.userInfo.userSubId,
-              tableName: 'EmployeesTable',
+              tableName: 'PeopleTable',
               usertokenColumnName: "userSubId",
               uid: this.state.selectedEmailId,
-              uidColumnName:  "employeeId"
+              uidColumnName:  "personId"
             }
         })
         then(response => {
           try { 
-            toast.success("Employee was succesfully deleted", {
+            toast.success("Person was succesfully deleted", {
               position: toast.POSITION.TOP_RIGHT
             })
           } catch(e) {
-            toast.warning("There was a problem deleting this employee", {
+            toast.warning("There was a problem deleting this person", {
               position: toast.POSITION.TOP_RIGHT
             })
           }
@@ -669,7 +665,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeMeeting = () => {
-   // console.log('triggering to send meeting changes to DB')
+   console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeMeetingTime: false})
@@ -685,7 +681,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeInviteText = () => {
-   // console.log('triggering to send meeting changes to DB')
+   console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeInvite: false})
@@ -701,7 +697,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChangeTodoList = () => {
-   // console.log('triggering to send meeting changes to DB')
+   console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeTodoList: false})
@@ -760,11 +756,11 @@ class BusinessAccount extends React.Component {
                   <Tab> To Do List </Tab>
                 </TabList>
                 <TabPanel>
-                  <EmployeesTab
-                    employeeList={this.state.employeeList}
-                    isLoadingEmployeeList={this.state.isLoadingEmployeeList}
-                    onOpenAddEmployeeeDialog={this.openAddEmployeeeDialog}
-                    onOpenEditEmployeeeDialog={this.triggerOpenEditDialog}
+                  <PeopleTab
+                    peopleList={this.state.peopleList}
+                    isLoadingPeopleList={this.state.isLoadingPeopleList}
+                    onOpenAddPersonDialog={this.openAddPersonDialog}
+                    onOpenEditPersonDialog={this.triggerOpenEditDialog}
                     onOpenDeleteDialog={this.openDeleteDialog}
                     selectedEmailId={this.state.selectedEmailId}
                     onUpdateSelectedEmailId={this.updateSelectedEmailId}
@@ -817,7 +813,7 @@ class BusinessAccount extends React.Component {
           </div>      
         </div>
         <Dialog 
-          open={this.state.showAddEmployeeeDialog} 
+          open={this.state.showAddPeopleDialog} 
         >
           <DialogTitle>Add Employee</DialogTitle>
           <DialogContent>
@@ -838,7 +834,7 @@ class BusinessAccount extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.addEmployeeList} className="actionButton">
+            <Button onClick={this.addPeople} className="actionButton">
               Add Employees
             </Button>
             <Button onClick={this.cancelChange} className="ghostButton">
@@ -847,7 +843,7 @@ class BusinessAccount extends React.Component {
           </DialogActions>
         </Dialog>
         <Dialog 
-          open={this.state.showEditEmployeeeDialog} 
+          open={this.state.showEditPersonDialog} 
         >
           <DialogTitle>Add Connections for {this.state.selectedEmail}</DialogTitle>
           <DialogContent style={{height: "300px"}}>
@@ -870,7 +866,7 @@ class BusinessAccount extends React.Component {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.sendEmployeeChangesToDB} className="actionButton">
+            <Button onClick={this.sendPersonChangesToDB} className="actionButton">
               Save 
             </Button>
             <Button onClick={this.cancelChange} className="ghostButton">
@@ -888,7 +884,7 @@ class BusinessAccount extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.deleteEmployee} className="actionButton">
+            <Button onClick={this.deletePerson} className="actionButton">
               Confirm
             </Button>
             <Button onClick={this.closeDeleteDialog} className="ghostButton">

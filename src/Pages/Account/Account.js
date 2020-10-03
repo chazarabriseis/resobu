@@ -2,9 +2,7 @@ import React from 'react'
 import { withRouter } from "react-router";
 import { Auth} from 'aws-amplify';
 
-import BusinessAccount from './BusinessAccount';
-import ConferenceAccount from './ConferenceAccount';
-import TradeshowAccount from './TradeshowAccount';
+import AllAccounts from './AllAccounts';
 import Spinner from '../../Components/Common/Spinner'
 
 
@@ -43,34 +41,9 @@ class Account extends React.Component {
         ) : (
           <div>
             {this.props.isAuthenticated ? (
-              <div>
-                {this.props.userInfo.groupType === 'Business' ? (
-                  <BusinessAccount 
-                    userInfo={this.props.userInfo}
-                  />
-                ) : (
-                  <div>
-                    {this.props.userInfo.groupType === 'Conference' ? (
-                      <ConferenceAccount 
-                        userInfo={this.props.userInfo}
-                      />
-                    ) : (
-                      <div>
-                        {this.props.userInfo.groupType === 'Tradeshow' ? (
-                          <TradeshowAccount 
-                            userInfo={this.props.userInfo}
-                          />
-                        ) : (
-                          <TradeshowAccount 
-                            userInfo={this.props.userInfo}
-                          />
-                        )
-                      }
-                      </div> 
-                    )}
-                  </div>
-                )}
-              </div>
+              <AllAccounts 
+                userInfo={this.props.userInfo}
+              />               
             ) : (
               <div style={{marginBottom: '500px'}}>
                 <div className="topSection">

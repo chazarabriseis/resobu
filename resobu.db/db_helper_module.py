@@ -34,10 +34,10 @@ Base = declarative_base()
 
 
 # Define table classes
-class EmployeesTable(Base):
-    __tablename__ = 'employees'
-    employeeEmail = Column(String, primary_key=True)
-    employeeId = Column(Integer, Sequence("employee_Id_sequence")) #sometimes a number was missed when testing...
+class PeopleTable(Base):
+    __tablename__ = 'people'
+    personEmail = Column(String, primary_key=True)
+    personId = Column(Integer, Sequence("person_Id_sequence")) #sometimes a number was missed when testing...
     userSubId = Column(String)
     teamColleagues = Column(ARRAY(String))
     projectColleagues = Column(ARRAY(String))

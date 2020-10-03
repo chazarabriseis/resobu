@@ -63,7 +63,7 @@ def lambda_handler(event, context):
     filepath_db_credentials = get_parameter()
 
     # just return all columns 
-    employees_field_list = dbhm.EmployeesTable.__table__.columns.keys()
+    people_field_list = dbhm.PeopleTable.__table__.columns.keys()
     socialbutterflychats_field_list = dbhm.SocialButterflyChatsTable.__table__.columns.keys()
     chats_field_list = dbhm.ChatsTable.__table__.columns.keys()
 
@@ -85,11 +85,11 @@ def lambda_handler(event, context):
         if session:
             print("Session opened")
 
-        if command_to_perform == 'listemployees':
+        if command_to_perform == 'listpeople':
             filter_key = 'userSubId'
             # filter result based on user id to only return relevant results
-            result = dbhm.get_row_data_list(user_sub, filter_key, employees_field_list,
-                                            dbhm.EmployeesTable, engine, session)
+            result = dbhm.get_row_data_list(user_sub, filter_key, people_field_list,
+                                            dbhm.PeopleTable, engine, session)
 
             # return simplejson.dumps with default str to avoid datetime problems
             return simplejson.dumps(result, ignore_nan=True, default=str)
@@ -129,10 +129,10 @@ def lambda_handler(event, context):
                         })
             # Store results in db
             try:
-                if table_name == 'EmployeesTable':
+                if table_name == 'PeopleTable':
                     for row in list_to_insert:
                         input_dict = row
-                        db_add_row = dbhm.insert_row(dbhm.EmployeesTable,
+                        db_add_row = dbhm.insert_row(dbhm.PeopleTable,
                                                      input_dict, engine, session)
                 if table_name == 'SocialButterflyChatsTable':
                     for row in list_to_insert:
@@ -165,8 +165,8 @@ def lambda_handler(event, context):
                         })
             # Store results in db
             try:
-                if table_name == 'EmployeesTable' :
-                    db_add_result = dbhm.insert_row(dbhm.EmployeesTable,
+                if table_name == 'PeopleTable' :
+                    db_add_result = dbhm.insert_row(dbhm.PeopleTable,
                                                     input_dict, engine, session)
                 if table_name == 'SocialButterflyChatsTable' :
                     db_add_result = dbhm.insert_row(dbhm.SocialButterflyChatsTable,
@@ -193,17 +193,16 @@ def lambda_handler(event, context):
                     "message": "Event function parameters missing."
                 })
 
-            if table_name == 'EmployeesTable':
+            if table_name == 'PeopleTable':
                 for change in changes:
-                    if change not in employees_field_list:
-                        return {"errorMessage": "Can't find column name in Employee table!",
+                    if change not in people_field_list:
+                        return {"errorMessage": "Can't find column name in People table!",
                                 "errorType": "Invalid column name",
                                 "stackTrace": ""}
-
                 # Try to add to table
                 result = []
-                row = session.query(dbhm.EmployeesTable).filter(
-                    dbhm.EmployeesTable.employeeId == col_id).first()
+                row = session.query(dbhm.PeopleTable).filter(
+                    dbhm.PeopleTable.personId == col_id).first()
                 for change in changes:
                     setattr(row, change, changes[change])
                 try:
@@ -287,7 +286,7 @@ def lambda_handler(event, context):
                 num_entries_deleted = session.query(table).filter(filter_rule).delete()
                 print(f"{num_entries_deleted} records were deleted")
                 if num_entries_deleted == 0:
-                    message = "Employee could not not be found, possibly already deleted"
+                    message = "Person could not not be found, possibly already deleted"
                     print(message)
                     return  {"errorType": "NoRecordFoundError",
                             "httpStatus": 400,

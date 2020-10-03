@@ -6,24 +6,24 @@ import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 
 import Spinner from '../../Components/Common/Spinner';
-import './EmployeesTable.css';
+import './PeopleTable.css';
 
 
-export default class EmployeesTable extends Component {
+export default class PeopleTable extends Component {
     constructor(props) {
         super(props) 
 
         this.columns = [
             {
-              key: 'employeeId',
-              dataField: 'employeeId',
-              text: 'Employee ID',
+              key: 'personId',
+              dataField: 'personId',
+              text: 'Person ID',
               headerFormatter: this.headerFormatter,
               hidden: true
             },
             {
-              key: 'employeeEmail',
-              dataField: 'employeeEmail',
+              key: 'personEmail',
+              dataField: 'personEmail',
               text: 'Email',
               headerFormatter: this.headerFormatter,
               filter: textFilter({
@@ -70,9 +70,9 @@ export default class EmployeesTable extends Component {
     }
 
     handleSingleSelect = (row) => {
-      const employeeId = [row.employeeId]
-      const employeeEmail = [row.employeeEmail]
-      this.props.onUpdateSelectedEmailId(employeeId, employeeEmail)
+      const personId = [row.personId]
+      const personEmail = [row.personEmail]
+      this.props.onUpdateSelectedEmailId(personId, personEmail)
     }
 
     handleNextPage = ({
@@ -86,7 +86,7 @@ export default class EmployeesTable extends Component {
     }) => () => {onPageChange(page - 1);}
 
     render() {
-        const indexSorted = [{dataField: 'employeeEmail', order:'asc'}];
+        const indexSorted = [{dataField: 'personEmail', order:'asc'}];
 
         /*
         const customTotal = (from, to, size) => (
@@ -128,11 +128,11 @@ export default class EmployeesTable extends Component {
           onSelect: this.handleSingleSelect
       }
 
-        let employeesTable = (
+        let peopleTable = (
           <ToolkitProvider
-            classes='employeesTable'
-            keyField="employeeId"
-            data={ this.props.employeeList }
+            classes='peopleTable'
+            keyField="personId"
+            data={ this.props.peopleList }
             columns={ this.columns }
             columnToggle
           >
@@ -153,20 +153,20 @@ export default class EmployeesTable extends Component {
           </ToolkitProvider>)
 
         return (
-            <div className='employeesTable'>
-                {this.props.isLoadingEmployeeList ? (
+            <div className='peopleTable'>
+                {this.props.isLoadingPeopleList ? (
                     <Spinner />
-                    ) : this.props.isLoadingEmployeeList.length === 0 ? (
+                    ) : this.props.isLoadingPeopleList.length === 0 ? (
                     <div>
                         <p className='nodata-indication' style={{color: '#0E253A', width: '60%', margin: '0 auto', paddingTop: '10px'}}>
-                            Go ahead and add employees who should join the social butterfly meetings
+                            Go ahead and add people who should join the social butterfly chats
                         </p>
                     </div>
                     ) : (
                     <div className='row-table' style={{backgroundColor: '#fff', display: 'flex'}}>
                         <div style={{width: '100%'}}>
-                            <div className='tableEmployees'>
-                                {employeesTable}
+                            <div className='tablePeople'>
+                                {peopleTable}
                             </div>
                         </div>
                     </div>
