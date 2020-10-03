@@ -13,7 +13,7 @@ export default class PeopleTable extends Component {
     constructor(props) {
         super(props) 
 
-        this.columnsPeople = [
+        this.columns = [
             {
               key: 'personId',
               dataField: 'personId',
@@ -32,50 +32,24 @@ export default class PeopleTable extends Component {
               sort: true
             },
             {
+              key: 'teamColleagues',
+              dataField: 'teamColleagues',
+              text: 'Team Colleagues',
+              headerFormatter: this.headerFormatter
+            },
+            {
+              key: 'projectColleagues',
+              dataField: 'projectColleagues',
+              text: 'Project Colleagues',
+              headerFormatter: this.headerFormatter,
+            },
+            {
               key: 'connectedColleagues',
               dataField: 'connectedColleagues',
-              text: 'Connected People',
+              text: 'Connected Colleagues',
               headerFormatter: this.headerFormatter
             }
         ]
-
-        this.columnsEmployees = [
-          {
-            key: 'personId',
-            dataField: 'personId',
-            text: 'Person ID',
-            headerFormatter: this.headerFormatter,
-            hidden: true
-          },
-          {
-            key: 'personEmail',
-            dataField: 'personEmail',
-            text: 'Email',
-            headerFormatter: this.headerFormatter,
-            filter: textFilter({
-              placeholder: 'Search'
-            }),
-            sort: true
-          },
-          {
-            key: 'teamColleagues',
-            dataField: 'teamColleagues',
-            text: 'Team Colleagues',
-            headerFormatter: this.headerFormatter
-          },
-          {
-            key: 'projectColleagues',
-            dataField: 'projectColleagues',
-            text: 'Project Colleagues',
-            headerFormatter: this.headerFormatter,
-          },
-          {
-            key: 'connectedColleagues',
-            dataField: 'connectedColleagues',
-            text: 'Connected Colleagues',
-            headerFormatter: this.headerFormatter
-          }
-      ]
     }
 
     headerFormatter = (column, colIndex, { sortElement, filterElement }) => {
@@ -159,7 +133,7 @@ export default class PeopleTable extends Component {
             classes='peopleTable'
             keyField="personId"
             data={ this.props.peopleList }
-            columns={ this.props.userInfo.groupType === 'Business' ? this.columnsEmployees : this.columnsPeople }
+            columns={ this.columns }
             columnToggle
           >
             {props => (

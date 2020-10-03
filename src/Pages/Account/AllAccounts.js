@@ -43,10 +43,12 @@ class BusinessAccount extends React.Component {
       emailList: '',
 
       showEditPersonDialog: false,
+      showEditEmployeeDialog: false,
       teamListHTML: '',
       projectListHTML: '',
       teamListStates: [],
       projectListStates: [],
+      connectedListStates: [],
       allEmails: [],
       collateralChanges: [],
       
@@ -321,40 +323,61 @@ class BusinessAccount extends React.Component {
     const emails = peopleList.map(function(item) {
       return item.personEmail
     })
-    
-    const teamList = peopleList[this.state.selectedEmailTableId].teamColleagues
-    const projectList = peopleList[this.state.selectedEmailTableId].projectColleagues
+    // get information depending on business or other
+    if (this.props.userInfo.groupType === 'Business') { 
+      const teamList = peopleList[this.state.selectedEmailTableId].teamColleagues
+      const projectList = peopleList[this.state.selectedEmailTableId].projectColleagues
 
-    const teamListStates = emails.map((item, index) => {
-      if (item === this.state.selectedEmail[0]) {
-        return null
-      } else {
-        let sameTeam = false
-        if (teamList.includes(item)) {
-          sameTeam = true
+      const teamListStates = emails.map((item, index) => {
+        if (item === this.state.selectedEmail[0]) {
+          return null
+        } else {
+          let sameTeam = false
+          if (teamList.includes(item)) {
+            sameTeam = true
+          }
+          return sameTeam
         }
-        return sameTeam
-      }
-    })
-    
-    const projectListStates = emails.map((item, index) => {
-      if (item === this.state.selectedEmail[0]) {
-        return null
-      } else {
-        let sameTeam = false
-        if (projectList.includes(item)) {
-          sameTeam = true
-        }
-        return sameTeam
-      }
-    })
+      })
 
-    this.setState({
-      teamListStates: teamListStates,
-      projectListStates: projectListStates,
-      initialState: currentState,
-      allEmails: emails
-    }, () => this.openEditPersonDialog())
+      const projectListStates = emails.map((item, index) => {
+        if (item === this.state.selectedEmail[0]) {
+          return null
+        } else {
+          let sameTeam = false
+          if (projectList.includes(item)) {
+            sameTeam = true
+          }
+          return sameTeam
+        }
+      })
+
+      this.setState({
+        teamListStates: teamListStates,
+        projectListStates: projectListStates,
+        initialState: currentState,
+        allEmails: emails
+      }, () => this.openEditEmployeeDialog())
+
+    } else {
+      const connectedList = peopleList[this.state.selectedEmailTableId].connectedColleagues
+      const connectedListStates = emails.map((item, index) => {
+        if (item === this.state.selectedEmail[0]) {
+          return null
+        } else {
+          let sameTeam = false
+          if (connectedList.includes(item)) {
+            sameTeam = true
+          }
+          return sameTeam
+        }
+      })
+
+      this.setState({
+        connectedListStates: connectedListStates,
+        allEmails: emails
+      }, () => this.openEditPersonDialog())
+    }
   }
 
   createTeamHTML = () => {
@@ -383,6 +406,24 @@ class BusinessAccount extends React.Component {
       }
     })
     return projectListHTML
+  }
+
+  createConnectionHTML = () => {
+    const connectedListHTML = this.state.allEmails.map((item, index) => {
+      if (item === this.state.selectedEmail[0]) {
+        return null
+      } else {
+        return <li key= {item}>  
+                  <input id='connected' type="checkbox" value={item} checked={this.state.connectedListStates[index]} onChange={this.editPersonEntry}/>
+                  <label> {item} </label> 
+                </li>
+      }
+    })
+    return connectedListHTML
+  }
+
+  openEditEmployeeDialog = () => {
+    this.setState({showEditEmployeeDialog: true})
   }
 
   openEditPersonDialog = () => {
@@ -486,7 +527,44 @@ class BusinessAccount extends React.Component {
             teamListStates: newTeamListStates,
             collateralChanges: newCollateralChanges
           })
-      }
+      } else if (table === "connected") {
+        // update the checkbox state
+        let newConnectedListStates = _.cloneDeep(this.state.connectedListStates)
+        const connectedListIndex = this.state.allEmails.findIndex(data => data === connectedEmail)
+        let currentValue = newConnectedListStates[connectedListIndex]
+        newConnectedListStates[connectedListIndex] = !currentValue
+        // update the peopleList state
+        let newConnectedColleagues = newPersonData.connectedColleagues
+        if (newConnectedColleagues.includes(connectedEmail)) {
+          const indexProject = newConnectedColleagues.findIndex(data => data === connectedEmail)
+          newConnectedColleagues.splice(indexProject,1)
+        } else {
+          newConnectedColleagues.push(connectedEmail)
+        }
+        newPeopleList[this.state.selectedEmailTableId].connectedColleagues = newConnectedColleagues
+        // update the connectedColleagues List in peopleList state for the email that is selected
+        let newConnectingPersonData = newPeopleList[tableIndexConnectingEmail]
+        newConnectedColleagues = newConnectingPersonData.connectedColleagues
+        if (newConnectedColleagues.includes(personEmail)) {
+          const indexProject = newConnectedColleagues.findIndex(data => data === personEmail)
+          newConnectedColleagues.splice(indexProject,1)
+        } else {
+          newConnectedColleagues.push(personEmail)
+        }
+        newPeopleList[tableIndexConnectingEmail].connectedColleagues = newConnectedColleagues
+        // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
+        if (collateralIndex === -1) {
+          newCollateralChanges.push({colId: indexConnectingEmail, changes: {connectedColleagues: newConnectedColleagues }})
+        } else {
+          newCollateralChanges[collateralIndex].changes.connectedColleagues = newConnectedColleagues
+        }
+
+        this.setState({
+          peopleList: newPeopleList,
+          connectedListStates: newConnectedListStates,
+          collateralChanges: newCollateralChanges
+        })
+    }
   }
 
   sendPersonChangesToDB = () => {
@@ -750,7 +828,7 @@ class BusinessAccount extends React.Component {
             <div className="sectionContent">
               <Tabs style={{ width: '90%'}}>
                 <TabList>
-                  <Tab> Employee List </Tab>
+                  <Tab> {this.props.userInfo.groupType === 'Business' ? 'Employees' : 'People'} </Tab>
                   <Tab> Chat Time </Tab>
                   <Tab> Chat Invite </Tab>
                   <Tab> To Do List </Tab>
@@ -764,6 +842,7 @@ class BusinessAccount extends React.Component {
                     onOpenDeleteDialog={this.openDeleteDialog}
                     selectedEmailId={this.state.selectedEmailId}
                     onUpdateSelectedEmailId={this.updateSelectedEmailId}
+                    userInfo={this.props.userInfo}
                   />
                 </TabPanel>
                 <TabPanel>
@@ -843,7 +922,7 @@ class BusinessAccount extends React.Component {
           </DialogActions>
         </Dialog>
         <Dialog 
-          open={this.state.showEditPersonDialog} 
+          open={this.state.showEditEmployeeDialog} 
         >
           <DialogTitle>Add Connections for {this.state.selectedEmail}</DialogTitle>
           <DialogContent style={{height: "300px"}}>
@@ -863,6 +942,32 @@ class BusinessAccount extends React.Component {
                   {this.createProjectHTML()}
                 </ul>  
               </div>  
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.sendPersonChangesToDB} className="actionButton">
+              Save 
+            </Button>
+            <Button onClick={this.cancelChange} className="ghostButton">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog 
+          open={this.state.showEditPersonDialog} 
+        >
+          <DialogTitle>Add Connections for {this.state.selectedEmail}</DialogTitle>
+          <DialogContent style={{height: "300px"}}>
+            <DialogContentText>
+              You can add people so we know who is already connected. 
+            </DialogContentText>
+            <div className="container">
+              <div>
+                <div> Connections </div>  
+                <ul style= {{listStyle: 'none'}}>
+                  {this.createConnectionHTML()}
+                </ul>  
+              </div>   
             </div>
           </DialogContent>
           <DialogActions>
