@@ -9,7 +9,7 @@ import FrequencyInput from './FrequencyInput'
 import './tabs.css'
 
 
-export default class MeetingTab extends Component {
+export default class BusinessChatTab extends Component {
 
     render() {  
         return (
@@ -22,8 +22,8 @@ export default class MeetingTab extends Component {
                 
                 <div className='meetingPlanner'>
                   <p>
-                    Choose the meeting time here so we can schedule meetings. 
-                    You should also send and invite for this recurring meeting out to everyone involved so they have time blocked in their calendar for the remote social butterfly meeting. 
+                    Choose the meeting time here so we can schedule chats. 
+                    You should also send and invite for this recurring meeting out to everyone involved so they have time blocked in their calendar for the remote social butterfly chat. 
                   </p>
                   <div className="p">
                   <FrequencyInput

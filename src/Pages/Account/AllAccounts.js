@@ -9,7 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { purple } from '@material-ui/core/colors';
 
 import PeopleTab from '../../Components/AccountPage/PeopleTab'
-import MeetingTab from '../../Components/AccountPage/MeetingTab'
+import BusinessChatTab from '../../Components/AccountPage/BusinessChatTab'
+import ChatTab from '../../Components/AccountPage/ChatTab'
 import InviteTab from '../../Components/AccountPage/InviteTab'
 import TodoTab from '../../Components/AccountPage/TodoTab'
 
@@ -849,14 +850,27 @@ class BusinessAccount extends React.Component {
                 {this.state.isLoadingMeetingInfoList ?
                   <Spinner /> 
                   :
-                  <MeetingTab
-                    changeMeetingTime={this.state.changeMeetingTime}
-                    meetingInfo={this.state.meetingInfo}
-                    onChangeMeeting={this.changeMeeting}
-                    onSaveChangeMeeting={this.saveChangeMeeting}
-                    onCancelChangeMeeting={this.cancelChange}
-                    onSetMeetingInfo={this.setMeetingInfo}
-                  />
+                  <div>
+                    {this.props.userInfo.groupType === 'Business' ?
+                    <BusinessChatTab
+                      changeMeetingTime={this.state.changeMeetingTime}
+                      meetingInfo={this.state.meetingInfo}
+                      onChangeMeeting={this.changeMeeting}
+                      onSaveChangeMeeting={this.saveChangeMeeting}
+                      onCancelChangeMeeting={this.cancelChange}
+                      onSetMeetingInfo={this.setMeetingInfo}
+                    />
+                    :
+                    <ChatTab 
+                      changeMeetingTime={this.state.changeMeetingTime}
+                      meetingInfo={this.state.meetingInfo}
+                      onChangeMeeting={this.changeMeeting}
+                      onSaveChangeMeeting={this.saveChangeMeeting}
+                      onCancelChangeMeeting={this.cancelChange}
+                      onSetMeetingInfo={this.setMeetingInfo}
+                    />
+                    }
+                  </div>
                 }
                 </TabPanel>
                 <TabPanel>
