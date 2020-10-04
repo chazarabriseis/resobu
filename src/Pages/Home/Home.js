@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import { withRouter } from "react-router";
 
-import Why from '../../Components/HomePage/Why'
+import WhyForWho from '../../Components/HomePage/WhyForWho'
 import How from '../../Components/HomePage/How'
 import WhatDiagram from '../../Components/HomePage/WhatDiagram'
 
@@ -31,7 +31,9 @@ class Home extends React.Component {
         </div>
 
         <div className="infoBox infoBoxWhite"> 
-          <Why />         
+          <WhyForWho 
+            onGotoSignUp = {this.gotoSignUp}
+          />         
         </div>
         
         <div className="infoBox infoBoxwhite"> 

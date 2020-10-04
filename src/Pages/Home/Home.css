@@ -108,10 +108,27 @@
     font-weight: 200;
 }
 
+.whoHeading {
+    font-size: xx-large;
+    font-weight: 200;
+}
+
 .planText {
     font-size: large;
     font-weight: lighter;
     padding-bottom: 20px;
+}
+
+.whoText {
+    flex: 1;
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 10px;
+    display: block;
 }
 
 .planPrice {
@@ -137,6 +154,41 @@
 .planTitle {
     padding-top: 20px;
     flex: 1;
+}
+
+.whoTitle {
+    padding-top: 20px;
+    flex: 1;
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-style: solid;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    margin-right: 10px;
+}
+
+.whoIcon {
+    flex: 1;
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    font-size: xxx-large;
+    padding-bottom: 30px;
+    margin-right: 10px;
+}
+
+.whoButton {
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-right: 10px;
 }
 
 .planPricing {
@@ -192,10 +244,11 @@
 .card {
     flex-grow: 1;
     padding: 20px;
-    border-color: thistle;
+    border-color: purple;
     border-style: solid;
     border-width: thin;
     margin-right: 20px;
+    border-radius: 10px;
 }
 
 .cardTitle {

@@ -6,7 +6,7 @@ class How extends React.Component {
   render () {
     return(
       <div>
-        <div className='heading3'>We organise these encounters either randomly or tailor them with your data and our connection and learning <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance</div>
+        <div className='heading3'>We organise chats either randomly or tailor them to your data with our connection and learning <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance</div>
         <div className='container'>
           <div className='card'>
             <div className='cardTitle'>Random selection of chat partners</div>
