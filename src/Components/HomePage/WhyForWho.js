@@ -19,7 +19,7 @@ class WhyForWho extends React.Component {
                 <div className="whoHeading"> Business </div>
             </div>
             <div className="whoTitle plan">
-                <div className="whoHeading"> Workshops / Meetings </div>
+                <div className="whoHeading"> Workshops </div>
             </div>
             <div className="whoTitle plan">
                 <div className="whoHeading"> Conferene </div>
@@ -47,39 +47,38 @@ class WhyForWho extends React.Component {
         <div className="container">
             <div className="whoText">
                 <div className="planText"> 
-                    Times are changing, more and more people are working from home or in different office locations. 
-                    Therfore no more unplanned watercooler discussions happen which are known to lead to connections and new ideas.
+                    Are you missing that employees mingle at random watercooler like conversations in your company?
                 </div>
             </div>
             <div className="whoText">
                 <div className="planText">
-                    For established teams that want to break up silos and create connection throughout the team.
+                    Are you missing that people with the same interest start chating during the coffee break at your workshop?
                 </div>
             </div>
             <div className="whoText">
                 <div className="planText">
-                    The same applies to conferences and tradeshows, in the modern times. These will be carried out more often in the digital world.
-                    Therfore people cannot mingle anymore in the breaks and in front of exhibition booths to exchange knowledge and build networks,
-                    a major reason why people attend them.
-                </div>
+                    Are you missing that attendees of your conference can keep on discussing the presentation they just went to?
+               </div>
             </div>
             <div className="whoText">
-                <div className="planText">For organizations that need additional security, control, and support to handle their overwhelming data that could flow into personalising the connections.</div>
+                <div className="planText">
+                    Are you missing that attendees at your tradeshow are meeting new possible clients?   
+                </div>
             </div>
         </div>
     
         <div className="container planContainer">
           <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/business/')}}>More Info &#38; Pricing</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/business/')}}>More Info </Button>  
           </div>
           <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/workshop/')}}>More Info &#38;  Pricing</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/workshop/')}}>More Info </Button>  
           </div>
           <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/conference/')}}>More Info &#38;  Pricing</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/conference/')}}>More Info</Button>  
           </div> 
           <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/tradeshow/')}}>More Info &#38;  Pricing</Button>  
+            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/tradeshow/')}}>More Info </Button>  
           </div>
         </div>
       </div>

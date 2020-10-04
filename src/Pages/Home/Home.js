@@ -35,21 +35,13 @@ class Home extends React.Component {
             onGotoSignUp = {this.gotoSignUp}
           />         
         </div>
-        
-        <div className="infoBox infoBoxwhite"> 
-          <How />
-        </div>
 
         <div className="infoBox infoBoxWhite"> 
           <WhatDiagram />          
         </div>
         
-        <div className="infoBox infoBoxWhite"> 
-          <div className="infoBoxContent container endCOA"> 
-            <Button className="ghostButton" variant='contained' size="large" onClick={() => {this.props.history.push('/business/')}}>Remote Social Butterfly for businesses</Button>      
-            <Button className="ghostButton" variant='contained' size="large" onClick={() => {this.props.history.push('/conference/')}}>Remote Social Butterfly for conferences</Button>      
-            <Button className="ghostButton" variant='contained' size="large" onClick={() => {this.props.history.push('/tradeshow/')}}>Remote Social Butterfly for tradeshows</Button>      
-          </div>  
+        <div className="infoBox infoBoxwhite"> 
+          <How />
         </div>
        
       </div>

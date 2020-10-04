@@ -30,7 +30,7 @@ class How extends React.Component {
                   Possibilities are endless, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can be tailored exaxtly to your needs.
                 </div>
                 <div className='cardText'> 
-                  <div style={{fontWeight: '500' , display: 'inline'}}>For Conferences and Tradeshows: </div> When additional data exists the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can work to develop encounters between attendees at conferences or 
+                  <div style={{fontWeight: '500' , display: 'inline'}}>For Workshops, Conferences and Tradeshows: </div> When additional data exists the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can work to develop encounters between attendees at conferences or 
                   tradeshows based on areas of expertise, locations, business areas and other relevant data to make sure the meetings organised are as meaningful and as beneficial as possible. 
                   It will avoid organising meetings that do not make sense, such as meetings between people who work at the same company or for competitors.
                 </div>

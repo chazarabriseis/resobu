@@ -75,6 +75,7 @@ class Header extends React.Component {
                   onClose={this.closeMenu}
                 >
                   <MenuItem component={Link} to="/business" onClick={this.closeMenu}> for Businesses</MenuItem>
+                  <MenuItem component={Link} to="/workshop" onClick={this.closeMenu}>for Workshops</MenuItem>
                   <MenuItem component={Link} to="/conference" onClick={this.closeMenu}>for Conferences</MenuItem>
                   <MenuItem component={Link} to="/tradeshow" onClick={this.closeMenu}>for Tradeshows</MenuItem>
                 </Menu>
