@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, TextField } from '@material-ui/core'
+import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core'
+import { ToastContainer, toast } from 'react-toastify';
+
 import TimeInput from './TimeInput'
-import WeekdayInput from './WeekdayInput'
 import DurationInput from './DurationInput'
-import WeekOfMonthInput from './WeekOfMonthInput'
-import FrequencyInput from './FrequencyInput'
 
 import './tabs.css'
 
@@ -14,18 +14,23 @@ export default class BusinessChatTab extends Component {
     render() {  
         return (
             <div className="tab">
-                <Button variant="contained" size="large" className="ghostButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onAddAnotherMeeting}>+</Button>
                 <div className="tabContent">
-                
-                    <Button variant="contained" size="large" className="actionButton" disabled={this.props.changeMeetingTime} onClick={this.props.onChangeMeeting}>Change Meeting Time</Button>   
-                    <Button variant="contained" size="large" className="actionButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onSaveChangeMeeting}>Save</Button>   
-                    <Button variant="contained" size="large" className="ghostButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onCancelChangeMeeting}>Cancel</Button>
-                    
+                    <Button variant="contained" className="actionButton" onClick={this.props.onOpenAddChatDialog}> Add Chat </Button>
+                    <Button variant="contained" className="actionButton" disabled={this.props.disableChatButtons} onClick={this.props.onChangeChat}> Change Chat </Button>   
+                    <Button variant="contained" className="actionButton" disabled={this.props.disableChatButtons} onClick={this.props.onDeleteChat}> Delete Chat </Button>   
                     <div className='meetingPlanner'>
-                        <p>
-                            Choose the meeting time here so we can schedule meetings. 
-                            You should also let people know that these are times when remote social butterfly chats will take place.
-                        </p>
+                        <div className= "container">
+                            {this.props.onCreateChatHTML()}
+                        </div>
+                    </div>
+                    <Dialog 
+                        open={this.props.showAddChatDialog} 
+                    >
+                    <DialogTitle>Add Chat</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Choose a date, time and duration for the chat
+                        </DialogContentText>
                         <p>On</p>                 
                         <div className="p">
                             <TextField
@@ -56,8 +61,18 @@ export default class BusinessChatTab extends Component {
                             changeMeetingTime={this.props.changeMeetingTime}
                             />
                         </div>
-                    </div>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" className="actionButton" onClick={this.props.onSaveChangeMeeting}>
+                            Save
+                        </Button> 
+                        <Button variant="contained" className="ghostButton" onClick={this.props.onCancelChangeMeeting}>
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                    </Dialog>
                 </div>
+                <ToastContainer />
             </div>  
         )
     }

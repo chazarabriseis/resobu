@@ -60,7 +60,12 @@ class BusinessAccount extends React.Component {
       
       changeMeetingTime: false,
       changeInvite: false,
-      changeTodoList: false
+      changeTodoList: false,
+
+      showAddChatDialog: false,
+      changeChatTime: false,
+      selectedChatId: null,
+      disableChatButtons: true
     }
   }
 
@@ -150,13 +155,28 @@ class BusinessAccount extends React.Component {
       })
     })    
     */
-    if (!this.state.meetingInfo) {
+    if (!this.state.meetingInfo && this.props.userInfo.groupType === 'Business') {
+      await this.createMeetingBusiness()
+    } else if (!this.state.meetingInfo) {
       await this.createMeeting()
     }
     
   }
 
-  async createMeeting() {
+  async createMeeting () {
+    const meetingInfo = { chats: [{id: '2021-01-01-11:30', date: "2021-01-01", time: '11:30', duration: '30'},{id: '2021-01-01-14:30', date: "2021-01-01", time: '14:30', duration: '30'}],
+    inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
+    todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
+    activated: false
+    }
+    // [{id: '2021-01-01-11:30', date: "2021-01-01", time: '11:30', duration: '30'}]
+    await this.setState({
+      meetingInfo: meetingInfo,
+      isLoadingMeetingInfoList: false
+    })
+  }
+
+  async createMeetingBusiness() {
     const meetingInfo = { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01", duration: '30',
       weekday: 'friday', time: '11:30', weekOfMonth: 'last',
       inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
@@ -393,6 +413,7 @@ class BusinessAccount extends React.Component {
       }
     })
     return teamListHTML
+    
   }
 
   createProjectHTML = () => {
@@ -783,6 +804,47 @@ class BusinessAccount extends React.Component {
   }
 
 
+  openAddChatDialog = () => {
+    const currentState = _.cloneDeep(this.state)
+    this.setState({
+      showAddChatDialog: true,
+      initialState: currentState
+    })
+  }
+
+  createChatHTML = () => {
+    if (this.state.meetingInfo.chats.length === 0 ) {
+      return <p> Please go ahead and add chat times</p>
+    } else {
+      const chatListHTML = this.state.meetingInfo.chats.map((item, index) => {
+        if (item === this.state.selectedEmail[0]) {
+          return null
+        } else {
+          return <div className='chatBox' id={item.id} key= {item.id} onClick={this.setSelectedChat}> 
+                    <div className='p' id={item.id}>
+                      On {item.date}
+                    </div>
+                    <div className='p' id={item.id}>
+                      at {item.time}
+                    </div>
+                    <div className='p' id={item.id}>
+                      for {item.duration}
+                    </div>
+                  </div>
+        }
+      })
+      return chatListHTML
+    }
+  }
+
+  setSelectedChat = (e) => {
+    this.setState({
+      selectedChatId: e.target.id,
+      disableChatButtons: false
+    })
+  }
+
+
   render() {
 
     const PurpleSwitch = withStyles({
@@ -868,6 +930,10 @@ class BusinessAccount extends React.Component {
                       onSaveChangeMeeting={this.saveChangeMeeting}
                       onCancelChangeMeeting={this.cancelChange}
                       onSetMeetingInfo={this.setMeetingInfo}
+                      onOpenAddChatDialog= {this.openAddChatDialog}
+                      showAddChatDialog={this.state.showAddChatDialog}
+                      onCreateChatHTML={this.createChatHTML}
+                      disableChatButtons={this.state.disableChatButtons}
                     />
                     }
                   </div>
@@ -888,18 +954,18 @@ class BusinessAccount extends React.Component {
                   }
                 </TabPanel>
                 <TabPanel>
-                {this.state.isLoadingMeetingInfoList ?
-                  <Spinner /> 
-                    :
-                  <TodoTab
-                    changeTodoList={this.state.changeTodoList}
-                    todoList={this.state.meetingInfo.todoList}
-                    onChangeTodoList={this.changeTodoList}
-                    onSaveChangeTodoList={this.saveChangeTodoList}
-                    onCancelChangeTodoList={this.cancelChange}
-                    onSetTodoList={this.setMeetingInfo}
-                  />
-                }
+                  {this.state.isLoadingMeetingInfoList ?
+                    <Spinner /> 
+                      :
+                    <TodoTab
+                      changeTodoList={this.state.changeTodoList}
+                      todoList={this.state.meetingInfo.todoList}
+                      onChangeTodoList={this.changeTodoList}
+                      onSaveChangeTodoList={this.saveChangeTodoList}
+                      onCancelChangeTodoList={this.cancelChange}
+                      onSetTodoList={this.setMeetingInfo}
+                    />
+                  }
                 </TabPanel>
               </Tabs>
             </div>

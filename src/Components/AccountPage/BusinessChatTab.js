@@ -16,15 +16,14 @@ export default class BusinessChatTab extends Component {
               <div className="tab">
               <div className="tabContent">
                 
-                <Button variant="contained" size="large" className="actionButton" disabled={this.props.changeMeetingTime} onClick={this.props.onChangeMeeting}>Change Meeting Time</Button>   
-                <Button variant="contained" size="large" className="actionButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onSaveChangeMeeting}>Save</Button>   
-                <Button variant="contained" size="large" className="ghostButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onCancelChangeMeeting}>Cancel</Button>
+                <Button variant="contained" className="actionButton" disabled={this.props.changeMeetingTime} onClick={this.props.onChangeMeeting}>Change Chat Time</Button>   
+                <Button variant="contained" className="actionButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onSaveChangeMeeting}>Save</Button>   
+                <Button variant="contained" className="ghostButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onCancelChangeMeeting}>Cancel</Button>
                 
                 <div className='meetingPlanner'>
                   <p>
-                    Choose the meeting time here so we can schedule chats. 
-                    You should also send and invite for this recurring meeting out to everyone involved so they have time blocked in their calendar for the remote social butterfly chat. 
-                  </p>
+                    Choose a reocurring chat time
+                 </p>
                   <div className="p">
                   <FrequencyInput
                     frequency={this.props.meetingInfo.frequency}

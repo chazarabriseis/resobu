@@ -25,3 +25,21 @@
     padding-left: 40px;
     padding-right: 40px;
 }
+
+.chatBox {
+    padding: 10px;
+    margin: 10px;
+    border-color: purple;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.chatBox:hover {
+    background-color: thistle;
+}
+
+.chatBox:active {
+    background-color: purple;
+}
