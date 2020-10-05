@@ -65,7 +65,10 @@ class BusinessAccount extends React.Component {
       showAddChatDialog: false,
       changeChatTime: false,
       selectedChatId: null,
-      disableChatButtons: true
+      selectedChatTableId: null,
+      disableChatButtons: true,
+      showEditChatDialog: false,
+      chatInfo: {date: "2021-01-01", time: '13:30', duration: '30'}
     }
   }
 
@@ -164,7 +167,7 @@ class BusinessAccount extends React.Component {
   }
 
   async createMeeting () {
-    const meetingInfo = { chats: [{id: '2021-01-01-11:30', date: "2021-01-01", time: '11:30', duration: '30'},{id: '2021-01-01-14:30', date: "2021-01-01", time: '14:30', duration: '30'}],
+    const meetingInfo = { chats: [{id: '2021-01-01_11:30', date: "2021-01-01", time: '11:30', duration: '30'},{id: '2021-01-01_14:30', date: "2021-01-01", time: '14:30', duration: '30'}],
     inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
     todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
     activated: false
@@ -812,6 +815,19 @@ class BusinessAccount extends React.Component {
     })
   }
 
+  openEditChatDialog = () => {
+    const currentState = _.cloneDeep(this.state)
+    const newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
+    const selectedChatInfo = newMeetingInfo.chats[this.state.selectedChatTableId]
+    console.log(selectedChatInfo)
+    this.setState({
+      showEditChatDialog: true,
+      showAddChatDialog: true,
+      initialState: currentState,
+      chatInfo: selectedChatInfo
+    })
+  }
+
   createChatHTML = () => {
     if (this.state.meetingInfo.chats.length === 0 ) {
       return <p> Please go ahead and add chat times</p>
@@ -820,7 +836,10 @@ class BusinessAccount extends React.Component {
         if (item === this.state.selectedEmail[0]) {
           return null
         } else {
-          return <div className='chatBox' id={item.id} key= {item.id} onClick={this.setSelectedChat}> 
+          return <div className='chatBox' tabIndex={index} id={item.id} key= {item.id} onClick={this.setSelectedChat}> 
+                    <div className='p' id={item.id}>
+                      Meeting {index+1}
+                    </div>
                     <div className='p' id={item.id}>
                       On {item.date}
                     </div>
@@ -838,10 +857,62 @@ class BusinessAccount extends React.Component {
   }
 
   setSelectedChat = (e) => {
+    const selectedChatId = e.target.id
+    const selectedChatTableId = this.state.meetingInfo.chats.findIndex(data =>  data.id === selectedChatId)
     this.setState({
       selectedChatId: e.target.id,
+      selectedChatTableId: selectedChatTableId,
       disableChatButtons: false
     })
+  }
+
+  setChatInfo = (e) => {
+    const newValue = e.target.value
+    const infoToChange = e.target.id
+    let newChatInfo = _.clone(this.state.chatInfo)
+    newChatInfo[infoToChange] = newValue
+    this.setState({chatInfo: newChatInfo})
+  }
+
+  saveAddChat = () => {
+    // check if coming from edit or add chat
+    const chatId = this.state.chatInfo.date + '_' + this.state.chatInfo.time
+    if (this.state.chatInfo.id) {
+      let newMeetingInfo = _.clone(this.state.meetingInfo)
+      // delete selected one
+      newMeetingInfo.chats.splice(this.state.selectedEmailTableId,1)
+      let chatInfo = _.clone(this.state.chatInfo)
+      chatInfo.chatId = chatId
+      newMeetingInfo.chats.push(this.state.chatInfo)
+      console.log('triggering to send meeting changes to DB')
+      const changes = {meetingInfo: newMeetingInfo}
+      this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
+      this.setState({
+        meetingInfo: newMeetingInfo,
+        showAddChatDialog: false,
+        showEditChatDialog: false
+      })
+    } else {
+      // check if a chat at that time already exists by checking the chatId
+      const chatIdIndex = this.state.meetingInfo.chats.findIndex(data => data.id === chatId)
+      if (chatIdIndex === -1) {
+        let newMeetingInfo = _.clone(this.state.meetingInfo)
+        let chatInfo = _.clone(this.state.chatInfo)
+        chatInfo.chatId = chatId
+        newMeetingInfo.chats.push(this.state.chatInfo)
+        console.log('triggering to send meeting changes to DB')
+        const changes = {meetingInfo: newMeetingInfo}
+        this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
+        this.setState({
+          meetingInfo: newMeetingInfo,
+          showAddChatDialog: false
+        })
+      } else {
+        toast.warning("Ooops, there is already a chat at this time.", {
+          position: toast.POSITION.TOP_RIGHT
+        })
+      } 
+    }  
   }
 
 
@@ -934,6 +1005,12 @@ class BusinessAccount extends React.Component {
                       showAddChatDialog={this.state.showAddChatDialog}
                       onCreateChatHTML={this.createChatHTML}
                       disableChatButtons={this.state.disableChatButtons}
+                      selectedChatTableId={this.state.selectedChatTableId}
+                      onOpenEditChatDialog={this.openEditChatDialog}
+                      showEditChatDialog={this.state.showEditChatDialog}
+                      chatInfo={this.state.chatInfo}
+                      onSetChatInfo={this.setChatInfo}
+                      onSaveAddChat= {this.saveAddChat}
                     />
                     }
                   </div>

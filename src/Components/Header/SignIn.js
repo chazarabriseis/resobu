@@ -288,7 +288,7 @@ class SignIn extends React.Component {
                                         value={this.state.password}
                                         onChange={event => this.setState({password: event.target.value })}
                                         error={this.state.password.length < 8}
-                                        helperText={this.state.password.length < 8 && 'Password needs to be at least 8 character long'} 
+                                        helperText={this.state.password.length < 8 && 'Password needs to be at least 8 characters long'} 
                                         InputProps={{
                                             endAdornment: <InputAdornment position="end">
                                                 <IconButton

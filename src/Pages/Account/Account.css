@@ -40,6 +40,9 @@
     background-color: thistle;
 }
 
-.chatBox:active {
+.chatBox:focus {
     background-color: purple;
+    outline: none;
+    color: white;
+    border-color: thistle;
 }
