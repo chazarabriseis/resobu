@@ -20,7 +20,7 @@ import 'react-tabs/style/react-tabs.css'
 import './Account.css'
 import '../../App.css'
 import Spinner from '../../Components/Common/Spinner';
-
+const __ISMSIE__ = navigator.userAgent.match(/Trident/i) ? true : false;
 
 class BusinessAccount extends React.Component {
   constructor(props) {
@@ -69,7 +69,9 @@ class BusinessAccount extends React.Component {
       disableChatButtons: true,
       showEditChatDialog: false,
       chatInfo: {date: "2021-01-01", time: '13:30', duration: '30'},
-      showDeleteDialogChat: false
+      showDeleteDialogChat: false,
+
+      inviteText: '<p>testin<strong>gdacdac</strong></p><p><strong>acalck</strong></p>'
     }
   }
 
@@ -183,7 +185,7 @@ class BusinessAccount extends React.Component {
   async createMeetingBusiness() {
     const meetingInfo = { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01", duration: '30',
       weekday: 'friday', time: '11:30', weekOfMonth: 'last',
-      inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
+      inviteText: '<p>Hello,</p><p><br></p><p>we are starting to have regular <strong>Remote Social Butterfly chats</strong> across the company to help us stay connected across different work places and departments.</p><p>They will take place every <strong>second Tuesday of the month from 13-13:30</strong>. You will receive an email who you will be talking to.</p><p>We hope you enjoy getting a chance to talk to various people across the company, we are happy to receive feedback!</p><p><br></p><p>Happy chatting!</p><p><br></p><p><br></p>',
       todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
       activated: false
     }
@@ -787,6 +789,20 @@ class BusinessAccount extends React.Component {
     })
   }
 
+  // implemented quill from https://codesandbox.io/s/qv5m74l80w?file=/src/index.tsx:309-381
+  changeInviteContents = (contents) => {
+    let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
+    let _contents = null;
+    if (__ISMSIE__) {
+      if (contents.indexOf("<p><br></p>") > -1) {
+        _contents = contents.replace(/<p><br><\/p>/gi, "<p>&nbsp;</p>");
+      }
+    }
+    console.log(contents)
+    newMeetingInfo.inviteText = _contents || contents
+    this.setState({ meetingInfo: newMeetingInfo });
+  };
+
   saveChangeInviteText = () => {
    console.log('triggering to send meeting changes to DB')
     const changes = {meetingInfo: this.state.meetingInfo}
@@ -963,21 +979,20 @@ class BusinessAccount extends React.Component {
         </div>
         <div className='container whyContent'>
           {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.activated ?
-          <div className='accountStatus accountActivated'> Activated, move switch to stop sending invites out </div>
-          :
-          <div className='accountStatus accountDeactivated'>Not activated, move switch to start sending invites out</div>
+            <div className='accountStatus accountActivated'> Activated, move switch to stop sending invites out </div>
+            :
+            <div className='accountStatus accountDeactivated'>Not activated, move switch to start sending invites out</div>
           }
           {!this.state.isLoadingMeetingInfoList && 
-          <FormControlLabel
-            control={
-              <PurpleSwitch size='medium' disableRipple id='activated' 
-                checked={this.state.meetingInfo.activated} onChange={this.setMeetingInfo} 
-                name="activated" value={this.state.meetingInfo.activated  ? 0 : 1}
-                classes={{switchBase: 'switchBase'}}
-              />
-            }
-            // label={this.state.meetingInfo.activated  ? 'Turn off' : 'Turn on'}
-          />
+            <FormControlLabel
+              control={
+                <PurpleSwitch size='medium' disableRipple id='activated' 
+                  checked={this.state.meetingInfo.activated} onChange={this.setMeetingInfo} 
+                  name="activated" value={this.state.meetingInfo.activated  ? 0 : 1}
+                  classes={{switchBase: 'switchBase'}}
+                />
+              }
+            />
           }
         </div>
         <div className="sections"> 
@@ -1004,51 +1019,53 @@ class BusinessAccount extends React.Component {
                   />
                 </TabPanel>
                 <TabPanel>
-                {this.state.isLoadingMeetingInfoList ?
-                  <Spinner /> 
-                  :
-                  <div>
-                    {this.props.userInfo.groupType === 'Business' ?
-                    <BusinessChatTab
-                      changeMeetingTime={this.state.changeMeetingTime}
-                      meetingInfo={this.state.meetingInfo}
-                      onChangeMeeting={this.changeMeeting}
-                      onSaveChangeMeeting={this.saveChangeMeeting}
-                      onCancelChangeMeeting={this.cancelChange}
-                      onSetMeetingInfo={this.setMeetingInfo}
-                    />
+                  {this.state.isLoadingMeetingInfoList ?
+                    <Spinner /> 
                     :
-                    <ChatTab 
-                      meetingInfo={this.state.meetingInfo}
-                      onCancelChangeChat={this.cancelChange}
-                      onOpenAddChatDialog= {this.openAddChatDialog}
-                      showChatDialog={this.state.showChatDialog}
-                      onCreateChatHTML={this.createChatHTML}
-                      disableChatButtons={this.state.disableChatButtons}
-                      selectedChatTableId={this.state.selectedChatTableId}
-                      onOpenEditChatDialog={this.openEditChatDialog}
-                      showEditChatDialog={this.state.showEditChatDialog}
-                      chatInfo={this.state.chatInfo}
-                      onSetChatInfo={this.setChatInfo}
-                      onSaveChat= {this.saveChat}
-                      onOpenDeleteChatDialog={this.openDeleteChatDialog}
-                    />
-                    }
-                  </div>
-                }
+                    <div>
+                      {this.props.userInfo.groupType === 'Business' ?
+                      <BusinessChatTab
+                        changeMeetingTime={this.state.changeMeetingTime}
+                        meetingInfo={this.state.meetingInfo}
+                        onChangeMeeting={this.changeMeeting}
+                        onSaveChangeMeeting={this.saveChangeMeeting}
+                        onCancelChangeMeeting={this.cancelChange}
+                        onSetMeetingInfo={this.setMeetingInfo}
+                      />
+                      :
+                      <ChatTab 
+                        meetingInfo={this.state.meetingInfo}
+                        onCancelChangeChat={this.cancelChange}
+                        onOpenAddChatDialog= {this.openAddChatDialog}
+                        showChatDialog={this.state.showChatDialog}
+                        onCreateChatHTML={this.createChatHTML}
+                        disableChatButtons={this.state.disableChatButtons}
+                        selectedChatTableId={this.state.selectedChatTableId}
+                        onOpenEditChatDialog={this.openEditChatDialog}
+                        showEditChatDialog={this.state.showEditChatDialog}
+                        chatInfo={this.state.chatInfo}
+                        onSetChatInfo={this.setChatInfo}
+                        onSaveChat= {this.saveChat}
+                        onOpenDeleteChatDialog={this.openDeleteChatDialog}
+                      />
+                      }
+                    </div>
+                  }
                 </TabPanel>
                 <TabPanel>
                   {this.state.isLoadingMeetingInfoList ?
                     <Spinner /> 
                     :
                     <InviteTab
-                    changeInvite={this.state.changeInvite}
-                    inviteText={this.state.meetingInfo.inviteText}
-                    onChangeInviteText={this.changeInviteText}
-                    onSaveChangeInviteText={this.saveChangeInviteText}
-                    onCancelChangeInviteText={this.cancelChange}
-                    onSetInviteText={this.setMeetingInfo}
-                  />
+                      changeInvite={this.state.changeInvite}
+                      // inviteText={this.state.meetingInfo.inviteText}
+                      inviteText={this.state.meetingInfo.inviteText}
+                      onChangeInviteText={this.changeInviteText}
+                      onSaveChangeInviteText={this.saveChangeInviteText}
+                      onCancelChangeInviteText={this.cancelChange}
+                      // onSetInviteText={this.setMeetingInfo}
+                      onSetInviteText={this.changeInviteContents}
+                    />
                   }
                 </TabPanel>
                 <TabPanel>
@@ -1069,10 +1086,8 @@ class BusinessAccount extends React.Component {
             </div>
           </div>      
         </div>
-        <Dialog 
-          open={this.state.showAddPeopleDialog} 
-        >
-          <DialogTitle>Add Employee</DialogTitle>
+        <Dialog open={this.state.showAddPeopleDialog} >
+          <DialogTitle>Add Employeess</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Either enter a list of emails separated by a comma or just a single one. You cann add project and team colleagues later by editing single entries. 
@@ -1099,9 +1114,7 @@ class BusinessAccount extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <Dialog 
-          open={this.state.showEditEmployeeDialog} 
-        >
+        <Dialog open={this.state.showEditEmployeeDialog} >
           <DialogTitle>Add Connections for {this.state.selectedEmail}</DialogTitle>
           <DialogContent style={{height: "300px"}}>
             <DialogContentText>
@@ -1131,9 +1144,7 @@ class BusinessAccount extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <Dialog 
-          open={this.state.showEditPersonDialog} 
-        >
+        <Dialog open={this.state.showEditPersonDialog} >
           <DialogTitle>Add Connections for {this.state.selectedEmail}</DialogTitle>
           <DialogContent style={{height: "300px"}}>
             <DialogContentText>
@@ -1157,9 +1168,7 @@ class BusinessAccount extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-        <Dialog
-          open={this.state.showDeleteDialog}
-        >
+        <Dialog open={this.state.showDeleteDialog}>
           <DialogTitle>{"Confirm deletion"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
