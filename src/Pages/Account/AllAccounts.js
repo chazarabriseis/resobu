@@ -171,7 +171,7 @@ class BusinessAccount extends React.Component {
 
   async createMeeting () {
     const meetingInfo = { chats: [{id: '2021-01-01@11:30', date: "2021-01-01", time: '11:30', duration: '30'},{id: '2021-01-01@14:30', date: "2021-01-01", time: '14:30', duration: '30'}],
-    inviteText: 'Helloooo, you are selected for this round of our Social Butterfly Chats on XXX.XXX.',
+    inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $DURATION$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
     todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
     activated: false
     }
@@ -185,7 +185,7 @@ class BusinessAccount extends React.Component {
   async createMeetingBusiness() {
     const meetingInfo = { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01", duration: '30',
       weekday: 'friday', time: '11:30', weekOfMonth: 'last',
-      inviteText: '<p>Hello,</p><p><br></p><p>we are starting to have regular <strong>Remote Social Butterfly chats</strong> across the company to help us stay connected across different work places and departments.</p><p>They will take place every <strong>second Tuesday of the month from 13-13:30</strong>. You will receive an email who you will be talking to.</p><p>We hope you enjoy getting a chance to talk to various people across the company, we are happy to receive feedback!</p><p><br></p><p>Happy chatting!</p><p><br></p><p><br></p>',
+      inviteText: '<p>Hello $NAME$,</p><p><br></p><p>your next <strong>Remote Social Butterfly Chat</strong> will happen on $DATE$ at $TIME$ for $DURATION$. You will be talking to $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>How about you discuss the biggest challenges you are facing on your current project?</p><p><br></p><p>We are always happy to receive feedback about the Remote Social Butterfly Chats to ensure you get the most out of it! Just reply to this email.</p><p><br></p><p>Happy chatting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
       todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
       activated: false
     }
@@ -804,10 +804,19 @@ class BusinessAccount extends React.Component {
   };
 
   saveChangeInviteText = () => {
-   console.log('triggering to send meeting changes to DB')
-    const changes = {meetingInfo: this.state.meetingInfo}
-    this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
-    this.setState({changeInvite: false})
+    // first check that the text contains all placeholders
+    if (this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$NAME$') 
+        && this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$DURATION$')
+        && this.state.meetingInfo.inviteText.includes('$CHATPARTNER$')) {
+          console.log('triggering to send meeting changes to DB')
+          const changes = {meetingInfo: this.state.meetingInfo}
+          this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
+          this.setState({changeInvite: false})
+    } else {
+      toast.warning("Hmm, you are missing one of the placeholders: $NAME$, $DATE$, $DATE$, $DURATION$ or $CHATPARTNER$.", {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
   }
 
 
@@ -1058,13 +1067,12 @@ class BusinessAccount extends React.Component {
                     :
                     <InviteTab
                       changeInvite={this.state.changeInvite}
-                      // inviteText={this.state.meetingInfo.inviteText}
                       inviteText={this.state.meetingInfo.inviteText}
                       onChangeInviteText={this.changeInviteText}
                       onSaveChangeInviteText={this.saveChangeInviteText}
                       onCancelChangeInviteText={this.cancelChange}
-                      // onSetInviteText={this.setMeetingInfo}
                       onSetInviteText={this.changeInviteContents}
+                      userInfo={this.props.userInfo}
                     />
                   }
                 </TabPanel>
