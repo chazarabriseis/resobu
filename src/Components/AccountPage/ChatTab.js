@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, TextField } from '@material-ui/core'
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@material-ui/core'
-import { ToastContainer, toast } from 'react-toastify';
 
 import TimeInput from './TimeInput'
 import DurationInput from './DurationInput'
@@ -17,17 +16,20 @@ export default class BusinessChatTab extends Component {
                 <div className="tabContent">
                     <Button variant="contained" className="actionButton" onClick={this.props.onOpenAddChatDialog}> Add Chat </Button>
                     <Button variant="contained" className="actionButton" disabled={this.props.disableChatButtons} onClick={this.props.onOpenEditChatDialog}> Edit Chat </Button>   
-                    <Button variant="contained" className="actionButton" disabled={this.props.disableChatButtons} onClick={this.props.onDeleteChat}> Delete Chat </Button>   
+                    <Button variant="contained" className="actionButton" disabled={this.props.disableChatButtons} onClick={this.props.onOpenDeleteChatDialog}> Delete Chat </Button>   
                     <div className='meetingPlanner'>
-                        <div className= "container">
+                        <div className= "container chatContainer">
                             {this.props.onCreateChatHTML()}
                         </div>
                     </div>
-                    <Dialog open={this.props.showAddChatDialog} >
+                    <Dialog open={this.props.showChatDialog} >
                         <DialogTitle>{this.props.showEditChatDialog ? 'Edit Chat' : 'Add Chat'}</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Choose a date, time and duration for the chat
+                                {this.props.showEditChatDialog ? 
+                                    'Change meeting ' + this.props.meetingInfo.chats[this.props.selectedChatTableId].id : 
+                                    'Choose a date, time and duration for the chat'
+                                }
                             </DialogContentText>
                             <p>On</p>                 
                             <div className="p">
@@ -59,16 +61,15 @@ export default class BusinessChatTab extends Component {
                             </div>
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained" className="actionButton" onClick={this.props.onSaveAddChat}>
+                            <Button variant="contained" className="actionButton" onClick={this.props.onSaveChat}>
                                 Save
                             </Button> 
-                            <Button variant="contained" className="ghostButton" onClick={this.props.onCancelChangeMeeting}>
+                            <Button variant="contained" className="ghostButton" onClick={this.props.onCancelChangeChat}>
                                 Cancel
                             </Button>
                         </DialogActions>
                     </Dialog>
                 </div>
-                <ToastContainer />
             </div>  
         )
     }

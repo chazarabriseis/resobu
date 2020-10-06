@@ -26,6 +26,10 @@
     padding-right: 40px;
 }
 
+.chatContainer {
+    flex-wrap: wrap;
+}
+
 .chatBox {
     padding: 10px;
     margin: 10px;
@@ -36,12 +40,17 @@
     cursor: pointer;
 }
 
+.chatBoxTitle {
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
 .chatBox:hover {
     background-color: thistle;
 }
 
 .chatBox:focus {
-    background-color: purple;
+    background-color: thistle;
     outline: none;
     color: white;
     border-color: thistle;
