@@ -14,6 +14,7 @@ class WhyForWho extends React.Component {
   render () {
     return(
       <div>
+
         <div className="container planContainer">
             <div className="whoTitle plan">
                 <div className="whoHeading"> Business </div>
@@ -22,7 +23,7 @@ class WhyForWho extends React.Component {
                 <div className="whoHeading"> Workshops </div>
             </div>
             <div className="whoTitle plan">
-                <div className="whoHeading"> Conferene </div>
+                <div className="whoHeading"> Conference </div>
             </div>
             <div className="whoTitle plan">
                 <div className="whoHeading"> Tradeshow </div>
@@ -31,7 +32,7 @@ class WhyForWho extends React.Component {
 
         <div className="container planContainer">
           <div className="whoIcon">
-          <FontAwesomeIcon size='large' icon='building'/> 
+          <FontAwesomeIcon icon='building'/> 
           </div>
           <div className="whoIcon">
           <FontAwesomeIcon icon='comments'/> 
@@ -43,7 +44,6 @@ class WhyForWho extends React.Component {
           <FontAwesomeIcon icon='handshake'/> 
           </div>
         </div>
-
         <div className="container">
             <div className="whoText">
                 <div className="planText"> 
@@ -62,7 +62,7 @@ class WhyForWho extends React.Component {
             </div>
             <div className="whoText">
                 <div className="planText">
-                    Are you missing that attendees at your tradeshow are meeting new possible clients?   
+                    Are you missing that exhibitors at your tradeshow are meeting new potential clients?   
                 </div>
             </div>
         </div>

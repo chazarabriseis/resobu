@@ -910,7 +910,7 @@ class BusinessAccount extends React.Component {
     const chatId = this.state.chatInfo.date + '@' + this.state.chatInfo.time
     const chatIdIndex = this.state.meetingInfo.chats.findIndex(data => data.id === chatId)
     // check if a chat at that time already exists by checking the chatId against existing chatIds
-    if (chatIdIndex === -1 || this.state.chatInfo.duration != this.state.meetingInfo.chats[this.state.selectedChatTableId].duration) {
+    if (chatIdIndex === -1 || this.state.chatInfo.duration !== this.state.meetingInfo.chats[this.state.selectedChatTableId].duration) {
       let newMeetingInfo = _.clone(this.state.meetingInfo)
       let newChatInfo = _.clone(this.state.chatInfo)
       newChatInfo.id = chatId
