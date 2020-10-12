@@ -1,24 +1,24 @@
 import json
-import boto3
-from boto3.dynamodb.conditions import Key
-from botocore.exceptions import ClientError
+# import boto3
+# from boto3.dynamodb.conditions import Key
+# from botocore.exceptions import ClientError
 
 def handler(event, context):
-  error = []
-  try:
-    dynamodb = boto3.resource('dynamodb')
-  except KeyError:
-    error.append('db error')
-    raise Exception({
-        "errorType": "Exception",
-        "httpStatus": 500,
-        "message": "One of the required function parameters not present (requestType, userSubId, tableName)"
-    })
+  # error = []
+  #  try:
+  #   dynamodb = boto3.resource('dynamodb')
+  # except KeyError:
+  #  error.append('db error')
+  #  raise Exception({
+  #      "errorType": "Exception",
+  #      "httpStatus": 500,
+  #      "message": "One of the required function parameters not present (requestType, userSubId, tableName)"
+  #  })
 
   body = {
-      "message": "connected to",
-      "db": dynamodb,
-      "error": error
+      "message": "updated message" #,
+      #"db": dynamodb,
+      #"error": error
   }
 
   response = {
