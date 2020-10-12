@@ -3,8 +3,8 @@ from pprint import pprint
 
 if __name__ == '__main__':
     # # test to fetch the People List
-    # body = {'requestType': "fetchList", 'userSubId': "123", 'tableName': "PeopleTable"}
-    body = {'requestType': "fetchList", 'userSubId': "123", 'tableName': "SocialButterflyChatsTable"}
+    body = {'requestType': "fetchList", 'userSubId': "123", 'tableName': "PeopleTable"}
+    # body = {'requestType': "fetchList", 'userSubId': "123", 'tableName': "SocialButterflyChatsTable"}
 
     # # test to put an item that does already exist
     # body = {'requestType': "insertRow", 'userSubId': "123", 'tableName': "PeopleTable", 'email': "14@test.com"}

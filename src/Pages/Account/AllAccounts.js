@@ -1,4 +1,5 @@
 import React from 'react'
+import { API } from 'aws-amplify';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import { Dialog, DialogActions, Button, DialogTitle, DialogContent,TextField, DialogContentText } from '@material-ui/core'
 import { withRouter } from "react-router";
@@ -88,6 +89,9 @@ class BusinessAccount extends React.Component {
     }
    console.log('Fetching People List')
    console.log(body)
+
+   const response = await API.get('PeopleApi', '/people');
+   console.log(response)
     // backend call to get people list 
     /*
     this.setState({
