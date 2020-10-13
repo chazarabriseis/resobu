@@ -83,15 +83,18 @@ class BusinessAccount extends React.Component {
   }
 
   async fetchPeopleList() {  
-    const body = {
-      usertoken: this.props.userInfo.userSubId,
-      request_type: 'listpeople'
+    const _body = {
+      user_sub_id: this.props.userInfo.userSubId,
+      request_type: 'list_people'
     }
    console.log('Fetching People List')
-   console.log(body)
+   console.log(_body)
 
-   const response = await API.get('PeopleApi', '/people');
-   console.log(response)
+   //const response = await API.post('PeopleApi', '/people', {
+   //   body: _body
+   //  })
+   // const response = await API.get('PeopleApi', '/people')
+   // console.log(response)
     // backend call to get people list 
     /*
     this.setState({
@@ -101,7 +104,7 @@ class BusinessAccount extends React.Component {
     // POST request to get people DB - tested
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
-          usertoken: this.props.userInfo.userSubId,
+          user_sub_id: this.props.userInfo.userSubId,
           request_type: 'listpeoples'
       }
     })
@@ -134,18 +137,15 @@ class BusinessAccount extends React.Component {
       isLoadingMeetingInfoList: true
     })
     const body = {
-      usertoken: this.props.userInfo.userSubId,
-      request_type: 'listmeeting'
+      user_sub_id: this.props.userInfo.userSubId,
+      request_type: 'list_meeting'
     }
    console.log('Fetching Meeting Info')
    console.log(body)
     /*
     // POST request to get meetingInfo from DB
     API.post('resobu_api_endpoint', '/rds-request', {
-      body: {
-          usertoken: this.props.userInfo.userSubId,
-          request_type: 'listmeeting'
-      }
+      body: body
     })
     .then(response => {
       const resultList = response['meeting_info']
@@ -201,7 +201,7 @@ class BusinessAccount extends React.Component {
     }]
 
     const body = {
-      usertoken: this.props.userInfo.userSubId,
+      user_sub_id: this.props.userInfo.userSubId,
       request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
       table_name: 'SocialButterflyChatsTable',
       list_to_insert: meetingList
@@ -219,7 +219,7 @@ class BusinessAccount extends React.Component {
     // POST to create a meeting in DB   
     API.post('resobu_api_endpoint', '/rds-request', {
       body: {
-          usertoken: this.props.userInfo.userSubId,
+          user_sub_id: this.props.userInfo.userSubId,
           request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
           table_name: 'SocialButterflyChatsTable'
           list_to_insert: meetingList
@@ -293,22 +293,16 @@ class BusinessAccount extends React.Component {
     } else {
       const emailList = this.createPeopleTableEntries(emails)
       const body = {
-        usertoken: this.props.userInfo.userSubId,
-        request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-        table_name: 'PeopleTable',
-        list_to_insert: emailList
+        user_sub_id: this.props.userInfo.userSubId,
+        request_type: 'insert_person',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+        email: emailList[0] // list_to_insert: emailList
       }
      console.log('adding emails')
      console.log(body)
       /*
         // POST toadd emails to DB   
-        API.post('resobu_api_endpoint', '/rds-request', {
-            body: {
-                usertoken: this.props.userInfo.userSubId,
-                request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-                table_name: 'PeopleTable',
-                list_to_insert: emailList
-            }
+        API.post('PeopleApi', '/people', {
+            body: body
         })
         .then(response => {
               if (response['errorType'] === 'Key already exists') {
@@ -601,7 +595,8 @@ class BusinessAccount extends React.Component {
 
   sendPersonChangesToDB = () => {
     // also need to change all the other entries of the connected ones...should be collected in the change event
-   console.log('triggering to send emplyee changes to DB')
+    console.log('triggering to send emplyee changes to DBBBB')
+    this.setState({showEditPersonDialog: false, showEditEmployeeDialog: false})
     const changes = {
       projectColleagues: this.state.peopleList[this.state.selectedEmailTableId].projectColleagues,
       teamColleagues: this.state.peopleList[this.state.selectedEmailTableId].teamColleagues
@@ -611,29 +606,24 @@ class BusinessAccount extends React.Component {
     for (let i =0; i<collateralChanges.length; i++) {
       this.editTableEntry('PeopleTable', collateralChanges[i].colId, collateralChanges[i].changes)
     }
-    this.setState({showEditPersonDialog: false})
   }
 
   async editTableEntry(tableName, colId, changes){ 
-    const body = {
-      request_type: 'changerowvalues',
-      usertoken: this.props.userInfo.userSubId,
-      table_name: tableName, // either PeopleTable or SocialButterflyChatsTable
-      col_id: colId,  // either personId or userSubId depeding on the table
-      changes: changes // dictionary wit column names as key and new values as value
-    } 
+    let body = {}
+    if (tableName === "PeopleTable") {
+      body = {
+        request_type: 'update_person',
+        user_sub_id: this.props.userInfo.userSubId,
+        email: colId,
+        changes: changes // dictionary with column names as in DB as key and new values as value
+      } 
+    }
    console.log('editing table entry')
    console.log(body)
     /*
         // POST to edit table entry in DB   
-        API.post('resobu_api_endpoint', '/rds-request', {
-            body: {
-                request_type: 'changerowvalues',
-                usertoken: this.props.userInfo.userSubId,
-                table_name: tableName, // either PeopleTable or SocialButterflyChatsTable
-                col_id: colId,  // either personId or userSubId
-                changes: changes // dictionary wit column names as key and new values as value
-            }
+        API.post('PeopleApi', '/people', {
+            body: body
         })
         .then(response => {
               if (response['errorMessage'] === 'Add successful') {
@@ -711,26 +701,16 @@ class BusinessAccount extends React.Component {
     // change all the entries that had the selected people as a team/project/connected colleague
     this.deletePersonEverywhere()
     const body = {
-      requesttype: "deleterow",
-      usertoken: this.props.userInfo.userSubId,
-      tableName: 'PeopleTable',
-      usertokenColumnName: "userSubId",
-      uid: this.state.selectedEmailId[0],
-      uidColumnName:  "personId"
+      request_type: "delete_person",
+      user_sub_id: this.props.userInfo.userSubId,
+      email: this.state.selectedEmailId[0]
     }
    console.log(`delete person`) 
    console.log(body)
     /*
         // POST to delete emails to DB - tested   
         API.post('resobu_api_endpoint', '/rds-request', {
-            body: {
-              requesttype: "deleterow",
-              usertoken: this.props.userInfo.userSubId,
-              tableName: 'PeopleTable',
-              usertokenColumnName: "userSubId",
-              uid: this.state.selectedEmailId,
-              uidColumnName:  "personId"
-            }
+            body: body
         })
         then(response => {
           try { 
