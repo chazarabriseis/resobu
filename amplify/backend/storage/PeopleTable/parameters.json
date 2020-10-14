@@ -1,7 +1,0 @@
-{
-    "tableName": "PeopleTable",
-    "partitionKeyName": "userSubId",
-    "partitionKeyType": "S",
-    "sortKeyName": "email",
-    "sortKeyType": "S"
-}
