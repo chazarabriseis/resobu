@@ -91,11 +91,11 @@ class BusinessAccount extends React.Component {
     console.log('Fetching People List')
     console.log(_body)
 
-    const response = await API.post('dynamodbapi', '/dynamodb-request', {
-      body: _body
-    })
+    //const response = await API.post('dynamodbapi', '/dynamodb-request', {
+    //  body: _body
+    //})
    // const response = await API.get('PeopleApi', '/people')
-    console.log(response)
+    //console.log(response)
     // backend call to get people list 
     /*
     this.setState({
