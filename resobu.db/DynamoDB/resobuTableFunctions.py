@@ -5,17 +5,8 @@ from botocore.exceptions import ClientError
 
 def lambda_handler(event):
     # MISSING: would like to check that connection and table exists
-    dynamodb_client = boto3.client('dynamodb', endpoint_url="http://localhost:8000")
-    print(dynamodb_client.list_tables()['TableNames'])
-    # if "PeopleTable" in dynamodb_client.list_tables()['TableNames']:
-    #    print('table is in ')
-    #    dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
-    #    table = dynamodb.Table("PeopleTable")
-    # else:
-    #    print('table is out ')
-    #    return {"errorType": "DBConnection",
-    #            "httpStatus": 500,
-    #            "message": "No connection to DB or table doesn't exist"}
+    # dynamodb_client = boto3.client('dynamodb', endpoint_url="http://localhost:8000")
+    # print(dynamodb_client.list_tables()['TableNames'])
 
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
     table = dynamodb.Table("ReSoBuTable")
@@ -31,49 +22,69 @@ def lambda_handler(event):
                                                 "(request_type, user_sub_id, group_type)"}}
     user_sub_id = user_sub_id + '#' + group_type
 
-    if command_to_perform == 'list_people':
+    if command_to_perform == 'read_people':
         response = table.query(
-            KeyConditionExpression=Key('UserSubId').eq(user_sub_id) & Key('TypeInfo').begins_with('PERSON#')
+            KeyConditionExpression=Key('UserSubIdGroupType').eq(user_sub_id) & Key('TypeInfo').begins_with('PERSON#')
         ),
 
         return response
 
-    if command_to_perform == 'list_chat_parents':
+    if command_to_perform == 'read_chat_parents':
         response = table.query(
-            KeyConditionExpression=Key('UserSubId').eq(user_sub_id) & Key('TypeInfo').begins_with('CHATPARENT#')
+            KeyConditionExpression=Key('UserSubIdGroupType').eq(user_sub_id) &
+            Key('TypeInfo').begins_with('CHATPARENT#')
         ),
 
         return response
 
-    if command_to_perform == 'list_activated_chat_parents':
+    if command_to_perform == 'read_activated_chat_parents':
         response = table.query(
-            KeyConditionExpression=Key('UserSubId').eq(user_sub_id) & Key('TypeInfo').begins_with('CHATPARENT#True#')
+            KeyConditionExpression=Key('UserSubIdGroupType').eq(user_sub_id) &
+            Key('TypeInfo').begins_with('CHATPARENT#True#')
         ),
 
         return response
 
-    if command_to_perform == 'insert_person':
-        try:
-            email = event["email"]
-            email = 'PERSON#' + email
-        except KeyError:
-            return {'ResponseMetadata': {"errorType": "KeyError",
+    if command_to_perform == 'create_person' or command_to_perform == 'create_chat_parent':
+        response = {'ResponseMetadata': {"errorType": "EmptyResponse",
                                          "HTTPStatusCode": 500,
-                                         "message": "One of the required function parameters not present (email)"}}
+                                         "message": "DB query returned nothing"}}
+        type_info = ''
+        info = {}
+
+        if command_to_perform == 'create_person':
+            try:
+                info = event["person_info"]
+                email = event["email"]
+                type_info = 'PERSON#' + email
+            except KeyError:
+                return {'ResponseMetadata': {"errorType": "KeyError",
+                                             "HTTPStatusCode": 500,
+                                             "message": "One of the required function parameters not present "
+                                                        "(email, person_info)"}}
+
+        if command_to_perform == 'create_chat_parent':
+            try:
+                info = event["chat_info"]
+                activated = event["activated"]
+                next_chat = event["next_chat"]
+                type_info = 'CHATPARENT#' + str(activated) + '#' + next_chat
+            except KeyError:
+                return {'ResponseMetadata': {"errorType": "KeyError",
+                                             "HTTPStatusCode": 500,
+                                             "message": "One of the required function parameters not present "
+                                                        "(chat_info, activated, next_chat)"}}
+
         try:
             response = table.put_item(
                 Item={
-                    'UserSubId': user_sub_id,
-                    'TypeInfo': email,
+                    'UserSubIdGroupType': user_sub_id,
+                    'TypeInfo': type_info,
 
-                    'info': {
-                        'teamColleagues': [],
-                        'projectColleagues': [],
-                        'connectedColleagues': []
-                    }
+                    'info': info
                 },
-                ConditionExpression="TypeInfo <> :email",
-                ExpressionAttributeValues={':email': email}
+                ConditionExpression="TypeInfo <> :type_info",
+                ExpressionAttributeValues={':type_info': type_info}
             )
         except ClientError as e:
             print(e)
@@ -84,58 +95,45 @@ def lambda_handler(event):
 
         return response
 
-    if command_to_perform == 'insert_chat_parent':
-        try:
-            chat_info = event["chat_info"]
-            activated = event["activated"]
-            next_chat = event["next_chat"]
-            chat = 'CHATPARENT#' + str(activated) + '#' + next_chat
-        except KeyError:
-            return {'ResponseMetadata': {"errorType": "KeyError",
+    if command_to_perform == 'update_person' or command_to_perform == 'update_chat_parent':
+        response = {'ResponseMetadata': {"errorType": "EmptyResponse",
                                          "HTTPStatusCode": 500,
-                                         "message": "One of the required function parameters not present "
-                                                    "(chat_info, activated, next_chat)"}}
-        try:
-            response = table.put_item(
-                Item={
-                    'UserSubId': user_sub_id,
-                    'TypeInfo': chat,
+                                         "message": "DB query returned nothing"}}
+        changes = {}
+        type_info = ''
 
-                    'info': chat_info
-                },
-                ConditionExpression="TypeInfo <> :chat",
-                ExpressionAttributeValues={':chat': chat}
-            )
-        except ClientError as e:
-            print(e)
-            if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
-                return {'ResponseMetadata': {"errorType": "ConditionalCheckFailedException",
+        if command_to_perform == 'update_person':
+            try:
+                email = event["email"]
+                type_info = 'PERSON#' + email
+                changes = event["changes"]
+            except KeyError:
+                return {'ResponseMetadata': {"errorType": "KeyError",
                                              "HTTPStatusCode": 500,
-                                             "message": "Chat already exists"}}
+                                             "message": "One of the required function parameters not present "
+                                                        "(email,changes)"}}
+        if command_to_perform == 'update_chat_parent':
+            try:
+                changes = event["changes"]
+                activated = event["activated"]
+                next_chat = event["next_chat"]
+                type_info = 'CHATPARENT#' + str(activated) + '#' + next_chat
+            except KeyError:
+                return {'ResponseMetadata': {"errorType": "KeyError",
+                                             "HTTPStatusCode": 500,
+                                             "message": "One of the required function parameters not present "
+                                                        "(chat_info, activated, next_chat)"}}
 
-        return response
-
-    if command_to_perform == 'update_person':
-        try:
-            email = event["email"]
-            email = 'PERSON#' + email
-            changes = event["changes"]
-        except KeyError:
-            return {'ResponseMetadata': {"errorType": "KeyError",
-                                         "HTTPStatusCode": 500,
-                                         "message": "One of the required function parameters not present "
-                                                    "(email,changes)"}}
-
-        update_expression, expression_attribute_values = get_update_expressions(changes, email)
+        update_expression, expression_attribute_values = get_update_expressions(changes, type_info)
 
         try:
             response = table.update_item(
                 Key={
-                    'userSubId': user_sub_id,
-                    'TypeInfo': email
+                    'UserSubIdGroupType': user_sub_id,
+                    'TypeInfo': type_info
                 },
                 UpdateExpression=update_expression,
-                ConditionExpression="TypeInfo = :email",
+                ConditionExpression="TypeInfo = :type_info",
                 ExpressionAttributeValues=expression_attribute_values,
                 ReturnValues="UPDATED_NEW"
             )
@@ -148,24 +146,41 @@ def lambda_handler(event):
 
         return response
 
-    if command_to_perform == 'delete_person':
-        try:
-            email = event["email"]
-            email = 'PERSON#' + email
-        except KeyError:
-            return {'ResponseMetadata': {"errorType": "KeyError",
+    if command_to_perform == 'delete_person' or command_to_perform == 'delete_chat_parent':
+        response = {'ResponseMetadata': {"errorType": "EmptyResponse",
                                          "HTTPStatusCode": 500,
-                                         "message": "One of the required function parameters not present (email)"}}
+                                         "message": "DB query returned nothing"}}
+        type_info = ''
+
+        if command_to_perform == 'delete_person':
+            try:
+                email = event["email"]
+                type_info = 'PERSON#' + email
+            except KeyError:
+                return {'ResponseMetadata': {"errorType": "KeyError",
+                                             "HTTPStatusCode": 500,
+                                             "message": "One of the required function parameters not present (email)"}}
+
+        if command_to_perform == 'delete_chat_parent':
+            try:
+                activated = event["activated"]
+                next_chat = event["next_chat"]
+                type_info = 'CHATPARENT#' + str(activated) + '#' + next_chat
+            except KeyError:
+                return {'ResponseMetadata': {"errorType": "KeyError",
+                                             "HTTPStatusCode": 500,
+                                             "message": "One of the required function parameters not present "
+                                                        "(activated, next_chat)"}}
 
         try:
             response = table.delete_item(
-                TableName='PeopleTable',
+                TableName='ReSoBuTable',
                 Key={
-                    'userSubId': user_sub_id,
-                    'TypeInfo': email
+                    'UserSubIdGroupType': user_sub_id,
+                    'TypeInfo': type_info
                 },
-                ConditionExpression="TypeInfo = :email",
-                ExpressionAttributeValues={':email': email}
+                ConditionExpression="TypeInfo = :typeinfo",
+                ExpressionAttributeValues={':typeinfo': type_info}
 
             )
         except ClientError as e:
@@ -182,11 +197,11 @@ def lambda_handler(event):
                                  "message": "command_to_perform does not exist"}}
 
 
-def get_update_expressions(changes, email):
+def get_update_expressions(changes, type_info):
     update_expression = 'set '
     expression_attribute_values = {}
     for change in changes:
         update_expression = update_expression + 'info.' + change + '=:' + change
         expression_attribute_values[':'+change] = changes[change]
-    expression_attribute_values[':email'] = email
+    expression_attribute_values[':type_info'] = type_info
     return update_expression, expression_attribute_values

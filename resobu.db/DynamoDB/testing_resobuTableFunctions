@@ -3,30 +3,41 @@ from pprint import pprint
 
 if __name__ == '__main__':
     # # test to fetch the People List
-    # body = {'request_type': "list_people", 'user_sub_id': "1", 'group_type': 'Business'}
-    # body = {'request_type': "list_chat_parents", 'user_sub_id': "1", 'group_type': 'Business'}
-    body = {'request_type': "list_activated_chat_parents", 'user_sub_id': "1", 'group_type': 'Business'}
+    body = {'request_type': "read_people", 'user_sub_id': "3", 'group_type': 'Business'}
+    # body = {'request_type': "read_chat_parents", 'user_sub_id': "1", 'group_type': 'Business'}
+    # body = {'request_type': "read_activated_chat_parents", 'user_sub_id': "1", 'group_type': 'Business'}
 
-    # # test to put an item that does already exist
-    # body = {'request_type': "insert_person", 'user_sub_id': "1", 'group_type': 'Business', 'email': "1@test.com"}
+    # # test to put an item
+    # body = {'request_type': "create_person", 'user_sub_id': "3", 'group_type': 'Business', 'email': "3@test.com",
+    #        'person_info': {'teamColleagues': [], 'projectColleagues': [],'connectedColleagues': []}}
 
-    # body = {'request_type': "insert_chat_parent", 'user_sub_id': "1", 'group_type': 'Business',
-    #         "activated": True,
-    #         "next_chat": '2021-01-01',
-    #         "chat_info": {'frequency': 'monthly', 'startDate': "2021-01-01", 'endDate': "2033-01-01", 'duration': '30',
-    #                       'weekday': 'friday', 'time': '11:30', 'weekOfMonth': 'last',
-    #                       'inviteText': '<p>Hello $NAME$,</p><p><br></p><p>your next <strong>Remote Chat</strong>',
-    #                       'todoList': {'enteredEmails': False, 'personalisedInvite': False, 'scheduledMeeting': False,
-    #                                    'choseMeetingTime': False, 'activated': False}
-    #                       }
-    #         }
+    # body = {'request_type': "create_chat_parent", 'user_sub_id': "2", 'group_type': 'Business',
+    #          "activated": True,
+    #          "next_chat": '2021-01-01',
+    #          "chat_info": {'frequency': 'monthly', 'startDate': "2021-01-01", 'endDate': "2033-01-01", 'duration': '30',
+    #                        'weekday': 'friday', 'time': '11:30', 'weekOfMonth': 'last',
+    #                        'inviteText': '<p>Hello $NAME$,</p><p><br></p><p>your next <strong>Remote Chat</strong>',
+    #                         'todoList': {'enteredEmails': False, 'personalisedInvite': False, 'scheduledMeeting': False,
+    #                                      'choseMeetingTime': False, 'activated': False},
+    #                        'chatSize': 2}
+    #          }
 
     # # test to update an existing item updateRow
-    # body = {'request_type': "update_person", 'user_sub_id': "123", 'email': '2@test.com',
-    #        'changes': {'projectColleagues': ['1@test.com','1@test.com']}}
+    # body = {'request_type': "update_person", 'user_sub_id': "4", 'group_type': 'Business', 'email': '2@test.com',
+    #         'changes': {'projectColleagues': ['1@test.com', '1@test.com']}}
+    # body = {'request_type': "update_chat_parent", 'user_sub_id': "5", 'group_type': 'Business', "activated": True,
+    #         "next_chat": '2021-01-01',
+    #         'changes': {"chat_info": {'frequency': 'always', 'startDate': "2021-01-01", 'endDate': "2033-01-01", 'duration': '30',
+    #                                   'weekday': 'friday', 'time': '11:30', 'weekOfMonth': 'last',
+    #                                   'inviteText': '<p>Hello $NAME$,</p><p><br></p><p>your next <strong>Remote Chat</strong>',
+    #                                   'todoList': {'enteredEmails': False, 'personalisedInvite': False, 'scheduledMeeting': False,
+    #                                                'choseMeetingTime': False, 'activated': False},
+    #                                   'chatSize': 4}
+    #          }}
 
     # # test to delete an existing item
-    # body = {'request_type': "delete_person", 'user_sub_id': "123", 'email': "6@test.com"}
+    # body = {'request_type': "delete_person", 'user_sub_id': "1", 'group_type': 'Business', 'email': "2@test.com"}
+    # body = {'request_type': "delete_chat_parent", 'user_sub_id': "1", 'group_type': 'Business', "activated": True, "next_chat": '2021-01-01',}
 
     lambdaResponse = rtf.lambda_handler(body)
     print("Got following response:")

@@ -8,7 +8,7 @@ def create_one_table():
         TableName='ReSoBuTable',
         KeySchema=[
             {
-                'AttributeName': 'UserSubId',
+                'AttributeName': 'UserSubIdGroupType',
                 'KeyType': 'HASH'  # Partition key
             },
             {
@@ -18,7 +18,7 @@ def create_one_table():
         ],
         AttributeDefinitions=[
             {
-                'AttributeName': 'UserSubId',
+                'AttributeName': 'UserSubIdGroupType',
                 'AttributeType': 'S'
             },
             {
