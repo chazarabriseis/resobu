@@ -6,9 +6,9 @@ from botocore.exceptions import ClientError
 
 def lambda_handler(event, context):
 
-    userattributeslist = [ "given_name","family_name","email"]
+    userattributeslist = ["email"]
     try:
-        accesstoken = event["accessToken"]
+        user_sub_id = event["user_sub_id"]
         message_header = event['subject']
         message_body = event['body']
 
@@ -24,7 +24,7 @@ def lambda_handler(event, context):
         # Create new cognito idp resource
         print("Starting IDP information requests...")
         idp = boto3.client('cognito-idp')
-        idp_response = idp.get_user(AccessToken=accesstoken)
+        idp_response = idp.get_user(AccessToken=user_sub_id)
         print(idp_response["UserAttributes"])
 
         userattributes={}
@@ -38,7 +38,7 @@ def lambda_handler(event, context):
                 print("...got: "+userattributes[attrib])
 
     except ClientError as e:
-        message = "Failed! Requested: "+accesstoken+" IDP Response"+e.response['Error']['Message']
+        message = "Failed! Requested: "+user_sub_id+" IDP Response"+e.response['Error']['Message']
         print(message)
         raise Exception({
                 "errorType" : "Exception",
@@ -51,8 +51,8 @@ def lambda_handler(event, context):
         print("Success: IDP identity info")
 
         # set intermediate variables for convenience
-        lastname = userattributes["family_name"]
-        firstname = userattributes["given_name"]
+        # lastname = userattributes["family_name"]
+        # firstname = userattributes["given_name"]
         email = userattributes["email"]
 
 
@@ -80,7 +80,7 @@ def lambda_handler(event, context):
     # to email address
     RECIPIENT = "remote.social.butterfly@gmail.com"
     # The subject line for the email.
-    SUBJECT = "RESOBU: Contact from %s" % firstname
+    SUBJECT = "RESOBU: Contact from %s" % email
 
     
     # Also add text wrapping here to mimic what the user typed in 
@@ -91,9 +91,9 @@ def lambda_handler(event, context):
     # The email body for recipients with non-HTML email clients.
     BODY_TEXT = ("A user has contacted you\r\n"
                  "User info:\r\n"
-                 f"First Name: {firstname} \r\n"
-                 f"Last Name: {lastname} \r\n"
                  f"Email: {email} \r\n"
+                 "Subject:\r\n"
+                 f"{message_header} \r\n" 
                  "Text:\r\n"
                  f"{message_body} \r\n" 
                  )
@@ -107,15 +107,15 @@ def lambda_handler(event, context):
                 <body>
                 <h1>A user has contacted you</h1>
                 <p>User info:</p>
-                <p><b>First Name:</b> %s</br>
-                <b>Last Name:</b> %s</br>
                 <b>Email:</b> %s</br>
+                <p>Subject:</p>
+                 %s
                 <b>Contact:</b></br></br>
                 %s
                 </br></br>
                 </body>
                 </html>
-                """ % (firstname,lastname,email,message_body_html)
+                """ % (email,message_header,message_body_html)
 
     #
     # Mail Notification
