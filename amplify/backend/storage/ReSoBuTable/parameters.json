@@ -1,0 +1,7 @@
+{
+    "tableName": "ReSoBuTable",
+    "partitionKeyName": "UserSubIdGroupType",
+    "partitionKeyType": "S",
+    "sortKeyName": "TypeInfo",
+    "sortKeyType": "S"
+}
