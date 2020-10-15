@@ -97,7 +97,7 @@ class BusinessAccount extends React.Component {
     })
     */
 
-    //POST request to get people DB - tested
+    //POST request to get people DB - teste
     API.post('ReSoBuAPI', '/dynamodb-requests', {
       body: _body
     })
