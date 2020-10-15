@@ -85,33 +85,24 @@ class BusinessAccount extends React.Component {
   async fetchPeopleList() {  
     const _body = {
       user_sub_id: this.props.userInfo.userSubId,
-      request_type: 'read_people',
-      group_type: this.props.userInfo.groupType
+      group_type: this.props.userInfo.groupType,
+      request_type: 'read_people'
     }
     console.log('Fetching People List')
     console.log(_body)
 
-    //const response = await API.post('dynamodbapi', '/dynamodb-request', {
-    //  body: _body
-    //})
-   // const response = await API.get('PeopleApi', '/people')
-    //console.log(response)
-    // backend call to get people list 
     /*
     this.setState({
       isLoadingPeopleList: true
     })
 
     // POST request to get people DB - tested
-    API.post('resobu_api_endpoint', '/rds-request', {
-      body: {
-          user_sub_id: this.props.userInfo.userSubId,
-          request_type: 'listpeoples'
-      }
+    API.post('ReSoBuAPI', '/dynamodb-requests', {
+      body: _body
     })
     .then(response => {
-      const resultList = response['meeting_info']
-      this.setState({meetingInfo: resultList})
+      const resultList = response['Items']
+      this.setState({peopleList: resultList})
     }) 
     .catch(e => {
       toast.warning("Sorry, there was a problem connecting to the DB.", {
@@ -137,20 +128,22 @@ class BusinessAccount extends React.Component {
     this.setState({
       isLoadingMeetingInfoList: true
     })
-    const body = {
+    const _body = {
       user_sub_id: this.props.userInfo.userSubId,
-      request_type: 'list_meeting'
+      group_type: this.props.userInfo.groupType,
+      request_type: 'read_chat_parents'
+      
     }
    console.log('Fetching Meeting Info')
-   console.log(body)
+   console.log(_body)
     /*
     // POST request to get meetingInfo from DB
-    API.post('resobu_api_endpoint', '/rds-request', {
-      body: body
+    API.post('ReSoBuAPI', '/dynamodb-requests', {
+      body: _body
     })
     .then(response => {
-      const resultList = response['meeting_info']
-      this.setState({meetingInfo: resultList})
+      const resultList = response['Items']
+      this.setState({meetingInfo: resultList[0]})
 
       if (!resultList) {
         await this.createMeeting()
@@ -194,22 +187,16 @@ class BusinessAccount extends React.Component {
       todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
       activated: false
     }
-    const meetingList = [{
-      userSubId: this.props.userInfo.userSubId,
-      meetingInfo: meetingInfo,
-      groupType: this.props.userInfo.groupType,
-      subscription: this.props.userInfo.subscription
-    }]
 
-    const body = {
+    const _body = {
       user_sub_id: this.props.userInfo.userSubId,
-      request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-      table_name: 'SocialButterflyChatsTable',
-      list_to_insert: meetingList
+      group_type: this.props.userInfo.groupType,
+      request_type: 'create_chat_parent',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+      info: meetingInfo
     }
 
    console.log('Creating initial meeting')
-   console.log(body)
+   console.log(_body)
 
     this.setState({
       meetingInfo: meetingInfo,
@@ -218,13 +205,8 @@ class BusinessAccount extends React.Component {
 
     /*
     // POST to create a meeting in DB   
-    API.post('resobu_api_endpoint', '/rds-request', {
-      body: {
-          user_sub_id: this.props.userInfo.userSubId,
-          request_type: 'insertrows',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-          table_name: 'SocialButterflyChatsTable'
-          list_to_insert: meetingList
-      }
+    API.post('ReSoBuAPI', '/dynamodb-requests', {
+      body: _body
     })
     .then(response => {
           if (response['errorType'] === 'Key already exists') {
@@ -247,7 +229,6 @@ class BusinessAccount extends React.Component {
     })
   */
   }
-
 
   openAddPersonDialog = () => {
     const currentState = _.cloneDeep(this.state)
@@ -293,17 +274,18 @@ class BusinessAccount extends React.Component {
       return
     } else {
       const emailList = this.createPeopleTableEntries(emails)
-      const body = {
+      const _body = {
         user_sub_id: this.props.userInfo.userSubId,
-        request_type: 'insert_person',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+        group_type: this.props.userInfo.groupType,
+        request_type: 'create_person',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
         email: emailList[0] // list_to_insert: emailList
       }
      console.log('adding emails')
-     console.log(body)
+     console.log(_body)
       /*
         // POST toadd emails to DB   
-        API.post('PeopleApi', '/people', {
-            body: body
+        API.post('ReSoBuAPI', '/dynamodb-requests', {
+            body: _body
         })
         .then(response => {
               if (response['errorType'] === 'Key already exists') {
@@ -610,21 +592,33 @@ class BusinessAccount extends React.Component {
   }
 
   async editTableEntry(tableName, colId, changes){ 
-    let body = {}
+    let _body = {}
     if (tableName === "PeopleTable") {
-      body = {
-        request_type: 'update_person',
+      _body = {
         user_sub_id: this.props.userInfo.userSubId,
+        group_type: this.props.userInfo.groupType,
+        request_type: 'update_person',
         email: colId,
         changes: changes // dictionary with column names as in DB as key and new values as value
       } 
     }
+    if (tableName === "SocialButterflyChatsTable") {
+      _body = {
+        user_sub_id: this.props.userInfo.userSubId,
+        group_type: this.props.userInfo.groupType,
+        request_type: 'update_chat_parent',
+        // TODO: change the chat_parent structure
+        // activated: True,
+        // next_chat: '2021-01-01',
+        changes: changes // dictionary with column names as in DB as key and new values as value
+      } 
+    }
    console.log('editing table entry')
-   console.log(body)
+   console.log(_body)
     /*
         // POST to edit table entry in DB   
-        API.post('PeopleApi', '/people', {
-            body: body
+        API.post('ReSoBuAPI', '/dynamodb-requests', {
+            body: _body
         })
         .then(response => {
               if (response['errorMessage'] === 'Add successful') {
@@ -701,17 +695,18 @@ class BusinessAccount extends React.Component {
   async deletePerson () {  
     // change all the entries that had the selected people as a team/project/connected colleague
     this.deletePersonEverywhere()
-    const body = {
-      request_type: "delete_person",
+    const _body = {
       user_sub_id: this.props.userInfo.userSubId,
+      group_type: this.props.userInfo.groupType,
+      request_type: "delete_person",
       email: this.state.selectedEmailId[0]
     }
    console.log(`delete person`) 
-   console.log(body)
+   console.log(_body)
     /*
         // POST to delete emails to DB - tested   
-        API.post('resobu_api_endpoint', '/rds-request', {
-            body: body
+        API.post('ReSoBuAPI', '/dynamodb-requests', {
+            body: _body
         })
         then(response => {
           try { 
@@ -760,7 +755,7 @@ class BusinessAccount extends React.Component {
 
   saveChangeMeeting = () => {
    console.log('triggering to send meeting changes to DB')
-    const changes = {meetingInfo: this.state.meetingInfo}
+    const changes = {info: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeMeetingTime: false})
   }
@@ -794,7 +789,7 @@ class BusinessAccount extends React.Component {
         && this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$DURATION$')
         && this.state.meetingInfo.inviteText.includes('$CHATPARTNER$')) {
           console.log('triggering to send meeting changes to DB')
-          const changes = {meetingInfo: this.state.meetingInfo}
+          const changes = {info: this.state.meetingInfo}
           this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
           this.setState({changeInvite: false})
     } else {
@@ -815,7 +810,7 @@ class BusinessAccount extends React.Component {
 
   saveChangeTodoList = () => {
    console.log('triggering to send meeting changes to DB')
-    const changes = {meetingInfo: this.state.meetingInfo}
+    const changes = {info: this.state.meetingInfo}
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeTodoList: false})
   }
@@ -904,7 +899,7 @@ class BusinessAccount extends React.Component {
         // delete selected one
         newMeetingInfo.chats.splice(this.state.selectedChatTableId,1)
         newMeetingInfo.chats.push(newChatInfo)
-        const changes = {meetingInfo: newMeetingInfo}
+        const changes = {info: newMeetingInfo}
         console.log('triggering to send meeting changes to DB')
         this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
         this.setState({
@@ -914,7 +909,7 @@ class BusinessAccount extends React.Component {
         })
       } else {
           newMeetingInfo.chats.push(newChatInfo)
-          const changes = {meetingInfo: newMeetingInfo}
+          const changes = {info: newMeetingInfo}
           console.log('triggering to send meeting changes to DB')
           this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
           this.setState({
@@ -939,7 +934,7 @@ class BusinessAccount extends React.Component {
   deleteChat = () => {
     let newMeetingInfo = _.clone(this.state.meetingInfo)
     newMeetingInfo.chats.splice(this.state.selectedChatTableId,1)
-    const changes = {meetingInfo: newMeetingInfo}
+    const changes = {info: newMeetingInfo}
     console.log('triggering to send meeting changes to DB')
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({

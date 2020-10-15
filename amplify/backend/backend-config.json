@@ -19,6 +19,28 @@
 			"providerPlugin": "awscloudformation"
 		}
 	},
-	"function": {},
-	"api": {}
+	"function": {
+		"ReSoBuLambdaDynamodbRequests": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": []
+		}
+	},
+	"api": {
+		"ReSoBuAPI": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "ReSoBuLambdaDynamodbRequests",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	}
 }

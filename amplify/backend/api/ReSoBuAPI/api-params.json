@@ -1,0 +1,41 @@
+{
+    "paths": [
+        {
+            "name": "/dynamodb-requests",
+            "lambdaFunction": "ReSoBuLambdaDynamodbRequests",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
+        }
+    ],
+    "resourceName": "ReSoBuAPI",
+    "apiName": "ReSoBuAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "ReSoBuLambdaDynamodbRequests"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "amplify-resobu-dev-101636-authRole",
+        "unAuthRoleName": "amplify-resobu-dev-101636-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "ReSoBuLambdaDynamodbRequests",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
