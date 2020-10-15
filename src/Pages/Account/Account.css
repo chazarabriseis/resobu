@@ -1,0 +1,57 @@
+.sections {
+    padding-bottom: 40px;
+}
+
+.section1 {
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.section2 {
+    background-color: rgb(228, 225, 225);
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.sectionContent {
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+}
+
+.sectionHeader {
+    font-size: larger;
+    margin-bottom: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.chatContainer {
+    flex-wrap: wrap;
+}
+
+.chatBox {
+    padding: 10px;
+    margin: 10px;
+    border-color: purple;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.chatBoxTitle {
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.chatBox:hover {
+    background-color: thistle;
+}
+
+.chatBox:focus {
+    background-color: thistle;
+    outline: none;
+    color: white;
+    border-color: thistle;
+}
