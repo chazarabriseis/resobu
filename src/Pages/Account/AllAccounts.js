@@ -102,14 +102,15 @@ class BusinessAccount extends React.Component {
       body: _body
     })
     .then(response => {
-      const resultList = response['Items']
-      this.setState({peopleList: resultList})
+      console.log(response)
+      // const resultList = response['Items']
+      // this.setState({peopleList: resultList})
     }) 
     .catch(e => {
       toast.warning("Sorry, there was a problem connecting to the DB.", {
           position: toast.POSITION.TOP_RIGHT
       })
-    })
+    }) 
     
     this.setState({
       isLoadingPeopleList: false,
