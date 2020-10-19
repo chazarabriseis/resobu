@@ -145,7 +145,7 @@ class SignIn extends React.Component {
     render () {
         return (
             <div className="contact">
-                <div className="flier"><img alt="appIcon" width="50" src="butterfly.png" /></div>
+                <div className="flier"><img alt="appIcon" width="50" src="butterfly-animated_purple.gif" /></div>
                 {this.state.forgotPassword ? (
                     <div>
                         <div className="topSection">
