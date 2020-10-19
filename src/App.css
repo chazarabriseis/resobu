@@ -217,10 +217,10 @@
 /* Adjust animation duration to change the element’s speed */
   animation: fly 10s linear infinite;
   pointer-events: none !important;
-	top: 0;
-	left: 0;
+	top: 400px;
+	left: 1800px;
 	position: fixed;
-	animation-delay: 10s;
+	animation-delay: 0s;
 	z-index: 999999;
 }
 

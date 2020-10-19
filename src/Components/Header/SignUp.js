@@ -177,7 +177,7 @@ class SignUp extends React.Component {
     render () {
         return (
             <div className="contact">
-                <div className="flier"><img alt="appIcon" width="50" src="butterfly.png" /></div>
+                <div className="flier"><img alt="appIcon" width="50" src="butterfly-animated_purple.gif" /></div>
                 <div className="topSection">
                     <div className="heading1"> Create a new account </div>
                 </div>

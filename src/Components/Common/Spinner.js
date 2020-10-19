@@ -10,8 +10,13 @@ library.add(fas)
 export default class Spinner extends Component {
     render() { return(      
         <div className='loadingSpinner'>
-            <FontAwesomeIcon className='spinner' icon='snowflake'/>
+            <FontAwesomeIcon className='spinner' icon='snowflake' color="white"/>
+            <p>
+            <img alt="appIcon" width="50" src="butterfly-animated_purple.gif" />
+            </p>
             <p>Loading...</p>
         </div>
     )}
 }
+
+// <FontAwesomeIcon className='spinner' icon='snowflake'/>
