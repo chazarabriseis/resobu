@@ -1,12 +1,20 @@
+import json
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 
 
-def lambda_handler(event):
+def handler(event, context):
     # MISSING: would like to check that connection and table exists
     # dynamodb_client = boto3.client('dynamodb', endpoint_url="http://localhost:8000")
     # print(dynamodb_client.list_tables()['TableNames'])
+
+    headers = {
+        "Access-Control-Allow-Credentials": True,
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        "Access-Control-Allow-Origin": "*",
+    }
 
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
     table = dynamodb.Table("ReSoBuTable")
@@ -16,10 +24,11 @@ def lambda_handler(event):
         group_type = event["group_type"]
         user_sub_id = event["user_sub_id"]
     except KeyError:
-        return {'ResponseMetadata': {"errorType": "KeyError",
-                                     "HTTPStatusCode": 500,
-                                     "message": "One of the required function parameters not present "
-                                                "(request_type, user_sub_id, group_type)"}}
+        return {"headers": headers,
+                "statusCode": 500,
+                "errorType": "KeyError",
+                "message": "One of the required function parameters not present (request_type, user_sub_id, group_type)"}
+
     user_sub_id = user_sub_id + '#' + group_type
 
     if command_to_perform == 'read_people':
@@ -27,23 +36,29 @@ def lambda_handler(event):
             KeyConditionExpression=Key('UserSubIdGroupType').eq(user_sub_id) & Key('TypeInfo').begins_with('PERSON#')
         ),
 
-        return response
+        return {"headers": headers,
+                "statusCode": 200,
+                "response": json.dumps(response)}
 
     if command_to_perform == 'read_chat_parents':
         response = table.query(
             KeyConditionExpression=Key('UserSubIdGroupType').eq(user_sub_id) &
-            Key('TypeInfo').begins_with('CHATPARENT#')
+                                   Key('TypeInfo').begins_with('CHATPARENT#')
         ),
 
-        return response
+        return {"headers": headers,
+                "statusCode": 200,
+                "response": json.dumps(response)}
 
     if command_to_perform == 'read_activated_chat_parents':
         response = table.query(
             KeyConditionExpression=Key('UserSubIdGroupType').eq(user_sub_id) &
-            Key('TypeInfo').begins_with('CHATPARENT#True#')
+                                   Key('TypeInfo').begins_with('CHATPARENT#True#')
         ),
 
-        return response
+        return {"headers": headers,
+                "statusCode": 200,
+                "response": json.dumps(response)}
 
     if command_to_perform == 'create_person' or command_to_perform == 'create_chat_parent':
         response = {'ResponseMetadata': {"errorType": "EmptyResponse",
@@ -58,10 +73,10 @@ def lambda_handler(event):
                 email = event["email"]
                 type_info = 'PERSON#' + email
             except KeyError:
-                return {'ResponseMetadata': {"errorType": "KeyError",
-                                             "HTTPStatusCode": 500,
-                                             "message": "One of the required function parameters not present "
-                                                        "(email, person_info)"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "KeyError",
+                        "message": "One of the required function parameters not present (email, person_info)"}
 
         if command_to_perform == 'create_chat_parent':
             try:
@@ -70,10 +85,10 @@ def lambda_handler(event):
                 next_chat = event["next_chat"]
                 type_info = 'CHATPARENT#' + str(activated) + '#' + next_chat
             except KeyError:
-                return {'ResponseMetadata': {"errorType": "KeyError",
-                                             "HTTPStatusCode": 500,
-                                             "message": "One of the required function parameters not present "
-                                                        "(chat_info, activated, next_chat)"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "KeyError",
+                        "message": "One of the required function parameters not present (chat_info, activated, next_chat)"}
 
         try:
             response = table.put_item(
@@ -89,16 +104,21 @@ def lambda_handler(event):
         except ClientError as e:
             print(e)
             if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
-                return {'ResponseMetadata': {"errorType": "ConditionalCheckFailedException",
-                                             "HTTPStatusCode": 500,
-                                             "message": "Email already exists"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "ConditionalCheckFailedException",
+                        "message": "Email already exists"}
 
-        return response
+        return {"headers": headers,
+                "statusCode": 200,
+                "response": json.dumps(response)}
 
     if command_to_perform == 'update_person' or command_to_perform == 'update_chat_parent':
-        response = {'ResponseMetadata': {"errorType": "EmptyResponse",
-                                         "HTTPStatusCode": 500,
-                                         "message": "DB query returned nothing"}}
+        response = {"headers": headers,
+                    "statusCode": 500,
+                    "errorType": "EmptyResponse",
+                    "message": "got no response"}
+
         changes = {}
         type_info = ''
 
@@ -108,10 +128,11 @@ def lambda_handler(event):
                 type_info = 'PERSON#' + email
                 changes = event["changes"]
             except KeyError:
-                return {'ResponseMetadata': {"errorType": "KeyError",
-                                             "HTTPStatusCode": 500,
-                                             "message": "One of the required function parameters not present "
-                                                        "(email,changes)"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "KeyError",
+                        "message": "One of the required function parameters not present (email, changes)"}
+
         if command_to_perform == 'update_chat_parent':
             try:
                 changes = event["changes"]
@@ -119,10 +140,10 @@ def lambda_handler(event):
                 next_chat = event["next_chat"]
                 type_info = 'CHATPARENT#' + str(activated) + '#' + next_chat
             except KeyError:
-                return {'ResponseMetadata': {"errorType": "KeyError",
-                                             "HTTPStatusCode": 500,
-                                             "message": "One of the required function parameters not present "
-                                                        "(chat_info, activated, next_chat)"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "KeyError",
+                        "message": "One of the required function parameters not present (chat_info, activated, next_chat)"}
 
         update_expression, expression_attribute_values = get_update_expressions(changes, type_info)
 
@@ -140,11 +161,14 @@ def lambda_handler(event):
         except ClientError as e:
             print(e)
             if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
-                return {'ResponseMetadata': {"errorType": "ConditionalCheckFailedException",
-                                             "HTTPStatusCode": 500,
-                                             "message": "Email does not exist"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "ConditionalCheckFailedException",
+                        "message": "Email already exists"}
 
-        return response
+        return {"headers": headers,
+                "statusCode": 200,
+                "response": json.dumps(response)}
 
     if command_to_perform == 'delete_person' or command_to_perform == 'delete_chat_parent':
         response = {'ResponseMetadata': {"errorType": "EmptyResponse",
@@ -157,9 +181,10 @@ def lambda_handler(event):
                 email = event["email"]
                 type_info = 'PERSON#' + email
             except KeyError:
-                return {'ResponseMetadata': {"errorType": "KeyError",
-                                             "HTTPStatusCode": 500,
-                                             "message": "One of the required function parameters not present (email)"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "KeyError",
+                        "message": "One of the required function parameters not present (email)"}
 
         if command_to_perform == 'delete_chat_parent':
             try:
@@ -167,10 +192,10 @@ def lambda_handler(event):
                 next_chat = event["next_chat"]
                 type_info = 'CHATPARENT#' + str(activated) + '#' + next_chat
             except KeyError:
-                return {'ResponseMetadata': {"errorType": "KeyError",
-                                             "HTTPStatusCode": 500,
-                                             "message": "One of the required function parameters not present "
-                                                        "(activated, next_chat)"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "KeyError",
+                        "message": "One of the required function parameters not present (activated, next_chat)"}
 
         try:
             response = table.delete_item(
@@ -186,15 +211,19 @@ def lambda_handler(event):
         except ClientError as e:
             print(e)
             if e.response['Error']['Code'] == "ConditionalCheckFailedException":
-                return {'ResponseMetadata': {"errorType": "ConditionalCheckFailedException",
-                                             "HTTPStatusCode": 500,
-                                             "message": "Email does not exist"}}
+                return {"headers": headers,
+                        "statusCode": 500,
+                        "errorType": "ConditionalCheckFailedException",
+                        "message": "Email already exists"}
 
-        return response
+        return {"headers": headers,
+                "statusCode": 200,
+                "response": json.dumps(response)}
 
-    return {'ResponseMetadata': {"errorType": "No command matches",
-                                 "HTTPStatusCode": 500,
-                                 "message": "command_to_perform does not exist"}}
+    return {"headers": headers,
+            "statusCode": 500,
+            "errorType": "noCommand",
+            "message": "request type does not exist"}
 
 
 def get_update_expressions(changes, type_info):
@@ -202,6 +231,6 @@ def get_update_expressions(changes, type_info):
     expression_attribute_values = {}
     for change in changes:
         update_expression = update_expression + 'info.' + change + '=:' + change
-        expression_attribute_values[':'+change] = changes[change]
+        expression_attribute_values[':' + change] = changes[change]
     expression_attribute_values[':type_info'] = type_info
     return update_expression, expression_attribute_values
