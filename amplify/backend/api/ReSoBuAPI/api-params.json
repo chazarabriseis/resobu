@@ -13,6 +13,20 @@
                     "/DELETE"
                 ]
             }
+        },
+        {
+            "name": "/send-contact-email",
+            "lambdaFunction": "ReSoBuLambdaSendingContactEmail",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
         }
     ],
     "resourceName": "ReSoBuAPI",
@@ -20,10 +34,13 @@
     "functionArns": [
         {
             "lambdaFunction": "ReSoBuLambdaDynamodbRequests"
+        },
+        {
+            "lambdaFunction": "ReSoBuLambdaSendingContactEmail"
         }
     ],
     "privacy": {
-        "auth": 1,
+        "auth": 2,
         "unauth": 0,
         "authRoleName": "amplify-resobu-dev-101636-authRole",
         "unAuthRoleName": "amplify-resobu-dev-101636-unauthRole"
@@ -36,6 +53,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "ReSoBuLambdaSendingContactEmail",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
-    ]
+    ],
+    "uuid": "7c93a747"
 }
