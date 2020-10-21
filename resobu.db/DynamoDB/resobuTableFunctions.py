@@ -26,8 +26,9 @@ def handler(event, context):
     except KeyError:
         return {"headers": headers,
                 "statusCode": 500,
-                "errorType": "KeyError",
-                "message": "One of the required function parameters not present (request_type, user_sub_id, group_type)"}
+                "body" : json.dumps({"errorType": "KeyError",
+                                     "message": "One of the required function parameters not present (request_type, user_sub_id, group_type)"})
+                }
 
     user_sub_id = user_sub_id + '#' + group_type
 
@@ -38,7 +39,7 @@ def handler(event, context):
 
         return {"headers": headers,
                 "statusCode": 200,
-                "response": json.dumps(response)}
+                "body": json.dumps(response)}
 
     if command_to_perform == 'read_chat_parents':
         response = table.query(
@@ -48,7 +49,7 @@ def handler(event, context):
 
         return {"headers": headers,
                 "statusCode": 200,
-                "response": json.dumps(response)}
+                "body": json.dumps(response)}
 
     if command_to_perform == 'read_activated_chat_parents':
         response = table.query(
@@ -58,12 +59,14 @@ def handler(event, context):
 
         return {"headers": headers,
                 "statusCode": 200,
-                "response": json.dumps(response)}
+                "body": json.dumps(response)}
 
     if command_to_perform == 'create_person' or command_to_perform == 'create_chat_parent':
-        response = {'ResponseMetadata': {"errorType": "EmptyResponse",
-                                         "HTTPStatusCode": 500,
-                                         "message": "DB query returned nothing"}}
+        response = {"headers": headers,
+                    "statusCode": 500,
+                    "body": json.dumps({"errorType": "NoResponse",
+                                        "message": "Empty response was returned"})
+                    }
         type_info = ''
         info = {}
 
@@ -75,8 +78,9 @@ def handler(event, context):
             except KeyError:
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "KeyError",
-                        "message": "One of the required function parameters not present (email, person_info)"}
+                        "body": json.dumps({"errorType": "KeyError",
+                                            "message": "One of the required function parameters not present (email, person_info)"})
+                        }
 
         if command_to_perform == 'create_chat_parent':
             try:
@@ -87,8 +91,9 @@ def handler(event, context):
             except KeyError:
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "KeyError",
-                        "message": "One of the required function parameters not present (chat_info, activated, next_chat)"}
+                        "body": json.dumps({"errorType": "KeyError",
+                                            "message": "One of the required function parameters not present (chat_info, activated, next_chat)"})
+                        }
 
         try:
             response = table.put_item(
@@ -106,18 +111,20 @@ def handler(event, context):
             if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "ConditionalCheckFailedException",
-                        "message": "Email already exists"}
+                        "body": json.dumps({"errorType": "ConditionalCheckFailedException",
+                                            "message": "Email already exists"})
+                        }
 
         return {"headers": headers,
                 "statusCode": 200,
-                "response": json.dumps(response)}
+                "body": json.dumps(response)}
 
     if command_to_perform == 'update_person' or command_to_perform == 'update_chat_parent':
         response = {"headers": headers,
                     "statusCode": 500,
-                    "errorType": "EmptyResponse",
-                    "message": "got no response"}
+                    "body": json.dumps({"errorType": "NoResponse",
+                                        "message": "Empty response was returned"})
+                    }
 
         changes = {}
         type_info = ''
@@ -130,8 +137,9 @@ def handler(event, context):
             except KeyError:
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "KeyError",
-                        "message": "One of the required function parameters not present (email, changes)"}
+                        "body": json.dumps({"errorType": "KeyError",
+                                            "message": "One of the required function parameters not present (email, changes)"})
+                        }
 
         if command_to_perform == 'update_chat_parent':
             try:
@@ -142,8 +150,9 @@ def handler(event, context):
             except KeyError:
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "KeyError",
-                        "message": "One of the required function parameters not present (chat_info, activated, next_chat)"}
+                        "body": json.dumps({"errorType": "KeyError",
+                                            "message": "One of the required function parameters not present (chat_info, activated, next_chat)"})
+                        }
 
         update_expression, expression_attribute_values = get_update_expressions(changes, type_info)
 
@@ -163,17 +172,20 @@ def handler(event, context):
             if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "ConditionalCheckFailedException",
-                        "message": "Email already exists"}
+                        "body": json.dumps({"errorType": "ConditionalCheckFailedException",
+                                            "message": "Email already exists"})
+                        }
 
         return {"headers": headers,
                 "statusCode": 200,
-                "response": json.dumps(response)}
+                "body": json.dumps(response)}
 
     if command_to_perform == 'delete_person' or command_to_perform == 'delete_chat_parent':
-        response = {'ResponseMetadata': {"errorType": "EmptyResponse",
-                                         "HTTPStatusCode": 500,
-                                         "message": "DB query returned nothing"}}
+        response = {"headers": headers,
+                    "statusCode": 500,
+                    "body": json.dumps({"errorType": "NoResponse",
+                                        "message": "Empty response was returned"})
+                    }
         type_info = ''
 
         if command_to_perform == 'delete_person':
@@ -183,8 +195,9 @@ def handler(event, context):
             except KeyError:
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "KeyError",
-                        "message": "One of the required function parameters not present (email)"}
+                        "body": json.dumps({"errorType": "KeyError",
+                                            "message": "One of the required function parameters not present (email)"})
+                        }
 
         if command_to_perform == 'delete_chat_parent':
             try:
@@ -194,8 +207,9 @@ def handler(event, context):
             except KeyError:
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "KeyError",
-                        "message": "One of the required function parameters not present (activated, next_chat)"}
+                        "body": json.dumps({"errorType": "KeyError",
+                                            "message": "One of the required function parameters not present (activated, next_chat)"})
+                        }
 
         try:
             response = table.delete_item(
@@ -213,17 +227,19 @@ def handler(event, context):
             if e.response['Error']['Code'] == "ConditionalCheckFailedException":
                 return {"headers": headers,
                         "statusCode": 500,
-                        "errorType": "ConditionalCheckFailedException",
-                        "message": "Email already exists"}
+                        "body": json.dumps({"errorType": "ConditionalCheckFailedException",
+                                            "message": "Email already exists"})
+                        }
 
         return {"headers": headers,
                 "statusCode": 200,
-                "response": json.dumps(response)}
+                "body": json.dumps(response)}
 
     return {"headers": headers,
             "statusCode": 500,
-            "errorType": "noCommand",
-            "message": "request type does not exist"}
+            "body": json.dumps({"errorType": "noCommand",
+                                "message": "request type does not exist"})
+            }
 
 
 def get_update_expressions(changes, type_info):

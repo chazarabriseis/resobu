@@ -1,5 +1,6 @@
 import resobuTableFunctions as rtf
 from pprint import pprint
+import json
 
 if __name__ == '__main__':
     # # test to fetch the People List
@@ -40,7 +41,13 @@ if __name__ == '__main__':
     # body = {'request_type': "delete_person", 'user_sub_id': "1", 'group_type': 'Business', 'email': "2@test.com"}
     # body = {'request_type': "delete_chat_parent", 'user_sub_id': "1", 'group_type': 'Business', "activated": True, "next_chat": '2021-01-01',}
 
-    lambdaResponse = rtf.handler(body, context)
-    print("Got following response:")
-    pprint(lambdaResponse, sort_dicts=False)
+    #lambdaResponse = rtf.handler(body, context)
+    #print("Got following response:")
+    #pprint(lambdaResponse, sort_dicts=False)
+    #body = "{'request_type': 'read_people', 'user_sub_id': '3', 'group_type': 'Business'}"
+    body = '{"request_type": "read_people", "user_sub_id": "3", "group_type": "Business"}'
+    print(type(body))
+    _body = json.loads(body)
+    print(_body['request_type'])
+
 
