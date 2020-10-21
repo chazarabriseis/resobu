@@ -1,6 +1,8 @@
 import React from 'react'
 import { TextField, Button } from '@material-ui/core'
 import { withRouter } from "react-router";
+import { API } from 'aws-amplify';
+import { ToastContainer, toast } from 'react-toastify';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -42,9 +44,6 @@ class Contact extends React.Component {
         showAlert: true
       })
     } else {
-      this.setState({
-        submitted: true
-      })
       this.triggerEmail()
     }
   }
@@ -62,8 +61,25 @@ class Contact extends React.Component {
   };
 
   triggerEmail = () => {
+    const _body = {'message': 'hello'}
     // send the information to the lambda function that sends an email
     console.log(this.state)
+    API.post('ReSoBuAPI', '/sending-contact-email ', {
+      body: _body
+    })
+    .then(response => {
+      console.log(response)
+      // const resultList = response['Items']
+      // this.setState({peopleList: resultList})
+      this.setState({
+        submitted: true
+      })
+    }) 
+    .catch(e => {
+      toast.warning("Sorry, there was a problem connecting to the DB.", {
+          position: toast.POSITION.TOP_RIGHT
+      })
+    }) 
   }
 
   render () {
@@ -165,6 +181,7 @@ class Contact extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <ToastContainer />
       </div>
     )
   }
