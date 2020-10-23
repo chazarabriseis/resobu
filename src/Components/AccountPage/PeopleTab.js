@@ -16,8 +16,7 @@ export default class PeopleTab extends Component {
           <PeopleTable
             peopleList = {this.props.peopleList}
             isLoadingPeopleList = {this.props.isLoadingPeopleList}
-            selectedEmailId = {this.props.selectedEmailId}
-            onUpdateSelectedEmailId={this.props.onUpdateSelectedEmailId}
+            onUpdateSelectedEmail={this.props.onUpdateSelectedEmail}
             userInfo={this.props.userInfo}
           />
         </div>  

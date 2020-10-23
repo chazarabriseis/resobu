@@ -31,12 +31,11 @@ class BusinessAccount extends React.Component {
     this.addPeople = this.addPeople.bind(this);
     this.deletePerson = this.deletePerson.bind(this);
     this.editTableEntry = this.editTableEntry.bind(this);
-    this.createPeopleTableEntries = this.createPeopleTableEntries.bind(this)
 
     this.state = {
       initialState: {},
 
-      peopleList: null,
+      peopleList: [],
       isLoadingPeopleList: true,
       meetingInfo: null,
       isLoadingMeetingInfoList: true,
@@ -55,9 +54,7 @@ class BusinessAccount extends React.Component {
       collateralChanges: [],
       
       showDeleteDialog: false,
-      selectedEmailId: [],
       selectedEmail: '',
-      selectedEmailTableId: -1,
       
       changeMeetingTime: false,
       changeInvite: false,
@@ -83,47 +80,43 @@ class BusinessAccount extends React.Component {
   }
 
   async fetchPeopleList() {  
+    this.setState({
+      isLoadingPeopleList: true
+    })
+
     const _body = {
       user_sub_id: this.props.userInfo.userSubId,
       group_type: this.props.userInfo.groupType,
       request_type: 'read_people'
     }
+    let resultList = []
     console.log('Fetching People List')
-    console.log(_body)
-
-    /*
-    this.setState({
-      isLoadingPeopleList: true
-    })
-    */
 
     //POST request to get people DB - test
     API.post('ReSoBuAPI', '/dynamodb-requests', {
       body: _body
     })
     .then(response => {
-      console.log(response)
-      // const resultList = response['Items']
-      // this.setState({peopleList: resultList})
+      resultList = response['response'][0]['Items']
+      for (const result in resultList) { 
+        resultList[result]["personEmail"] = resultList[result]["TypeInfo"].replace("PERSON#", "") 
+        resultList[result]["personKey"] = result 
+        resultList[result]["projectColleagues"] = resultList[result]["info"]["projectColleagues"]
+        resultList[result]["connectedColleagues"] = resultList[result]["info"]["connectedColleagues"]
+        resultList[result]["teamColleagues"] = resultList[result]["info"]["teamColleagues"]
+        resultList[result]["officeLocation"] = resultList[result]["info"]["officeLocation"]
+      } 
+      this.setState({
+        isLoadingPeopleList: false,
+        peopleList: resultList
+      })
     }) 
     .catch(e => {
       toast.warning("Sorry, there was a problem connecting to the DB.", {
           position: toast.POSITION.TOP_RIGHT
       })
+      this.setState({ isLoadingPeopleList: false })
     }) 
-    
-    this.setState({
-      isLoadingPeopleList: false,
-      peopleList: [
-        {personId: 11, personEmail: '1@test.com', teamColleagues: ['2@test.com','3@test.com'] , projectColleagues: ['4@test.com','6@test.com'], connectedColleagues  : [], userSubId: ''},
-        {personId: 22, personEmail: '2@test.com', teamColleagues: ['1@test.com','3@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-        {personId: 33, personEmail: '3@test.com', teamColleagues: ['2@test.com','1@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-        {personId: 44, personEmail: '4@test.com', teamColleagues: ['5@test.com','6@test.com'] , projectColleagues: ['1@test.com','6@test.com'], connectedColleagues  : [] , userSubId: ''},
-        {personId: 55, personEmail: '5@test.com', teamColleagues: ['4@test.com','6@test.com'] , projectColleagues: [], connectedColleagues  : [] , userSubId: ''},
-        {personId: 66, personEmail: '6@test.com', teamColleagues: ['4@test.com','5@test.com'] , projectColleagues: ['1@test.com','4@test.com'], connectedColleagues  : [] , userSubId: ''}
-      ]
-    })
-    
   }
 
   async fetchMeetingInfo() {  
@@ -137,7 +130,6 @@ class BusinessAccount extends React.Component {
       
     }
    console.log('Fetching Meeting Info')
-   console.log(_body)
     /*
     // POST request to get meetingInfo from DB
     API.post('ReSoBuAPI', '/dynamodb-requests', {
@@ -198,7 +190,6 @@ class BusinessAccount extends React.Component {
     }
 
    console.log('Creating initial meeting')
-   console.log(_body)
 
     this.setState({
       meetingInfo: meetingInfo,
@@ -241,76 +232,82 @@ class BusinessAccount extends React.Component {
   }
 
   checkEnteredEmails = () => {
-    // also check if the same email was entered twice
+    // TODO: check for weird characters
     if (this.state.emailList=== '') {
       toast.warning("Oops, you haven't entered any emails yet.", {
         position: toast.POSITION.TOP_RIGHT
       })
-      return []
+      return [[], []];
     } else {
-      const emails = this.state.emailList.split(',')
+      let emails = this.state.emailList.split(',')
+      // remove trailing whitesapces
+      emails = emails.map((email) => {return email.trim()})
       for (let i=0; i<emails.length; i++) {
         if (!emails[i].includes('@') || emails[i].length < 1) {
-          toast.warning("Hmm, are you sure these are all emails?", {
+          toast.warning("Hmm, are you sure these are all emails? Or is the last character a comma?", {
             position: toast.POSITION.TOP_RIGHT
           })
-          return []
+          return [[], []];
+        } 
+      } 
+      
+      // remove duplicates from list 
+      emails = [ ...new Set(emails) ]
+      let emailsWithoutExistingEmails = _.clone(emails)
+      // check if email already exists, if not add it to peopleList
+      let newPeopleList = _.cloneDeep(this.state.peopleList)
+      let existingEmails = newPeopleList.map((person)=> {return person.personEmail})
+      for (let i=0; i<emails.length; i++) {
+        if (existingEmails.includes(emails[i])) {
+          const index = emailsWithoutExistingEmails.findIndex(email => email === emails[i])
+          emailsWithoutExistingEmails.splice(index,1)
+        } else {
+          let newPerson = {}
+          newPerson["personKey"]= existingEmails.length + i - 1
+          newPerson["personEmail"]=  emails[i]
+          newPerson["projectColleagues"]= []
+          newPerson["connectedColleagues"]= []
+          newPerson["teamColleagues"]= []
+          newPerson["officeLocation"]= ''
+
+          newPeopleList.push(newPerson)
         }
       } 
-      // returning a list that removes duplicates 
-      return [ ...new Set(emails) ];
+
+      return [emailsWithoutExistingEmails, newPeopleList];
     }
   } 
 
-  createPeopleTableEntries = (emails) => {
-    const emailList = emails.map((item) => {
-      return {email: item.toLowerCase(), userSubId: this.props.userInfo.userSubId};
-    })
-    return emailList
-  }
-
   async addPeople () {   
     // backened call to add people list
-    const emails = this.checkEnteredEmails()
+    const value = this.checkEnteredEmails()
+    const emails = value[0]
+    const newPeopleList = value[1]
     if (emails.length === 0) {
       return
     } else {
-      const emailList = this.createPeopleTableEntries(emails)
       const _body = {
         user_sub_id: this.props.userInfo.userSubId,
         group_type: this.props.userInfo.groupType,
-        request_type: 'create_person',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-        email: emailList[0] // list_to_insert: emailList
+        person_info: {teamColleagues: [], projectColleagues: [], connectedColleagues: [], officeLocation: ''},
+        request_type: 'create_people',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
+        emails: emails // list_to_insert: emailList
       }
      console.log('adding emails')
-     console.log(_body)
-      /*
-        // POST toadd emails to DB   
-        API.post('ReSoBuAPI', '/dynamodb-requests', {
-            body: _body
-        })
-        .then(response => {
-              if (response['errorType'] === 'Key already exists') {
-                  toast.warning("Sorry, there was a problem connecting to the DB.", {
-                    position: toast.POSITION.TOP_RIGHT
-                  })  
-              } else if (response['errorType'] === 'Add successful') {
-                  toast.success("Emails were succesfully added ", {
-                    position: toast.POSITION.TOP_RIGHT
-                  })
-                  this.setState({
-                    showAddPeopleDialog: false,
-                    emailList: ''
-                  })
-                  this.fetchPeopleList();
-              }
-        })
-        .catch(e => {
-            toast.warning("Sorry, there was a problem connecting to the DB.", {
-              position: toast.POSITION.TOP_RIGHT
-            })  
-        })
-      */ 
+      // POST toadd emails to DB   
+      API.post('ReSoBuAPI', '/dynamodb-requests', {
+          body: _body
+      })
+      .then(response => {
+        if (response["statusCode"] === 500) {
+          toast.warning(response["message"], {
+            position: toast.POSITION.TOP_RIGHT
+          })  
+        } else {
+          //this.fetchPeopleList()
+          this.setState({peopleList: newPeopleList})
+        }
+      })
     
       this.setState({
         showAddPeopleDialog: false,
@@ -322,7 +319,7 @@ class BusinessAccount extends React.Component {
 
   triggerOpenEditDialog = () => {
     const currentState = _.cloneDeep(this.state)
-    if (this.state.selectedEmailId.length === 0) {
+    if (this.state.selectedEmail.length === 0) {
       toast.warning("There is no entry selected that could be edited", {
         position: toast.POSITION.TOP_RIGHT
       })
@@ -334,9 +331,10 @@ class BusinessAccount extends React.Component {
       return item.personEmail
     })
     // get information depending on business or other
+    const selectedEmailTableId = peopleList.findIndex(person => person.personEmail === this.state.selectedEmail[0])
     if (this.props.userInfo.groupType === 'Business') { 
-      const teamList = peopleList[this.state.selectedEmailTableId].teamColleagues
-      const projectList = peopleList[this.state.selectedEmailTableId].projectColleagues
+      const teamList = peopleList[selectedEmailTableId].teamColleagues
+      const projectList = peopleList[selectedEmailTableId].projectColleagues
 
       const teamListStates = emails.map((item, index) => {
         if (item === this.state.selectedEmail[0]) {
@@ -370,7 +368,7 @@ class BusinessAccount extends React.Component {
       }, () => this.openEditEmployeeDialog())
 
     } else {
-      const connectedList = peopleList[this.state.selectedEmailTableId].connectedColleagues
+      const connectedList = peopleList[selectedEmailTableId].connectedColleagues
       const connectedListStates = emails.map((item, index) => {
         if (item === this.state.selectedEmail[0]) {
           return null
@@ -441,12 +439,9 @@ class BusinessAccount extends React.Component {
     this.setState({showEditPersonDialog: true})
   }
 
-  updateSelectedEmailId = (selectedEmailId, selectedEmail) => {
-    const selectedEmailTableId = this.state.peopleList.findIndex(data => data.personId === selectedEmailId[0])
+  updateSelectedEmail = (selectedEmail) => {
     this.setState({ 
-      selectedEmailId: selectedEmailId,
-      selectedEmail: selectedEmail,
-      selectedEmailTableId: selectedEmailTableId
+      selectedEmail: selectedEmail
     })
   }
 
@@ -456,11 +451,12 @@ class BusinessAccount extends React.Component {
       const connectedEmail = e.target.value
       const table = e.target.id
       
-      let newPersonData = _.cloneDeep(this.state.peopleList[this.state.selectedEmailTableId])
       let newPeopleList = _.cloneDeep(this.state.peopleList)
+      const selectedEmailTableId = newPeopleList.findIndex(person => person.personEmail === personEmail)
+      let newPersonData = _.cloneDeep(this.state.peopleList[selectedEmailTableId])
       let newCollateralChanges = _.cloneDeep(this.state.collateralChanges)
       const tableIndexConnectingEmail = newPeopleList.findIndex(data => data.personEmail === connectedEmail)
-      const indexConnectingEmail = newPeopleList[tableIndexConnectingEmail].personId
+      const indexConnectingEmail = newPeopleList[tableIndexConnectingEmail].personKey
       const collateralIndex = newCollateralChanges.findIndex(data => data.colId === indexConnectingEmail)
 
       if (table === "project") {
@@ -477,7 +473,7 @@ class BusinessAccount extends React.Component {
           } else {
             newProjectColleagues.push(connectedEmail)
           }
-          newPeopleList[this.state.selectedEmailTableId].projectColleagues = newProjectColleagues
+          newPeopleList[selectedEmailTableId].projectColleagues = newProjectColleagues
           // update the projectColleagues List in peopleList state for the email that is selected
           let newConnectingPersonData = newPeopleList[tableIndexConnectingEmail]
           newProjectColleagues = newConnectingPersonData.projectColleagues
@@ -491,7 +487,7 @@ class BusinessAccount extends React.Component {
 
           // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
           if (collateralIndex === -1) {
-            newCollateralChanges.push({colId: indexConnectingEmail, changes: {projectColleagues: newProjectColleagues}})
+            newCollateralChanges.push({colId: connectedEmail, changes: {projectColleagues: newProjectColleagues}})
           } else {
             newCollateralChanges[collateralIndex].changes.projectColleagues = newProjectColleagues
           }
@@ -515,7 +511,7 @@ class BusinessAccount extends React.Component {
           } else {
             newTeamColleagues.push(connectedEmail)
           }
-          newPeopleList[this.state.selectedEmailTableId].teamColleagues = newTeamColleagues
+          newPeopleList[selectedEmailTableId].teamColleagues = newTeamColleagues
           // update the teamColleagues List in peopleList state for the email that is selected
           let newConnectingPersonData = newPeopleList[tableIndexConnectingEmail]
           newTeamColleagues = newConnectingPersonData.teamColleagues
@@ -528,7 +524,7 @@ class BusinessAccount extends React.Component {
           newPeopleList[tableIndexConnectingEmail].teamColleagues = newTeamColleagues
           // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
           if (collateralIndex === -1) {
-            newCollateralChanges.push({colId: indexConnectingEmail, changes: {teamColleagues: newTeamColleagues }})
+            newCollateralChanges.push({colId: connectedEmail, changes: {teamColleagues: newTeamColleagues }})
           } else {
             newCollateralChanges[collateralIndex].changes.teamColleagues = newTeamColleagues
           }
@@ -552,7 +548,7 @@ class BusinessAccount extends React.Component {
         } else {
           newConnectedColleagues.push(connectedEmail)
         }
-        newPeopleList[this.state.selectedEmailTableId].connectedColleagues = newConnectedColleagues
+        newPeopleList[selectedEmailTableId].connectedColleagues = newConnectedColleagues
         // update the connectedColleagues List in peopleList state for the email that is selected
         let newConnectingPersonData = newPeopleList[tableIndexConnectingEmail]
         newConnectedColleagues = newConnectingPersonData.connectedColleagues
@@ -582,11 +578,12 @@ class BusinessAccount extends React.Component {
     // also need to change all the other entries of the connected ones...should be collected in the change event
     console.log('triggering to send emplyee changes to DBBBB')
     this.setState({showEditPersonDialog: false, showEditEmployeeDialog: false})
+    const selectedEmailTableId = this.state.peopleList.findIndex(person => person.personEmail === this.state.selectedEmail[0])
     const changes = {
-      projectColleagues: this.state.peopleList[this.state.selectedEmailTableId].projectColleagues,
-      teamColleagues: this.state.peopleList[this.state.selectedEmailTableId].teamColleagues
+      projectColleagues: this.state.peopleList[selectedEmailTableId].projectColleagues,
+      teamColleagues: this.state.peopleList[selectedEmailTableId].teamColleagues
     }
-    this.editTableEntry('PeopleTable', this.state.selectedEmailId[0], changes)
+    this.editTableEntry('PeopleTable', this.state.selectedEmail[0], changes)
     const collateralChanges = this.state.collateralChanges
     for (let i =0; i<collateralChanges.length; i++) {
       this.editTableEntry('PeopleTable', collateralChanges[i].colId, collateralChanges[i].changes)
@@ -616,31 +613,18 @@ class BusinessAccount extends React.Component {
       } 
     }
    console.log('editing table entry')
-   console.log(_body)
-    /*
-        // POST to edit table entry in DB   
-        API.post('ReSoBuAPI', '/dynamodb-requests', {
-            body: _body
-        })
-        .then(response => {
-              if (response['errorMessage'] === 'Add successful') {
-                  toast.success("Changes added to DB.", {
-                    position: toast.POSITION.TOP_RIGHT
-                  })  
-
-                  this.fetchPeopleList();
-        })
-        .catch(e => {
-            toast.warning("Sorry, there was a problem connecting to the DB.", {
-              position: toast.POSITION.TOP_RIGHT
-            })  
-        })
-      */
+    // POST to edit table entry in DB   
+    API.post('ReSoBuAPI', '/dynamodb-requests', {
+        body: _body
+    })
+    .then(response => {
+      // this.fetchPeopleList();
+    })
   } 
 
 
   openDeleteDialog = () => {
-    if (this.state.selectedEmailId.length === 0) {
+    if (this.state.selectedEmail.length === 0) {
         toast.warning("There is no entry selected that could be deleted", {
           position: toast.POSITION.TOP_RIGHT
         })
@@ -661,7 +645,6 @@ class BusinessAccount extends React.Component {
     const emailToDelete = this.state.selectedEmail[0]
     for (const email in collateralList) {
       const emailIndex = newPeopleList.findIndex(data => data.personEmail === collateralList[email])
-      const personId = newPeopleList[emailIndex].personId
       let newColumn = newPeopleList[emailIndex][columnName]
       if (newColumn.includes(emailToDelete)) {
         const indexToDelete = newColumn.findIndex(data => data === emailToDelete)
@@ -670,14 +653,15 @@ class BusinessAccount extends React.Component {
       newPeopleList[emailIndex][columnName] = newColumn
 
       // send changes to DB as well
-      this.editTableEntry('PeopleTable', personId, {[columnName]: newColumn})
+      this.editTableEntry('PeopleTable', collateralList[email], {[columnName]: newColumn})
     }
     return newPeopleList;
   }
 
   deletePersonEverywhere = () => {
     let newPeopleList = _.cloneDeep(this.state.peopleList)
-    const peopleTableId= this.state.selectedEmailTableId
+    const emailToDelete = this.state.selectedEmail[0]
+    const peopleTableId= newPeopleList.findIndex(data => data.personEmail === emailToDelete)
 
     // change the peopleList and the teamList/projectListStates accordingly by removing the deleted people
     let projectColleagues = newPeopleList[peopleTableId].projectColleagues
@@ -688,41 +672,38 @@ class BusinessAccount extends React.Component {
     newPeopleList = this.removeDeletedFromPeopleList('teamColleagues', teamColleagues, newPeopleList)
     newPeopleList = this.removeDeletedFromPeopleList('connectedColleagues', connectedColleagues, newPeopleList)   
 
-    // delete the people itself from the list 
+    // delete the persin itself from the list 
     newPeopleList.splice(peopleTableId, 1)
 
-    this.setState({peopleList: newPeopleList})
+    return newPeopleList
   }
 
-  async deletePerson () {  
-    // change all the entries that had the selected people as a team/project/connected colleague
-    this.deletePersonEverywhere()
+  async deletePerson () {
     const _body = {
       user_sub_id: this.props.userInfo.userSubId,
       group_type: this.props.userInfo.groupType,
       request_type: "delete_person",
-      email: this.state.selectedEmailId[0]
+      email: this.state.selectedEmail[0]
     }
-   console.log(`delete person`) 
-   console.log(_body)
-    /*
-        // POST to delete emails to DB - tested   
-        API.post('ReSoBuAPI', '/dynamodb-requests', {
-            body: _body
+    // POST to delete emails to DB - tested   
+    API.post('ReSoBuAPI', '/dynamodb-requests', {
+        body: _body
+    })
+    .then(response => {
+      if (response["statusCode"] === 200 && response["response"]["ResponseMetadata"]["HTTPStatusCode"] === 200) { 
+        // change all the entries that had the selected people as a team/project/connected colleague
+        const newPeopleList = this.deletePersonEverywhere()
+        this.setState({
+          peopleList: newPeopleList, 
+          selectedEmail: ''
         })
-        then(response => {
-          try { 
-            toast.success("Person was succesfully deleted", {
-              position: toast.POSITION.TOP_RIGHT
-            })
-          } catch(e) {
-            toast.warning("There was a problem deleting this person", {
-              position: toast.POSITION.TOP_RIGHT
-            })
-          }
+      } else { 
+        toast.warning("There was a problem deleting this person", {
+          position: toast.POSITION.TOP_RIGHT
         })
-      */
+      }
     this.closeDeleteDialog()
+    })
   }
 
 
@@ -780,7 +761,6 @@ class BusinessAccount extends React.Component {
         _contents = contents.replace(/<p><br><\/p>/gi, "<p>&nbsp;</p>");
       }
     }
-    console.log(contents)
     newMeetingInfo.inviteText = _contents || contents
     this.setState({ meetingInfo: newMeetingInfo });
   };
@@ -830,7 +810,6 @@ class BusinessAccount extends React.Component {
     const currentState = _.cloneDeep(this.state)
     const newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
     const selectedChatInfo = newMeetingInfo.chats[this.state.selectedChatTableId]
-    console.log(selectedChatInfo)
     this.setState({
       showEditChatDialog: true,
       showChatDialog: true,
@@ -870,9 +849,6 @@ class BusinessAccount extends React.Component {
   setSelectedChat = (e) => {
     const selectedChatId = e.target.id
     const selectedChatTableId = this.state.meetingInfo.chats.findIndex(data =>  data.id === selectedChatId)
-    console.log('slecting')
-    console.log(selectedChatId)
-    console.log(selectedChatTableId)
     this.setState({
       selectedChatId: e.target.id,
       selectedChatTableId: selectedChatTableId,
@@ -1004,8 +980,7 @@ class BusinessAccount extends React.Component {
                     onOpenAddPersonDialog={this.openAddPersonDialog}
                     onOpenEditPersonDialog={this.triggerOpenEditDialog}
                     onOpenDeleteDialog={this.openDeleteDialog}
-                    selectedEmailId={this.state.selectedEmailId}
-                    onUpdateSelectedEmailId={this.updateSelectedEmailId}
+                    onUpdateSelectedEmail={this.updateSelectedEmail}
                     userInfo={this.props.userInfo}
                   />
                 </TabPanel>

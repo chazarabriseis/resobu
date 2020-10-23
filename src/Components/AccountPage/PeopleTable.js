@@ -15,8 +15,8 @@ export default class PeopleTable extends Component {
 
         this.columnsPeople = [
             {
-              key: 'personId',
-              dataField: 'personId',
+              key: 'personKey',
+              dataField: 'personKey',
               text: 'Person ID',
               headerFormatter: this.headerFormatter,
               hidden: true
@@ -41,9 +41,9 @@ export default class PeopleTable extends Component {
 
         this.columnsEmployees = [
           {
-            key: 'personId',
-            dataField: 'personId',
-            text: 'Person ID',
+            key: 'personKey',
+            dataField: 'personKey',
+            text: 'Key',
             headerFormatter: this.headerFormatter,
             hidden: true
           },
@@ -67,6 +67,12 @@ export default class PeopleTable extends Component {
             key: 'projectColleagues',
             dataField: 'projectColleagues',
             text: 'Project Colleagues',
+            headerFormatter: this.headerFormatter,
+          },
+          {
+            key: 'officeLocation',
+            dataField: 'officeLocation',
+            text: 'Office Location',
             headerFormatter: this.headerFormatter,
           },
           {
@@ -96,9 +102,8 @@ export default class PeopleTable extends Component {
     }
 
     handleSingleSelect = (row) => {
-      const personId = [row.personId]
       const personEmail = [row.personEmail]
-      this.props.onUpdateSelectedEmailId(personId, personEmail)
+      this.props.onUpdateSelectedEmail(personEmail)
     }
 
     handleNextPage = ({
@@ -157,7 +162,7 @@ export default class PeopleTable extends Component {
         let peopleTable = (
           <ToolkitProvider
             classes='peopleTable'
-            keyField="personId"
+            keyField="personKey"
             data={ this.props.peopleList }
             columns={ this.props.userInfo.groupType === 'Business' ? this.columnsEmployees : this.columnsPeople }
             columnToggle
@@ -169,7 +174,7 @@ export default class PeopleTable extends Component {
                         // pagination={ paginationFactory(optionsPag) }
                         selectRow={selectRowSingle}
                         defaultSorted={indexSorted}
-                        noDataIndication='No data matches your search.'
+                        noDataIndication='Email does not exist in this table.'
                         { ...props.baseProps }
                         bordered={ false } 
                     />
@@ -182,10 +187,10 @@ export default class PeopleTable extends Component {
             <div className='peopleTable'>
                 {this.props.isLoadingPeopleList ? (
                     <Spinner />
-                    ) : this.props.isLoadingPeopleList.length === 0 ? (
+                    ) : this.props.peopleList.length === 0 ? (
                     <div>
-                        <p className='nodata-indication' style={{color: '#0E253A', width: '60%', margin: '0 auto', paddingTop: '10px'}}>
-                            Go ahead and add people who should join the social butterfly chats
+                        <p className='nodata-indication'>
+                    Use the <strong>Add {this.props.userInfo.groupType === "Business" ? "Employees" : "People"}</strong> button above to add people
                         </p>
                     </div>
                     ) : (
