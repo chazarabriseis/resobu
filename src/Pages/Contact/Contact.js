@@ -61,7 +61,7 @@ class Contact extends React.Component {
   };
 
   triggerEmail = () => {
-    const _body = {'message': 'hello'}
+    const _body = {}
     // send the information to the lambda function that sends an email
     console.log(this.state)
     API.post('ReSoBuAPI', '/sending-contact-email ', {
