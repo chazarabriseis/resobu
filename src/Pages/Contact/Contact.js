@@ -76,7 +76,7 @@ class Contact extends React.Component {
       })
     }) 
     .catch(e => {
-      toast.warning("Sorry, there was a problem connecting to the DB.", {
+      toast.warning("Sorry, there was a problem sending the email. For now, you can just send an email directly to remote.social.butterfly@gmail.com.", {
           position: toast.POSITION.TOP_RIGHT
       })
     }) 
