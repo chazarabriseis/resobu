@@ -144,7 +144,6 @@ class BusinessAccount extends React.Component {
         }
       } else {
         const meetingInfo = resultList[0]['info']
-        console.log(meetingInfo)
         this.setState({
           isLoadingMeetingInfoList: false,
           meetingInfo: meetingInfo,
@@ -155,7 +154,7 @@ class BusinessAccount extends React.Component {
 
   async createMeeting () {
     console.log('Creating initial meeting')
-    const meetingInfo = { chatActivation: false, chats: [{id: '2021-01-01@11:30', chatName: "Chat 1", chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30'},{id: '2021-01-01@14:30', chatName: "Chat 2", chatDate: "2021-01-01", chatTime: '14:30', chatLength: '30'}],
+    const meetingInfo = { chatActivation: false, chats: [{id: '2021-01-01@11:30', chatName: "Chat 1", chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30', chatSize: '2'},{id: '2021-01-01@14:30', chatName: "Chat 2", chatDate: "2021-01-01", chatTime: '14:30', chatLength: '30', chatSize: '2'}],
     inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
     todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
     }
@@ -186,7 +185,16 @@ class BusinessAccount extends React.Component {
 
   async createMeetingBusiness() {
     console.log('Creating initial meeting')
-    const meetingInfo = {chatActivation: false, nextChats: ['2021-01-01@11:30'],
+    const meetingInfo = {chatActivation: false, nextChats: [{chatName: "Chat 1", chatTime: "11:30", chatLength: "30", chatDate: "1609718400000"},
+                                                            {chatName: "Chat 2", chatTime: "11:30", chatLength: "30", chatDate: "1610323200000"},
+                                                            {chatName: "Chat 3", chatTime: "11:30", chatLength: "30", chatDate: "1610928000000"},
+                                                            {chatName: "Chat 4", chatTime: "11:30", chatLength: "30", chatDate: "1611532800000"},
+                                                            {chatName: "Chat 5", chatTime: "11:30", chatLength: "30", chatDate: "1612137600000"},
+                                                            {chatName: "Chat 6", chatTime: "11:30", chatLength: "30", chatDate: "1612742400000"},
+                                                            {chatName: "Chat 7", chatTime: "11:30", chatLength: "30", chatDate: "1613347200000"},
+                                                            {chatName: "Chat 8", chatTime: "11:30", chatLength: "30", chatDate: "1613952000000"},
+                                                            {chatName: "Chat 9", chatTime: "11:30", chatLength: "30", chatDate: "1614556800000"},
+                                                            {chatName: "Chat 10", chatTime: "11:30", chatLength: "30", chatDate: "1615161600000"}],
                       frequency: 'weekly', startDate: "2021-01-01", endDate: "2033-01-01", chatLength: '30',
                       weekday: 'friday', chatTime: '11:30', weekOfMonth: 'last',
                       inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
@@ -737,9 +745,42 @@ class BusinessAccount extends React.Component {
 
   saveChangeMeeting = () => {
    console.log('triggering to send meeting changes to DB')
-    const changes =  this.state.meetingInfo
-    this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
-    this.setState({changeMeetingTime: false})
+    let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
+    // calculate the next 10 chats
+    let startDate = new Date(this.state.meetingInfo.startDate)
+    let nextChats = []
+    for (let i = 0; i < 10; i++) {
+      let chatInfo = {}
+      chatInfo['chatName'] = "Chat " + String(i +1)
+      chatInfo['chatTime'] = this.state.meetingInfo.chatTime
+      chatInfo['chatLength'] = this.state.meetingInfo.chatLength
+      if (this.state.meetingInfo.frequency === "weekly") {
+        if (i === 0) {
+          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 0))
+        } else {
+          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 7))
+        }
+      } else if (this.state.meetingInfo.frequency === "fortnightly") {
+        if (i === 0) {
+          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 0))
+        } else {
+          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 14))
+        }
+      } else if (this.state.meetingInfo.frequency === "monthly") {
+        if (i === 0) {
+          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 0))
+        } else {
+          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 28))
+        }
+      }
+      nextChats.push(chatInfo)
+    }
+    newMeetingInfo['nextChats'] = nextChats
+    this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, newMeetingInfo)
+    this.setState({
+      changeMeetingTime: false,
+      meetingInfo: newMeetingInfo
+    })
   }
 
 
@@ -848,6 +889,26 @@ class BusinessAccount extends React.Component {
       })
       return chatListHTML
     }
+  }
+
+  createNextChatsHTML = () => {
+      let chatList = this.state.meetingInfo.nextChats
+      chatList = chatList.sort((a, b) => (a.chatDate > b.chatDate) ? 1 : (a.chatDate === b.chatDate) ? ((a.chatTime > b.chatTime) ? 1 : -1) : -1 )
+      const chatListHTML = chatList.map((item, index) => {
+          const chatDate = new Date(Number(item.chatDate))
+          return <div className='chatBox' tabIndex={index} id={index} key= {index}> 
+                    <div className='p chatBoxTitle' id={item.id}>
+                      {item.chatName}
+                    </div>
+                    <div className='p' id={item.id}>
+                      {String(chatDate).substring(0,15)}
+                    </div>
+                    <div className='p' id={item.id}>
+                      at {item.chatTime}
+                    </div>
+                  </div>
+      })
+     return chatListHTML
   }
 
   setSelectedChat = (e) => {
@@ -996,11 +1057,13 @@ class BusinessAccount extends React.Component {
                       {this.props.userInfo.groupType === 'Business' ?
                       <BusinessChatTab
                         changeMeetingTime={this.state.changeMeetingTime}
+                        peopleList={this.state.peopleList}
                         meetingInfo={this.state.meetingInfo}
                         onChangeMeeting={this.changeMeeting}
                         onSaveChangeMeeting={this.saveChangeMeeting}
                         onCancelChangeMeeting={this.cancelChange}
                         onSetMeetingInfo={this.setMeetingInfo}
+                        onCreateNextChatsHTML={this.createNextChatsHTML}
                       />
                       :
                       <ChatTab 

@@ -69,12 +69,12 @@ export default class PeopleTable extends Component {
             text: 'Project Colleagues',
             headerFormatter: this.headerFormatter,
           },
-          {
-            key: 'officeLocation',
-            dataField: 'officeLocation',
-            text: 'Office Location',
-            headerFormatter: this.headerFormatter,
-          },
+          // {
+          //  key: 'officeLocation',
+          //  dataField: 'officeLocation',
+          //  text: 'Office Location',
+          //  headerFormatter: this.headerFormatter,
+          //},
           {
             key: 'connectedColleagues',
             dataField: 'connectedColleagues',
