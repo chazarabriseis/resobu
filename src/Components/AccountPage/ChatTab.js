@@ -31,13 +31,27 @@ export default class BusinessChatTab extends Component {
                                     'Choose a date, time and duration for the chat'
                                 }
                             </DialogContentText>
+                            <p> 
+                            <div className="inputDescription">Chat name </div>
+                                <TextField 
+                                    id="chatName" 
+                                    size="small" 
+                                    fullWidth   
+                                    label="Enter name here"
+                                    variant="outlined"  
+                                    value={this.props.chatInfo.chatName}
+                                    onChange={this.props.onSetChatInfo}
+                                    // error={this.props.chatInfo.chatName.length > 20}
+                                    // helperText={this.props.chatInfo.chatName.length > 20 ? 'name cannot be longer than 20 characters' : ' '} 
+                                />
+                            </p>
                             <p>On</p>                 
                             <div className="p">
                                 <TextField
                                     type="date"
                                     value={this.props.chatInfo.chatDate}
                                     onChange={this.props.onSetChatInfo}
-                                    id={'date'}
+                                    id={'chatDate'}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}

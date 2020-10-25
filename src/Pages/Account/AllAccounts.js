@@ -154,12 +154,31 @@ class BusinessAccount extends React.Component {
   }
 
   async createMeeting () {
-    const meetingInfo = { chatActivation: false, chats: [{id: '2021-01-01@11:30', chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30'},{id: '2021-01-01@14:30', chatDate: "2021-01-01", chatTime: '14:30', chatLength: '30'}],
+    console.log('Creating initial meeting')
+    const meetingInfo = { chatActivation: false, chats: [{id: '2021-01-01@11:30', chatName: "Chat 1", chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30'},{id: '2021-01-01@14:30', chatName: "Chat 2", chatDate: "2021-01-01", chatTime: '14:30', chatLength: '30'}],
     inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
     todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
     }
-    // [{id: '2021-01-01-11:30', chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30'}]
-    await this.setState({
+
+    const _body = {request_type: "create_chat_parent", 
+             user_sub_id: this.props.userInfo.userSubId,
+             group_type: this.props.userInfo.groupType,
+             chat_info: meetingInfo
+            }
+    // POST to create a meeting in DB   
+    API.post('ReSoBuAPI', '/dynamodb-requests', {
+      body: _body
+    })
+    .then(response => {
+      console.log("Created initial meeting")
+    })
+    .catch(e => {
+        toast.warning("Sorry, there was a problem connecting to the DB.", {
+          position: toast.POSITION.TOP_RIGHT
+        })  
+    })
+
+    this.setState({
       meetingInfo: meetingInfo,
       isLoadingMeetingInfoList: false
     })
@@ -802,7 +821,9 @@ class BusinessAccount extends React.Component {
     if (this.state.meetingInfo.chats.length === 0 ) {
       return <p> Please go ahead and add chat times</p>
     } else {
-      const chatListHTML = this.state.meetingInfo.chats.map((item, index) => {
+      let chatList = this.state.meetingInfo.chats
+      chatList = chatList.sort((a, b) => (a.chatDate > b.chatDate) ? 1 : (a.chatDate === b.chatDate) ? ((a.chatTime > b.chatTime) ? 1 : -1) : -1 )
+      const chatListHTML = chatList.map((item, index) => {
         if (item === this.state.selectedEmail[0]) {
           return null
         } else {
@@ -810,11 +831,14 @@ class BusinessAccount extends React.Component {
                     <div className='p chatBoxTitle' id={item.id}>
                       Meeting {item.id }
                     </div>
-                    <div className='p' id={item.id}>
-                      On {item.date}
+                    <div className='p chatBoxTitle' id={item.id}>
+                      {item.chatName}
                     </div>
                     <div className='p' id={item.id}>
-                      at {item.time}
+                      On {item.chatDate}
+                    </div>
+                    <div className='p' id={item.id}>
+                      at {item.chatTime}
                     </div>
                     <div className='p' id={item.id}>
                       for {item.chatLength} minutes
@@ -845,7 +869,7 @@ class BusinessAccount extends React.Component {
   }
 
   saveChat = () => {
-    const chatId = this.state.chatInfo.date + '@' + this.state.chatInfo.time
+    const chatId = this.state.chatInfo.chatDate + '@' + this.state.chatInfo.chatTime
     const chatIdIndex = this.state.meetingInfo.chats.findIndex(data => data.id === chatId)
     // check if a chat at that time already exists by checking the chatId against existing chatIds
     if (chatIdIndex === -1 || this.state.chatInfo.chatLength !== this.state.meetingInfo.chats[this.state.selectedChatTableId].chatLength) {
