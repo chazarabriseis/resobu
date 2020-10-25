@@ -36,7 +36,7 @@ export default class BusinessChatTab extends Component {
                       <p>Every day at </p>
                       <div className="p">
                         <TimeInput
-                          time={this.props.meetingInfo.time}
+                          chatTime={this.props.meetingInfo.chatTime}
                           onSetTime={this.props.onSetMeetingInfo}
                           changeMeetingTime={this.props.changeMeetingTime}
                         />
@@ -44,7 +44,7 @@ export default class BusinessChatTab extends Component {
                       <p>for</p>
                       <div className="p">
                         <DurationInput
-                          duration={this.props.meetingInfo.duration}
+                          chatLength={this.props.meetingInfo.chatLength}
                           onSetDuration={this.props.onSetMeetingInfo}
                           changeMeetingTime={this.props.changeMeetingTime}
                         />
@@ -65,7 +65,7 @@ export default class BusinessChatTab extends Component {
                       <p>at </p>
                       <div className="p">
                         <TimeInput
-                          time={this.props.meetingInfo.time}
+                          chatTime={this.props.meetingInfo.chatTime}
                           onSetTime={this.props.onSetMeetingInfo}
                           changeMeetingTime={this.props.changeMeetingTime}
                         />
@@ -73,7 +73,7 @@ export default class BusinessChatTab extends Component {
                       <p>for</p>
                       <div className="p">
                         <DurationInput
-                          duration={this.props.meetingInfo.duration}
+                          chatLength={this.props.meetingInfo.chatLength}
                           onSetDuration={this.props.onSetMeetingInfo}
                           changeMeetingTime={this.props.changeMeetingTime}
                         />
@@ -101,7 +101,7 @@ export default class BusinessChatTab extends Component {
                       <p>of the month at </p>
                       <div className="p">
                         <TimeInput
-                          time={this.props.meetingInfo.time}
+                          chatTime={this.props.meetingInfo.chatTime}
                           onSetTime={this.props.onSetMeetingInfo}
                           changeMeetingTime={this.props.changeMeetingTime}
                         />
@@ -109,7 +109,7 @@ export default class BusinessChatTab extends Component {
                       <p>for</p>
                       <div className="p">
                         <DurationInput
-                          duration={this.props.meetingInfo.duration}
+                          chatLength={this.props.meetingInfo.chatLength}
                           onSetDuration={this.props.onSetMeetingInfo}
                           changeMeetingTime={this.props.changeMeetingTime}
                         />

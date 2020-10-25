@@ -38,6 +38,7 @@ class BusinessAccount extends React.Component {
       peopleList: [],
       isLoadingPeopleList: true,
       meetingInfo: null,
+      nextChats: [],
       isLoadingMeetingInfoList: true,
 
       showAddPeopleDialog: false,
@@ -66,7 +67,7 @@ class BusinessAccount extends React.Component {
       selectedChatTableId: null,
       disableChatButtons: true,
       showEditChatDialog: false,
-      chatInfo: {date: "2021-01-01", time: '13:30', duration: '30'},
+      chatInfo: {chatDate: "2021-01-01", chatTime: '13:30', chatLength: '30'},
       showDeleteDialogChat: false,
 
       inviteText: '<p>testin<strong>gdacdac</strong></p><p><strong>acalck</strong></p>'
@@ -126,48 +127,38 @@ class BusinessAccount extends React.Component {
     const _body = {
       user_sub_id: this.props.userInfo.userSubId,
       group_type: this.props.userInfo.groupType,
-      request_type: 'read_chat_parents'
-      
+      request_type: 'read_chat_parent'
     }
    console.log('Fetching Meeting Info')
-    /*
     // POST request to get meetingInfo from DB
     API.post('ReSoBuAPI', '/dynamodb-requests', {
       body: _body
     })
     .then(response => {
-      const resultList = response['Items']
-      this.setState({meetingInfo: resultList[0]})
-
-      if (!resultList) {
-        await this.createMeeting()
+      const resultList = response['response'][0]['Items']
+      if (resultList.length === 0) {
+        if (!this.state.meetingInfo && this.props.userInfo.groupType === 'Business') {
+          this.createMeetingBusiness()
+        } else if (!this.state.meetingInfo) {
+          this.createMeeting()
+        }
       } else {
+        const meetingInfo = resultList[0]['info']
+        console.log(meetingInfo)
         this.setState({
-          isLoadingMeetingInfoList: false
+          isLoadingMeetingInfoList: false,
+          meetingInfo: meetingInfo,
         })
       }
-    }) 
-    .catch(e => {
-      toast.warning("Sorry, there was a problem connecting to the DB.", {
-          position: toast.POSITION.TOP_RIGHT
-      })
-    })    
-    */
-    if (!this.state.meetingInfo && this.props.userInfo.groupType === 'Business') {
-      await this.createMeetingBusiness()
-    } else if (!this.state.meetingInfo) {
-      await this.createMeeting()
-    }
-    
+    })  
   }
 
   async createMeeting () {
-    const meetingInfo = { chats: [{id: '2021-01-01@11:30', date: "2021-01-01", time: '11:30', duration: '30'},{id: '2021-01-01@14:30', date: "2021-01-01", time: '14:30', duration: '30'}],
-    inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $DURATION$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
+    const meetingInfo = { chatActivation: false, chats: [{id: '2021-01-01@11:30', chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30'},{id: '2021-01-01@14:30', chatDate: "2021-01-01", chatTime: '14:30', chatLength: '30'}],
+    inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
     todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
-    activated: false
     }
-    // [{id: '2021-01-01-11:30', date: "2021-01-01", time: '11:30', duration: '30'}]
+    // [{id: '2021-01-01-11:30', chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30'}]
     await this.setState({
       meetingInfo: meetingInfo,
       isLoadingMeetingInfoList: false
@@ -175,52 +166,37 @@ class BusinessAccount extends React.Component {
   }
 
   async createMeetingBusiness() {
-    const meetingInfo = { frequency: 'monthly', startDate: "2021-01-01", endDate: "2033-01-01", duration: '30',
-      weekday: 'friday', time: '11:30', weekOfMonth: 'last',
-      inviteText: '<p>Hello $NAME$,</p><p><br></p><p>your next <strong>Remote Social Butterfly Chat</strong> will happen on $DATE$ at $TIME$ for $DURATION$. You will be talking to $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>How about you discuss the biggest challenges you are facing on your current project?</p><p><br></p><p>We are always happy to receive feedback about the Remote Social Butterfly Chats to ensure you get the most out of it! Just reply to this email.</p><p><br></p><p>Happy chatting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
-      todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
-      activated: false
-    }
+    console.log('Creating initial meeting')
+    const meetingInfo = {chatActivation: false, nextChats: ['2021-01-01@11:30'],
+                      frequency: 'weekly', startDate: "2021-01-01", endDate: "2033-01-01", chatLength: '30',
+                      weekday: 'friday', chatTime: '11:30', weekOfMonth: 'last',
+                      inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
+                      todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false,
+                                 choseMeetingTime: false, activated: false},
+                      chatSize: '2'}
 
-    const _body = {
-      user_sub_id: this.props.userInfo.userSubId,
-      group_type: this.props.userInfo.groupType,
-      request_type: 'create_chat_parent',     // check if the for loop should run here or at the backend () what happens if out of 5 entries the third is already entered and throws an error
-      info: meetingInfo
-    }
-
-   console.log('Creating initial meeting')
-
-    this.setState({
-      meetingInfo: meetingInfo,
-      isLoadingMeetingInfoList: false
-    })
-
-    /*
+    const _body = {request_type: "create_chat_parent", 
+             user_sub_id: this.props.userInfo.userSubId,
+             group_type: this.props.userInfo.groupType,
+             chat_info: meetingInfo
+            }
     // POST to create a meeting in DB   
     API.post('ReSoBuAPI', '/dynamodb-requests', {
       body: _body
     })
     .then(response => {
-          if (response['errorType'] === 'Key already exists') {
-              toast.warning("Sorry, there was a problem connecting to the DB.", {
-                position: toast.POSITION.TOP_RIGHT
-              })  
-          } else if (response['errorType'] === 'Add successful') {
-              toast.success("Emails were succesfully added ", {
-                position: toast.POSITION.TOP_RIGHT
-              })
-              this.setState({
-                meetingInfo: meetingInfo
-              })
-          }
+      console.log("Created initial meeting")
     })
     .catch(e => {
         toast.warning("Sorry, there was a problem connecting to the DB.", {
           position: toast.POSITION.TOP_RIGHT
         })  
     })
-  */
+
+    this.setState({
+      meetingInfo: meetingInfo,
+      isLoadingMeetingInfoList: false
+    })
   }
 
   openAddPersonDialog = () => {
@@ -575,9 +551,11 @@ class BusinessAccount extends React.Component {
   }
 
   sendPersonChangesToDB = () => {
-    // also need to change all the other entries of the connected ones...should be collected in the change event
-    console.log('triggering to send emplyee changes to DBBBB')
-    this.setState({showEditPersonDialog: false, showEditEmployeeDialog: false})
+    console.log('triggering  employee changes to DB')
+    this.setState({
+      showEditPersonDialog: false, 
+      showEditEmployeeDialog: false
+    })
     const selectedEmailTableId = this.state.peopleList.findIndex(person => person.personEmail === this.state.selectedEmail[0])
     const changes = {
       projectColleagues: this.state.peopleList[selectedEmailTableId].projectColleagues,
@@ -606,9 +584,6 @@ class BusinessAccount extends React.Component {
         user_sub_id: this.props.userInfo.userSubId,
         group_type: this.props.userInfo.groupType,
         request_type: 'update_chat_parent',
-        // TODO: change the chat_parent structure
-        // activated: True,
-        // next_chat: '2021-01-01',
         changes: changes // dictionary with column names as in DB as key and new values as value
       } 
     }
@@ -710,7 +685,7 @@ class BusinessAccount extends React.Component {
   setMeetingInfo = (e) => {
     let newValue = e.target.value
     let infoToChange = e.target.id
-    if (e.target.id === "activated") { newValue = Boolean(Number(e.target.value)) }
+    if (e.target.id === "chatActivation") { newValue = Boolean(Number(e.target.value)) }
     if (e.target.className === "frequency") { infoToChange = "frequency" } 
     if (e.target.id === "todoList") { 
       const todoListItemToChange = e.target.value
@@ -720,6 +695,11 @@ class BusinessAccount extends React.Component {
     let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
     newMeetingInfo[infoToChange] = newValue
     this.setState({meetingInfo: newMeetingInfo})  
+    // activation need to trigger a change to DB right away since there is no save button
+    if (e.target.id === "chatActivation") { 
+      console.log('triggering to send meeting changes to DB')
+      this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, newMeetingInfo)
+    }
   }
 
   changeMeeting = () => {
@@ -738,7 +718,7 @@ class BusinessAccount extends React.Component {
 
   saveChangeMeeting = () => {
    console.log('triggering to send meeting changes to DB')
-    const changes = {info: this.state.meetingInfo}
+    const changes =  this.state.meetingInfo
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeMeetingTime: false})
   }
@@ -768,14 +748,14 @@ class BusinessAccount extends React.Component {
   saveChangeInviteText = () => {
     // first check that the text contains all placeholders
     if (this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$NAME$') 
-        && this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$DURATION$')
+        && this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$CHATLENGTH$')
         && this.state.meetingInfo.inviteText.includes('$CHATPARTNER$')) {
           console.log('triggering to send meeting changes to DB')
-          const changes = {info: this.state.meetingInfo}
+          const changes =  this.state.meetingInfo
           this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
           this.setState({changeInvite: false})
     } else {
-      toast.warning("Hmm, you are missing one of the placeholders: $NAME$, $DATE$, $DATE$, $DURATION$ or $CHATPARTNER$.", {
+      toast.warning("Hmm, you are missing one of the placeholders: $NAME$, $DATE$, $DATE$, $CHATLENGTH$ or $CHATPARTNER$.", {
         position: toast.POSITION.TOP_RIGHT
       })
     }
@@ -792,7 +772,7 @@ class BusinessAccount extends React.Component {
 
   saveChangeTodoList = () => {
    console.log('triggering to send meeting changes to DB')
-    const changes = {info: this.state.meetingInfo}
+    const changes =  this.state.meetingInfo
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({changeTodoList: false})
   }
@@ -837,7 +817,7 @@ class BusinessAccount extends React.Component {
                       at {item.time}
                     </div>
                     <div className='p' id={item.id}>
-                      for {item.duration} minutes
+                      for {item.chatLength} minutes
                     </div>
                   </div>
         }
@@ -868,7 +848,7 @@ class BusinessAccount extends React.Component {
     const chatId = this.state.chatInfo.date + '@' + this.state.chatInfo.time
     const chatIdIndex = this.state.meetingInfo.chats.findIndex(data => data.id === chatId)
     // check if a chat at that time already exists by checking the chatId against existing chatIds
-    if (chatIdIndex === -1 || this.state.chatInfo.duration !== this.state.meetingInfo.chats[this.state.selectedChatTableId].duration) {
+    if (chatIdIndex === -1 || this.state.chatInfo.chatLength !== this.state.meetingInfo.chats[this.state.selectedChatTableId].chatLength) {
       let newMeetingInfo = _.clone(this.state.meetingInfo)
       let newChatInfo = _.clone(this.state.chatInfo)
       newChatInfo.id = chatId
@@ -877,7 +857,7 @@ class BusinessAccount extends React.Component {
         // delete selected one
         newMeetingInfo.chats.splice(this.state.selectedChatTableId,1)
         newMeetingInfo.chats.push(newChatInfo)
-        const changes = {info: newMeetingInfo}
+        const changes =  this.state.meetingInfo
         console.log('triggering to send meeting changes to DB')
         this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
         this.setState({
@@ -887,7 +867,7 @@ class BusinessAccount extends React.Component {
         })
       } else {
           newMeetingInfo.chats.push(newChatInfo)
-          const changes = {info: newMeetingInfo}
+          const changes =  this.state.meetingInfo
           console.log('triggering to send meeting changes to DB')
           this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
           this.setState({
@@ -912,7 +892,7 @@ class BusinessAccount extends React.Component {
   deleteChat = () => {
     let newMeetingInfo = _.clone(this.state.meetingInfo)
     newMeetingInfo.chats.splice(this.state.selectedChatTableId,1)
-    const changes = {info: newMeetingInfo}
+    const changes =  this.state.meetingInfo
     console.log('triggering to send meeting changes to DB')
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
     this.setState({
@@ -945,7 +925,7 @@ class BusinessAccount extends React.Component {
           <div className="heading1"> Your remote social butterfly chats</div>
         </div>
         <div className='container whyContent'>
-          {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.activated ?
+          {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.chatActivation ?
             <div className='accountStatus accountActivated'> Activated, move switch to stop sending invites out </div>
             :
             <div className='accountStatus accountDeactivated'>Not activated, move switch to start sending invites out</div>
@@ -953,9 +933,9 @@ class BusinessAccount extends React.Component {
           {!this.state.isLoadingMeetingInfoList && 
             <FormControlLabel
               control={
-                <PurpleSwitch size='medium' disableRipple id='activated' 
-                  checked={this.state.meetingInfo.activated} onChange={this.setMeetingInfo} 
-                  name="activated" value={this.state.meetingInfo.activated  ? 0 : 1}
+                <PurpleSwitch size='medium' disableRipple id='chatActivation' 
+                  checked={this.state.meetingInfo.chatActivation} onChange={this.setMeetingInfo} 
+                  name="chatActivation" value={this.state.meetingInfo.chatActivation  ? 0 : 1}
                   classes={{switchBase: 'switchBase'}}
                 />
               }

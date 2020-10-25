@@ -12,9 +12,9 @@ export default class DurationInput extends Component {
                 <FormControl disabled={!this.props.changeMeetingTime}>
                     <Select
                         native
-                        value={this.props.duration}
+                        value={this.props.chatLength}
                         onChange={this.props.onSetDuration}
-                        id='duration'
+                        id='chatLength'
                     >
                     {optionValues.map((item) => <option key={item} value={item}>{item} minutes</option>)}
                     </Select>

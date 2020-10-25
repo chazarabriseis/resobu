@@ -35,7 +35,7 @@ export default class BusinessChatTab extends Component {
                             <div className="p">
                                 <TextField
                                     type="date"
-                                    value={this.props.chatInfo.date}
+                                    value={this.props.chatInfo.chatDate}
                                     onChange={this.props.onSetChatInfo}
                                     id={'date'}
                                     InputLabelProps={{
@@ -46,7 +46,7 @@ export default class BusinessChatTab extends Component {
                             <p>at </p>
                             <div className="p">
                                 <TimeInput
-                                    time={this.props.chatInfo.time}
+                                    chatTime={this.props.chatInfo.chatTime}
                                     onSetTime={this.props.onSetChatInfo}
                                     changeMeetingTime={true}
                                 />
@@ -54,7 +54,7 @@ export default class BusinessChatTab extends Component {
                             <p>for</p>
                             <div className="p">
                                 <DurationInput
-                                    duration={this.props.chatInfo.duration}
+                                    chatLength={this.props.chatInfo.chatLength}
                                     onSetDuration={this.props.onSetChatInfo}
                                     changeMeetingTime={true}
                                 />

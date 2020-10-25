@@ -10,9 +10,9 @@ export default class TimeInput extends Component {
                 <TextField
                     disabled={!this.props.changeMeetingTime}
                     onChange={this.props.onSetTime}
-                    id="time"
+                    id="chatTime"
                     type="time"
-                    value={this.props.time}
+                    value={this.props.chatTime}
                     InputLabelProps={{
                         shrink: true,
                     }}
