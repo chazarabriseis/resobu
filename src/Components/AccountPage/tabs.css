@@ -13,8 +13,16 @@
     padding: 20px;
 }
 
+.chatLine {
+    padding-bottom: 40px;
+}
+
 .meetingInsight {
-    padding: 20px;
+    margin-left: 50px;
+    padding: 30px;
+    border-color: thistle;
+    border-left-style: solid;
+    border-width: thin;
 }
 
 .frequency{

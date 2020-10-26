@@ -16,8 +16,9 @@ export default class BusinessChatTab extends Component {
         return (
             <div className="tab">
             <div className="tabContent">
+
             <p><strong>Next ten chats:</strong></p>
-            <div className='p container'> {this.props.onCreateNextChatsHTML()}</div>
+            <div className='p container chatLine'> {this.props.onCreateNextChatsHTML()}</div>
               
               <Button variant="contained" className="actionButton" disabled={this.props.changeMeetingTime} onClick={this.props.onChangeMeeting}>Edit Chat Times</Button>   
               <Button variant="contained" className="actionButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onSaveChangeMeeting}>Save</Button>   
@@ -26,9 +27,6 @@ export default class BusinessChatTab extends Component {
 
               <div className="container">
                 <div className='meetingPlanner'>
-                  <p>
-                    Choose a reocurring chat time
-                  </p>
                   <div className="p">
                   <FrequencyInput
                     frequency={this.props.meetingInfo.frequency}
@@ -156,24 +154,21 @@ export default class BusinessChatTab extends Component {
                 </div>
                 <div className='meetingInsight'>
                   <div className='p'>
-                    Insight into how fast everyone will mingle depending on chat size, number of all people and chat frequency
+                    You have entered <strong>{this.props.peopleList.length}</strong> people and choosen to have roughly 
+                    <strong>{this.props.meetingInfo.frequency === "weekly" ? "52" : this.props.meetingInfo.frequency === "fortnightly" ? "26" : "12"} </strong>
+                    meetings per year.
                   </div>
-                  <div className="conainer">
-                    <div className="p">
-                      Number of people per chat:
-                      <ChatSizeInput
+                  <div className="container">
+                    <div className='p'> With: </div>
+                    <ChatSizeInput
                         chatSize={this.props.meetingInfo.chatSize}
                         onSetChatSize={this.props.onSetMeetingInfo}
                         changeMeetingTime={this.props.changeMeetingTime}
-                      />
-                    </div>
-                    <div className="p">
-                      Number of all people: {this.props.peopleList.length}
-                    </div>
-                    <div className="p">
-                      Maximum Chats per year: {this.props.meetingInfo.frequency === "weekly" ? "52" : 
-                                              this.props.meetingInfo.frequency === "fortnightly" ? "26" : "12"} 
-                    </div>
+                    />
+                    <div className='p'>people per meeting it will take roughly</div>   
+                  </div>
+                  <div className="p">
+                    XXX month until everyone has met.
                   </div>
                 </div>
               </div>

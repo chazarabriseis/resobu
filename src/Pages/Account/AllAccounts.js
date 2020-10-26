@@ -966,7 +966,7 @@ class BusinessAccount extends React.Component {
       chatList = chatList.sort((a, b) => (a.chatDate > b.chatDate) ? 1 : (a.chatDate === b.chatDate) ? ((a.chatTime > b.chatTime) ? 1 : -1) : -1 )
       const chatListHTML = chatList.map((item, index) => {
           const chatDate = new Date(Number(item.chatDate))
-          return <div className='chatBox' tabIndex={index} id={index} key= {index}> 
+          return <div className='chatBoxes' tabIndex={index} id={index} key= {index}> 
                     <div className='p chatBoxTitle' id={item.id}>
                       {item.chatName}
                     </div>
@@ -1105,7 +1105,9 @@ class BusinessAccount extends React.Component {
                 <TabList>
                   <Tab> {this.props.userInfo.groupType === 'Business' ? 'Employees' : 'People'} </Tab>
                   <Tab disabled> Connection <strong>AI</strong>ssistance </Tab>
-                  <Tab disabled> Learning <strong>AI</strong>ssistance </Tab>
+                  {this.props.userInfo.groupType === 'Business' && 
+                    <Tab disabled> Learning <strong>AI</strong>ssistance </Tab>
+                  }
                   <Tab> Chat Times </Tab>
                   <Tab> Chat Invite </Tab>
                   <Tab> To Do List </Tab>
@@ -1124,9 +1126,11 @@ class BusinessAccount extends React.Component {
                 <TabPanel>
                   Connection <strong>AI</strong>ssistance
                 </TabPanel>
-                <TabPanel>
-                  Learning <strong>AI</strong>ssistance
-                </TabPanel>
+                {this.props.userInfo.groupType === 'Business' && 
+                  <TabPanel>
+                    Learning <strong>AI</strong>ssistance
+                  </TabPanel>
+                }
                 <TabPanel>
                   {this.state.isLoadingMeetingInfoList ?
                     <Spinner /> 
