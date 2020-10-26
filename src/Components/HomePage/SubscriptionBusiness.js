@@ -35,12 +35,12 @@ class SubscriptionBusiness extends React.Component {
           <div className="planPricing planThistle">
             <div className="planPrice"> XX &euro; </div>
             <div className="planPriceInfo"> Per user, per month billed annually </div>
-            <div className="planPriceInfoExtra"> 2.20 &euro; billed monthly </div>
+            <div className="planPriceInfoExtra"> XX &euro; billed monthly </div>
           </div>
           <div className="planPricing plan">
             <div className="planPrice"> XX &euro;</div>
             <div className="planPriceInfo"> Per user, per month billed annually</div>
-            <div className="planPriceInfoExtra"> 3.30 &euro; billed monthly </div>
+            <div className="planPriceInfoExtra"> XX &euro; billed monthly </div>
           </div>
           <div className="planPricing planBorder">
           </div>

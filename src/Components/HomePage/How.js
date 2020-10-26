@@ -27,7 +27,7 @@ class How extends React.Component {
                   For example, we can make sure that team and project colleagues don't meet since they are already in contact. 
                   Or if exiting communication problems between departements are known, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can target specific encounters.
                   You can also just plug in your Teams, Trello etc and the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance will learn from the metadata which connections already exists or where they are lacking.
-                  Possibilities are endless, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can be tailored exaxtly to your needs.
+                  Possibilities are endless, the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can be tailored exactly to your needs.
                 </div>
                 <div className='cardText'> 
                   <div style={{fontWeight: '500' , display: 'inline'}}>For Workshops, Conferences and Tradeshows: </div> When additional data exists the connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance can work to develop encounters between attendees at conferences or 

@@ -27,7 +27,7 @@ class HomeConference extends React.Component {
       <div>
         <div className="topSection">
           <div className="heading1"> Let's enable networking at your conference</div>
-          <div className="heading2">Remote Social Butterfly automatically organises random or tailored chats to enable networking, knowledge transfer and an innovative culture.</div>
+          <div className="heading2">Remote Social Butterfly automatically organises random or tailored chats to enable networking and knowledge transfer.</div>
           <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>
         <div className="infoBox infoBoxWhiteWorkflow"> 

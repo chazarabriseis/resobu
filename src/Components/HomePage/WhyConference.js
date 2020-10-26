@@ -12,7 +12,7 @@ class WhyConference extends React.Component {
             label: 'From Connections Emerge Networks',
             imgPath:
             'caterpillar_transformation.png',
-            text: 'A key place for creating connections are conferences. However, through digitalization and global pandemics, the opportunity to come together to meet in person and build networks are reducing. Even at a life conferences the amount of people one could meet is overwheleming and it takes energy and courage to organize meetings with new people, so a lot times they do not happen. Remote Social Butterfly provides the opportunity to connect with attendees and create chance or deliberate encounters to grow everyones network.'
+            text: 'A key place for creating connections are conferences. However, through digitalization and global pandemics, the opportunity to come together to meet in person and build networks are reducing. Even at a live conference the amount of people one could meet is overwheleming and it takes energy and courage to organize meetings with new people, so a lot times they do not happen. Remote Social Butterfly provides the opportunity to connect with attendees and create chance or deliberate encounters to grow everyones network.'
             },
           {
             label: 'From Networks Emerge Possibilities',
