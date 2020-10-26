@@ -196,7 +196,7 @@ class BusinessAccount extends React.Component {
                                                             {chatName: "Chat 9", chatTime: "11:30", chatLength: "30", chatDate: "1614556800000"},
                                                             {chatName: "Chat 10", chatTime: "11:30", chatLength: "30", chatDate: "1615161600000"}],
                       frequency: 'weekly', startDate: "2021-01-01", endDate: "2033-01-01", chatLength: '30',
-                      weekday: 'friday', chatTime: '11:30', weekOfMonth: 'last',
+                      weekday: 'friday', chatTime: '11:30', weekOfMonth: 'first',
                       inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
                       todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false,
                                  choseMeetingTime: false, activated: false},
@@ -743,11 +743,62 @@ class BusinessAccount extends React.Component {
     this.setState(initialState)
   }
 
-  saveChangeMeeting = () => {
-   console.log('triggering to send meeting changes to DB')
-    let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
-    // calculate the next 10 chats
+  // from https://www.i-programmer.info/programming/javascript/6322-date-hacks-doing-javascript-date-calculations.html?start=1
+  nthDayInMonth(n, day, month, year) {
+    // day is in range 0 Sunday to 6 Saturday
+    let d = this.firstDayInMonth(day, month, year);
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate() + (n - 1) * 7);
+  }
+
+  firstDayInMonth(day, m, y) {
+    return new Date(y, m, 1 + (day - new Date(y, m, 1).getDay() + 7) % 7);
+    }
+
+  getStartDate = (initialDate) => {
+    const day2number = {'Monday':  1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5}
+    const selectedDayNumber = day2number[this.state.meetingInfo.weekday]
+    const weekOfMonth2number = {'first': 1,'second': 2, 'third': 3, 'fourth': 4}
+    const selectedWeekOfMonth = weekOfMonth2number[this.state.meetingInfo.weekOfMonth]
+    
+    const startDateFixed = new Date(initialDate)
+    let startDate = new Date(initialDate)
+    
+    // go to the weekday of interest to set the right startDate (getDay returns day in the week, Monday = 1)
+    let firstDateDays = selectedDayNumber - startDate.getDay()
+    let firstDate = new Date(startDate.setDate(startDate.getDate() + firstDateDays))
+    // move first date to next week if it is before the startDate
+    if (firstDate < startDateFixed) {
+      firstDate = firstDate.setDate(firstDate.getDate() + 7)
+    }
+
+    if (this.state.meetingInfo.frequency === "monthly") {
+     const year = new Date(startDate).getFullYear()
+     const month = new Date(startDate).getMonth()
+      firstDate = new Date(this.nthDayInMonth(selectedWeekOfMonth, selectedDayNumber, month, year))
+      // move first date to next month if it is before the startDate
+      if (firstDate < startDateFixed) {
+        firstDate = new Date(this.nthDayInMonth(selectedWeekOfMonth, selectedDayNumber, month + 1, year))
+      }
+    } 
+
+    return firstDate
+  }
+
+  calculateStartDate = () => {    
     let startDate = new Date(this.state.meetingInfo.startDate)
+    const today = new Date() 
+    let firstDate = null
+    
+    if (startDate > today) {
+      firstDate = this.getStartDate(startDate)
+    } else {
+      firstDate = this.getStartDate(today)
+    }
+    return firstDate
+  }
+
+  calculateNextTenMeetings = (_firstDate) => {
+    let firstDate = new Date(_firstDate)
     let nextChats = []
     for (let i = 0; i < 10; i++) {
       let chatInfo = {}
@@ -756,27 +807,46 @@ class BusinessAccount extends React.Component {
       chatInfo['chatLength'] = this.state.meetingInfo.chatLength
       if (this.state.meetingInfo.frequency === "weekly") {
         if (i === 0) {
-          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 0))
+          chatInfo['chatDate'] = String(firstDate.setDate(firstDate.getDate() + 0))
         } else {
-          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 7))
+          chatInfo['chatDate'] = String(firstDate.setDate(firstDate.getDate() + 7))
         }
       } else if (this.state.meetingInfo.frequency === "fortnightly") {
         if (i === 0) {
-          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 0))
+          chatInfo['chatDate'] = String(firstDate.setDate(firstDate.getDate() + 0))
         } else {
-          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 14))
+          chatInfo['chatDate'] = String(firstDate.setDate(firstDate.getDate() + 14))
         }
       } else if (this.state.meetingInfo.frequency === "monthly") {
+        const day2number = {'Monday':  1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5}
+        const selectedDayNumber = day2number[this.state.meetingInfo.weekday]
+        const weekOfMonth2number = {'first': 1,'second': 2, 'third': 3, 'fourth': 4}
+        const selectedWeekOfMonth = weekOfMonth2number[this.state.meetingInfo.weekOfMonth]
+        const year = new Date(firstDate).getFullYear()
+        const month = new Date(firstDate).getMonth()
         if (i === 0) {
-          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 0))
+          chatInfo['chatDate'] = String(firstDate.setDate(firstDate.getDate() + 0))
         } else {
-          chatInfo['chatDate'] = String(startDate.setDate(startDate.getDate() + 28))
+          const newDate = new Date(this.nthDayInMonth(selectedWeekOfMonth, selectedDayNumber, month + i, year))
+          chatInfo['chatDate'] = String(newDate.setDate(newDate.getDate() + 0))
         }
       }
       nextChats.push(chatInfo)
     }
+    return nextChats
+  }
+
+  saveChangeMeeting = () => {
+    console.log('triggering to send meeting changes to DB')
+    // calculating the next 10 meetinsg based on the input and current date
+    let startDate = this.calculateStartDate()
+    const nextChats = this.calculateNextTenMeetings(startDate)
+    // updating the state so it renders
+    let newMeetingInfo = _.cloneDeep(this.state.meetingInfo)
     newMeetingInfo['nextChats'] = nextChats
+    // send changes to DB
     this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, newMeetingInfo)
+    
     this.setState({
       changeMeetingTime: false,
       meetingInfo: newMeetingInfo
@@ -1034,7 +1104,9 @@ class BusinessAccount extends React.Component {
               <Tabs style={{ width: '90%'}}>
                 <TabList>
                   <Tab> {this.props.userInfo.groupType === 'Business' ? 'Employees' : 'People'} </Tab>
-                  <Tab> Chat Time </Tab>
+                  <Tab disabled> Connection <strong>AI</strong>ssistance </Tab>
+                  <Tab disabled> Learning <strong>AI</strong>ssistance </Tab>
+                  <Tab> Chat Times </Tab>
                   <Tab> Chat Invite </Tab>
                   <Tab> To Do List </Tab>
                 </TabList>
@@ -1048,6 +1120,12 @@ class BusinessAccount extends React.Component {
                     onUpdateSelectedEmail={this.updateSelectedEmail}
                     userInfo={this.props.userInfo}
                   />
+                </TabPanel>
+                <TabPanel>
+                  Connection <strong>AI</strong>ssistance
+                </TabPanel>
+                <TabPanel>
+                  Learning <strong>AI</strong>ssistance
                 </TabPanel>
                 <TabPanel>
                   {this.state.isLoadingMeetingInfoList ?

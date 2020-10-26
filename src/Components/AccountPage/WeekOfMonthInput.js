@@ -17,7 +17,7 @@ export default class WeekOfMonthInput extends Component {
                     <option value={'first'}>first</option>
                     <option value={'second'}>second</option>
                     <option value={'third'}>third</option>
-                    <option value={'last'}>last</option>
+                    <option value={'fourth'}>last</option>
                     </Select>
                 </FormControl>
             </div>

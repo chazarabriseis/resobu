@@ -16,10 +16,10 @@ export default class BusinessChatTab extends Component {
         return (
             <div className="tab">
             <div className="tabContent">
-
+            <p><strong>Next ten chats:</strong></p>
             <div className='p container'> {this.props.onCreateNextChatsHTML()}</div>
               
-              <Button variant="contained" className="actionButton" disabled={this.props.changeMeetingTime} onClick={this.props.onChangeMeeting}>Edit Chat Time</Button>   
+              <Button variant="contained" className="actionButton" disabled={this.props.changeMeetingTime} onClick={this.props.onChangeMeeting}>Edit Chat Times</Button>   
               <Button variant="contained" className="actionButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onSaveChangeMeeting}>Save</Button>   
               <Button variant="contained" className="ghostButton"  disabled={!this.props.changeMeetingTime} onClick={this.props.onCancelChangeMeeting}>Cancel</Button>
 
