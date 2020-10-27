@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { subscriptionBusiness, subscriptionConference, subscriptionTradeshow, groupTypes } from '../Common/Variables'
+import { subscriptionBusiness, subscriptionConference, subscriptionTradeshow, groupTypes, userTypes } from '../Common/Variables'
 import '../../App.css'
 
 library.add(fas)
@@ -26,6 +26,8 @@ class SignUp extends React.Component {
           email: "",
           groupType: "-",
           subscription: "-",
+          accountName: "",
+          userType: "-",
           password: "",
           passwordConfirm: "",
           showPassword: false,
@@ -36,6 +38,7 @@ class SignUp extends React.Component {
     
     componentDidMount() {
         window.scrollTo(0, 0);
+        // checking if person  need to enter confirmatio code instead of new sign up
         if (Boolean(this.props.goToEnterCode)) {
             this.setState({
                 submitted: true,
@@ -52,33 +55,25 @@ class SignUp extends React.Component {
     }  
 
     gotoCode = () => {
-        this.setState({
-            submitted: true
-        })
+        this.setState({submitted: true})
     }
 
     onSubmit = () => {
         if (!this.state.email.includes('@') || this.state.email.length < 1 || 
             (this.state.password !== this.state.passwordConfirm) || 
-            this.state.password.length < 8
+            this.state.password.length < 8 || this.state.accountName.length < 1 ||
+            this.state.subscription=== "-" || this.state.groupType=== "-" || this.state.userType=== "-" 
             ) {
                 toast.error("Hmm, are all the input fields correct?", {
                     position: toast.POSITION.TOP_RIGHT
                 })
         } else {
-            this.setState({
-                submitted: true
-            })
             this.signUp()
         }
     }
 
-    setSubscription = (e) => {
-        this.setState({subscription: e.target.value})  
-    }
-
-    setGroupType = (e) => {
-        this.setState({groupType: e.target.value})  
+    setSignUpInput = (e) => {
+        this.setState({[e.target.id]: e.target.value})
     }
 
     async signUp() {
@@ -87,6 +82,8 @@ class SignUp extends React.Component {
         const password = this.state.password
         const subscription = this.state.groupType+this.state.subscription
         const groupType = this.state.groupType
+        const userType = this.state.userType
+        const accountName = this.state.accountName
         try {
             await Auth.signUp({
                 username,
@@ -94,7 +91,9 @@ class SignUp extends React.Component {
                 attributes: {
                     email,
                     'custom:subscription' : subscription,
-                    'custom:groupType': groupType
+                    'custom:groupType': groupType,
+                    'custom:accountName': accountName,
+                    'custom:userType': userType
                 }
             })
         } catch (error) {
@@ -103,7 +102,12 @@ class SignUp extends React.Component {
                     position: toast.POSITION.TOP_RIGHT
                 })
                 this.setState({
-                    codeAlreadySent: true
+                    codeAlreadySent: true,
+                    submitted: true
+                })
+            } else if (error.name === "InvalidParameterException") {
+                toast.error("Oops, invalid email address format.", {
+                    position: toast.POSITION.TOP_RIGHT
                 })
             } else {
                 toast.error("Hmm, there was a problem with the sign up.", {
@@ -112,6 +116,7 @@ class SignUp extends React.Component {
             }
             return
         }
+        this.setState({ submitted: true})
         toast.success("Yay, your account was succesfully created. You just need to confirm your email by entering the code we just sent you.", {
             position: toast.POSITION.TOP_RIGHT
         })
@@ -253,7 +258,7 @@ class SignUp extends React.Component {
                                 required
                                 variant="outlined"  
                                 value={this.state.email}
-                                onChange={event => this.setState({ email: event.target.value })}
+                                onChange={this.setSignUpInput}
                                 error={!this.state.email.includes('@') || this.state.email.length < 1} 
                                 helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
                             />
@@ -264,7 +269,7 @@ class SignUp extends React.Component {
                                 <Select
                                     native
                                     value={this.state.groupType}
-                                    onChange={this.setGroupType}
+                                    onChange={this.setSignUpInput}
                                     id='groupType'
                                 >
                                 {groupTypes.map((item) => <option key={item} value={item}>{item}</option>)}
@@ -273,12 +278,42 @@ class SignUp extends React.Component {
                             </FormControl>
                         </div>
                         <div className="input"> 
+                            <div className="inputDescription">
+                                {this.state.groupType === 'Business' ? ('Company Name') : ('Event Name')} 
+                            </div>
+                            <TextField 
+                                id="accountName" 
+                                size="small" 
+                                fullWidth   
+                                required
+                                variant="outlined"  
+                                value={this.state.accountName}
+                                onChange={this.setSignUpInput}
+                                error={this.state.accountName.length < 1} 
+                                helperText={this.state.accountName.length < 1 ? 'Please enter a name' : ' '} 
+                            />
+                        </div>
+                        <div className="input"> 
+                            <div className="inputDescription">Will you be an admin or user?</div>
+                            <FormControl variant="outlined" error ={this.state.userType=== "-"} >
+                                <Select
+                                    native
+                                    value={this.state.userType}
+                                    onChange={this.setSignUpInput}
+                                    id='userType'
+                                >
+                                {userTypes.map((item) => <option key={item} value={item}>{item}</option>)}
+                                </Select>
+                                {this.state.userType=== "-" && <FormHelperText>You need to choose an option</FormHelperText>}
+                            </FormControl>
+                        </div>
+                        <div className="input"> 
                             <div className="inputDescription">Subscription</div>
                             <FormControl variant="outlined" error ={this.state.subscription=== "-"}>
                                 <Select
                                     native
                                     value={this.state.subscription}
-                                    onChange={this.setSubscription}
+                                    onChange={this.setSignUpInput}
                                     id='subscription'
                                 >
                                 { this.state.groupType === 'Business' ? (

@@ -15,6 +15,8 @@ import ChatTab from '../../Components/AccountPage/ChatTab'
 import InviteTab from '../../Components/AccountPage/InviteTab'
 import TodoTab from '../../Components/AccountPage/TodoTab'
 
+import { businessChatInfo, conferenceChatInfo } from '../../Components/AccountPage/AccountPageFunctions'
+
 import _ from "lodash" 
 
 import 'react-tabs/style/react-tabs.css'
@@ -38,7 +40,6 @@ class BusinessAccount extends React.Component {
       peopleList: [],
       isLoadingPeopleList: true,
       meetingInfo: null,
-      nextChats: [],
       isLoadingMeetingInfoList: true,
 
       showAddPeopleDialog: false,
@@ -46,8 +47,6 @@ class BusinessAccount extends React.Component {
 
       showEditPersonDialog: false,
       showEditEmployeeDialog: false,
-      teamListHTML: '',
-      projectListHTML: '',
       teamListStates: [],
       projectListStates: [],
       connectedListStates: [],
@@ -55,7 +54,7 @@ class BusinessAccount extends React.Component {
       collateralChanges: [],
       
       showDeleteDialog: false,
-      selectedEmail: '',
+      selectedEmail: [],
       
       changeMeetingTime: false,
       changeInvite: false,
@@ -67,10 +66,8 @@ class BusinessAccount extends React.Component {
       selectedChatTableId: null,
       disableChatButtons: true,
       showEditChatDialog: false,
-      chatInfo: {chatDate: "2021-01-01", chatTime: '13:30', chatLength: '30'},
-      showDeleteDialogChat: false,
-
-      inviteText: '<p>testin<strong>gdacdac</strong></p><p><strong>acalck</strong></p>'
+      chatInfo: {chatDate: "2021-01-01", chatTime: '13:30', chatLength: '30', chatName: 'New chat'},
+      showDeleteDialogChat: false
     }
   }
 
@@ -154,10 +151,7 @@ class BusinessAccount extends React.Component {
 
   async createMeeting () {
     console.log('Creating initial meeting')
-    const meetingInfo = { chatActivation: false, chats: [{id: '2021-01-01@11:30', chatName: "Chat 1", chatDate: "2021-01-01", chatTime: '11:30', chatLength: '30', chatSize: '2'},{id: '2021-01-01@14:30', chatName: "Chat 2", chatDate: "2021-01-01", chatTime: '14:30', chatLength: '30', chatSize: '2'}],
-    inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
-    todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false, choseMeetingTime: false, activated: false},
-    }
+    const meetingInfo = conferenceChatInfo
 
     const _body = {request_type: "create_chat_parent", 
              user_sub_id: this.props.userInfo.userSubId,
@@ -185,22 +179,7 @@ class BusinessAccount extends React.Component {
 
   async createMeetingBusiness() {
     console.log('Creating initial meeting')
-    const meetingInfo = {chatActivation: false, nextChats: [{chatName: "Chat 1", chatTime: "11:30", chatLength: "30", chatDate: "1609718400000"},
-                                                            {chatName: "Chat 2", chatTime: "11:30", chatLength: "30", chatDate: "1610323200000"},
-                                                            {chatName: "Chat 3", chatTime: "11:30", chatLength: "30", chatDate: "1610928000000"},
-                                                            {chatName: "Chat 4", chatTime: "11:30", chatLength: "30", chatDate: "1611532800000"},
-                                                            {chatName: "Chat 5", chatTime: "11:30", chatLength: "30", chatDate: "1612137600000"},
-                                                            {chatName: "Chat 6", chatTime: "11:30", chatLength: "30", chatDate: "1612742400000"},
-                                                            {chatName: "Chat 7", chatTime: "11:30", chatLength: "30", chatDate: "1613347200000"},
-                                                            {chatName: "Chat 8", chatTime: "11:30", chatLength: "30", chatDate: "1613952000000"},
-                                                            {chatName: "Chat 9", chatTime: "11:30", chatLength: "30", chatDate: "1614556800000"},
-                                                            {chatName: "Chat 10", chatTime: "11:30", chatLength: "30", chatDate: "1615161600000"}],
-                      frequency: 'weekly', startDate: "2021-01-01", endDate: "2033-01-01", chatLength: '30',
-                      weekday: 'friday', chatTime: '11:30', weekOfMonth: 'first',
-                      inviteText: '<p>Hello $NAME$,</p><p><br></p><p>you have a <strong>Remote Social Butterfly Chat</strong> happening on $DATE$ at $TIME$ for $CHATLENGTH$ with $CHATPARTNER$.</p><p>Please get in touch with each other to organise your chat.</p><p><br></p><p>If you have feedback about the Remote Social Butterfly Chats, just reply to this email.</p><p><br></p><p>Happy connecting!</p><p>Your Organizers and the Remote Social Butterfly Team</p>',
-                      todoList: {enteredEmails: false, personalisedInvite: false, scheduledMeeting: false,
-                                 choseMeetingTime: false, activated: false},
-                      chatSize: '2'}
+    const meetingInfo = businessChatInfo
 
     const _body = {request_type: "create_chat_parent", 
              user_sub_id: this.props.userInfo.userSubId,
@@ -564,7 +543,7 @@ class BusinessAccount extends React.Component {
         newPeopleList[tableIndexConnectingEmail].connectedColleagues = newConnectedColleagues
         // add changes to collateralChanges that will be commited to the DB when the save button is being pressed.
         if (collateralIndex === -1) {
-          newCollateralChanges.push({colId: indexConnectingEmail, changes: {connectedColleagues: newConnectedColleagues }})
+          newCollateralChanges.push({colId: connectedEmail, changes: {connectedColleagues: newConnectedColleagues }})
         } else {
           newCollateralChanges[collateralIndex].changes.connectedColleagues = newConnectedColleagues
         }
@@ -586,7 +565,8 @@ class BusinessAccount extends React.Component {
     const selectedEmailTableId = this.state.peopleList.findIndex(person => person.personEmail === this.state.selectedEmail[0])
     const changes = {
       projectColleagues: this.state.peopleList[selectedEmailTableId].projectColleagues,
-      teamColleagues: this.state.peopleList[selectedEmailTableId].teamColleagues
+      teamColleagues: this.state.peopleList[selectedEmailTableId].teamColleagues,
+      connectedColleagues: this.state.peopleList[selectedEmailTableId].connectedColleagues
     }
     this.editTableEntry('PeopleTable', this.state.selectedEmail[0], changes)
     const collateralChanges = this.state.collateralChanges
@@ -1001,9 +981,11 @@ class BusinessAccount extends React.Component {
 
   saveChat = () => {
     const chatId = this.state.chatInfo.chatDate + '@' + this.state.chatInfo.chatTime
-    const chatIdIndex = this.state.meetingInfo.chats.findIndex(data => data.id === chatId)
     // check if a chat at that time already exists by checking the chatId against existing chatIds
-    if (chatIdIndex === -1 || this.state.chatInfo.chatLength !== this.state.meetingInfo.chats[this.state.selectedChatTableId].chatLength) {
+    const chatIdIndex = this.state.meetingInfo.chats.findIndex(data => data.id === chatId)
+    // if an existing only changes chatLength or chatName the chat id doesn't change but the change shouldbe allowed
+    if (chatIdIndex === -1 || this.state.chatInfo.chatLength !== this.state.meetingInfo.chats[this.state.selectedChatTableId].chatLength
+        || this.state.chatInfo.chatName !== this.state.meetingInfo.chats[this.state.selectedChatTableId].chatName) {
       let newMeetingInfo = _.clone(this.state.meetingInfo)
       let newChatInfo = _.clone(this.state.chatInfo)
       newChatInfo.id = chatId

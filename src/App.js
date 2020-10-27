@@ -39,9 +39,10 @@ class App extends React.Component {
     }
   }
 
-  async signIn(username, userSubId, groupType, subscription) {
+  async signIn(username, userSubId, groupType, subscription, accountName, userType) {
     this.setState({ 
-      userInfo: {email: username, userSubId: userSubId, groupType: groupType, subscription: subscription},
+      userInfo: {email: username, userSubId: userSubId, groupType: groupType, 
+                 ubscription: subscription, accountName: accountName, userType: userType},
       isAuthenticated: true
     })
   }
@@ -125,7 +126,6 @@ class App extends React.Component {
                 </Route>
                 <Route exact path="/signin" > 
                   <SignIn
-                    onSignIn={this.signIn}
                     goToEnterCode = {this.state.goToEnterCode}
                     onSetGoToEnterCode = {this.setGoToEnterCode}
                   />

@@ -21,6 +21,13 @@ export const subscriptionTradeshow = [
 export const groupTypes = [
     "-",
     'Business',
+    'Workshop',
     'Conference',
     'Tradeshow'
+]
+
+export const userTypes = [
+    "-",
+    'Admin',
+    'User'
 ]

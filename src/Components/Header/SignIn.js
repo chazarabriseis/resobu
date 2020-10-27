@@ -71,7 +71,6 @@ class SignIn extends React.Component {
                 }
                 return
             }
-            this.props.onSignIn(username, password)
             this.props.history.push('/account')
         }
     }

@@ -20,9 +20,11 @@ class Account extends React.Component {
     if (userInfoAll) {
       const username = userInfoAll.attributes.email
       const userSubId = userInfoAll.attributes.sub
-      const subscription = userInfoAll.attributes['custom:subscription']
       const groupType = userInfoAll.attributes['custom:groupType']
-      await this.props.onSignIn(username, userSubId, groupType, subscription)
+      const subscription = userInfoAll.attributes['custom:subscription']
+      const accountName = userInfoAll.attributes['custom:accountName']
+      const userType = userInfoAll.attributes['custom:userType']
+      await this.props.onSignIn(username, userSubId, groupType, subscription, accountName, userType)
       this.waitingDone()
       window.scrollTo(0, 0);
     } 
