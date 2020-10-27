@@ -28,15 +28,15 @@
           
           
     
-          "functionReSoBuLambdaSendingContactEmailName": {
+          "functionReSoBuLambdaSendContactEmailName": {
             "Type": "String",
-            "Default": "functionReSoBuLambdaSendingContactEmailName"
+            "Default": "functionReSoBuLambdaSendContactEmailName"
           },
         
           
-          "functionReSoBuLambdaSendingContactEmailArn": {
+          "functionReSoBuLambdaSendContactEmailArn": {
             "Type": "String",
-            "Default": "functionReSoBuLambdaSendingContactEmailArn"
+            "Default": "functionReSoBuLambdaSendContactEmailArn"
           }
         
           
@@ -412,337 +412,6 @@
                     
                     
                     
-                      {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/POST",
-                            "/send-contact-email/*"
-                          ]
-                        ]
-                      },
-                                            {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/POST",
-                            "/send-contact-email"
-                          ]
-                        ]
-                      }
-                    
-                      ,
-                    
-                    
-                      {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/GET",
-                            "/send-contact-email/*"
-                          ]
-                        ]
-                      },
-                                            {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/GET",
-                            "/send-contact-email"
-                          ]
-                        ]
-                      }
-                    
-                      ,
-                    
-                    
-                      {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/PUT",
-                            "/send-contact-email/*"
-                          ]
-                        ]
-                      },
-                                            {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/PUT",
-                            "/send-contact-email"
-                          ]
-                        ]
-                      }
-                    
-                      ,
-                    
-                    
-                      {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/PATCH",
-                            "/send-contact-email/*"
-                          ]
-                        ]
-                      },
-                                            {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/PATCH",
-                            "/send-contact-email"
-                          ]
-                        ]
-                      }
-                    
-                      ,
-                    
-                    
-                      {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/DELETE",
-                            "/send-contact-email/*"
-                          ]
-                        ]
-                      },
-                                            {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "arn:aws:execute-api:",
-                            {
-                              "Ref": "AWS::Region"
-                            },
-                            ":",
-                            {
-                              "Ref": "AWS::AccountId"
-                            },
-                            ":",
-                            {
-                              "Ref": "ReSoBuAPI"
-                            },
-                            "/",
-                            {
-                              "Fn::If": [
-                                "ShouldNotCreateEnvResources",
-                                "Prod", 
-                                {
-                                  "Ref": "env"
-                                } 
-                              ]
-                            },
-                              "/DELETE",
-                            "/send-contact-email"
-                          ]
-                        ]
-                      }
-                    
-                    
-                    
-                    
-                    
                     ]
                   }
                 ]
@@ -1079,12 +748,6 @@
                       }
                     }
                   },
-                          
-                    "security": [
-                        {
-                          "sigv4": []
-                        }
-                      ],
                   
                   "x-amazon-apigateway-integration": {
                     "responses": {
@@ -1104,7 +767,7 @@
                             
                             {
                                 
-                                "Ref": "functionReSoBuLambdaSendingContactEmailArn"
+                                "Ref": "functionReSoBuLambdaSendContactEmailArn"
                             },
                             
                             "/invocations"
@@ -1184,12 +847,6 @@
                       }
                     }
                   },
-                          
-                    "security": [
-                        {
-                          "sigv4": []
-                        }
-                      ],
                   
                   "x-amazon-apigateway-integration": {
                     "responses": {
@@ -1209,7 +866,7 @@
                           
                           {
                             
-                            "Ref": "functionReSoBuLambdaSendingContactEmailArn"
+                            "Ref": "functionReSoBuLambdaSendContactEmailArn"
                           },
                           
                           "/invocations"
@@ -1300,12 +957,12 @@
         },
         
         
-        "functionReSoBuLambdaSendingContactEmailPermissionReSoBuAPI": {
+        "functionReSoBuLambdaSendContactEmailPermissionReSoBuAPI": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
                 "FunctionName": 
                     {
-                        "Ref":  "functionReSoBuLambdaSendingContactEmailName"
+                        "Ref":  "functionReSoBuLambdaSendContactEmailName"
                     },
                     
                     "Action": "lambda:InvokeFunction",
@@ -1335,7 +992,7 @@
         
         
         
-      "DeploymentAPIGWReSoBuAPI7c93a747": {
+      "DeploymentAPIGWReSoBuAPI6962800e": {
         "Type": "AWS::ApiGateway::Deployment",
         "Properties": {
           "Description": "The Development stage deployment of your API.",

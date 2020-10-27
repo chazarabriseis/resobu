@@ -26,7 +26,7 @@
             "service": "Lambda",
             "dependsOn": []
         },
-        "ReSoBuLambdaSendingContactEmail": {
+        "ReSoBuLambdaSendContactEmail": {
             "build": true,
             "providerPlugin": "awscloudformation",
             "service": "Lambda",
@@ -48,7 +48,7 @@
                 },
                 {
                     "category": "function",
-                    "resourceName": "ReSoBuLambdaSendingContactEmail",
+                    "resourceName": "ReSoBuLambdaSendContactEmail",
                     "attributes": [
                         "Name",
                         "Arn"

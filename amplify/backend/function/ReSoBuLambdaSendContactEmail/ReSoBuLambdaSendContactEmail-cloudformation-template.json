@@ -33,12 +33,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"ReSoBuLambdaDynamodbRequests",
+						"ReSoBuLambdaSendContactEmail",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"ReSoBuLambdaDynamodbRequests",
+									"ReSoBuLambdaSendContactEmail",
 									"-",
 									{
 										"Ref": "env"
@@ -69,7 +69,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-resobu-dev-101636-deployment",
-					"S3Key": "amplify-builds/ReSoBuLambdaDynamodbRequests-68655264684469307941-build.zip"
+					"S3Key": "amplify-builds/ReSoBuLambdaSendContactEmail-6d47386e4f6d4c4a396b-build.zip"
 				}
 			}
 		},
@@ -79,12 +79,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"resobuLambdaRole5da0360e",
+						"resobuLambdaRole0f86db52",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"resobuLambdaRole5da0360e",
+									"resobuLambdaRole0f86db52",
 									"-",
 									{
 										"Ref": "env"
