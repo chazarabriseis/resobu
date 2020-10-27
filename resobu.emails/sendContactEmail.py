@@ -1,71 +1,47 @@
 import json
-import textwrap
 import boto3
 from botocore.exceptions import ClientError
 
-
-def lambda_handler(event, context):
-
-    userattributeslist = ["email"]
-    try:
-        user_sub_id = event["user_sub_id"]
-        message_header = event['subject']
-        message_body = event['body']
-
-    except KeyError as e:
-        raise Exception({
-            "errorType" : "Exception",
-            "httpStatus": 500,
-            "message": "Required function parameters are not present {}".format(e)
-        })
-
-    # identity information
-    try:
-        # Create new cognito idp resource
-        print("Starting IDP information requests...")
-        idp = boto3.client('cognito-idp')
-        idp_response = idp.get_user(AccessToken=user_sub_id)
-        print(idp_response["UserAttributes"])
-
-        userattributes={}
-        for attrib in userattributeslist:
-            try:
-                userattributes[attrib] = [kvpair_obj["Value"] for kvpair_obj in idp_response["UserAttributes"] if kvpair_obj["Name"] == attrib][0]
-            except IndexError as e:
-                userattributes[attrib] = ""
-                print("Warn: no "+userattributes[(attrib)])
-            else:
-                print("...got: "+userattributes[attrib])
-
-    except ClientError as e:
-        message = "Failed! Requested: "+user_sub_id+" IDP Response"+e.response['Error']['Message']
-        print(message)
-        raise Exception({
-                "errorType" : "Exception",
-                "httpStatus": 500,
-                "message": message
-            })
-    else:
-        # for userattrib, value in userattributes.items(): print("...got userattributes[\""+userattrib+"\"]: "+value)
-        print("...got", userattributes)
-        print("Success: IDP identity info")
-
-        # set intermediate variables for convenience
-        # lastname = userattributes["family_name"]
-        # firstname = userattributes["given_name"]
-        email = userattributes["email"]
-
-
-	# debug information	
-    DEBUG = (f"Request ID: {context.aws_request_id} \r\n"
-        f"Mem. limits(MB): {context.memory_limit_in_mb} \r\n"
-        f"LambdaContext vars : {vars(context)} \r\n"
-        f"cognito_identity_id: {context.identity.cognito_identity_id} "
-        )
+def handler(event, context):
+    headers = {
+        "Access-Control-Allow-Credentials": True,
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        "Access-Control-Allow-Origin": "*",
+    }
     
-    print(DEBUG)
+    try:
+        _event_body = event["body"]
+        event_body = json.loads(_event_body)
     
-	# function mail settings
+    except KeyError:
+        return {"headers": headers,
+                "statusCode": 500,
+                "body": json.dumps({"errorType": "KeyError",
+                                    "message": "One of the required function parameters not present (body)",
+                                    "statusCode": 500})
+                }
+
+    try:
+        message_header = event_body["subject"]
+        message_body = event_body["text"]
+        sender_email = event_body["email"]
+        sender_name = event_body["name"]
+
+    except KeyError:
+        print('problem')
+        return {"headers": headers,
+                "statusCode": 500,
+                "body": json.dumps({"errorType": "KeyError",
+                                    "message": "One of the required function parameters not present (subject, body, email, name)",
+                                    "statusCode": 500})
+                }
+    
+    if len(sender_name) == 0:
+        sender_name = "Someone"
+    
+                
+    # function mail settings
     # AWS SES region (not all available)
     AWS_SES_REGION = "eu-west-1"
     # The character encoding for the email.
@@ -74,24 +50,17 @@ def lambda_handler(event, context):
     # function s3 settings
     # AWS S3 region
     AWS_S3_REGION = "eu-central-1"
-
+    
     # from email address. This address must be verified with Amazon SES.
     SENDER = "Remote Social Butterfly <remote.social.butterfly@gmail.com>"
     # to email address
     RECIPIENT = "remote.social.butterfly@gmail.com"
     # The subject line for the email.
-    SUBJECT = "RESOBU: Contact from %s" % email
-
+    SUBJECT = "ReSoBu: Contact by %s" % sender_name
     
-    # Also add text wrapping here to mimic what the user typed in 
-    # (if the box size changes the character length must too!)
-    # message_body_html = message_body.replace('\n','</br>')
-    # message_body_html = '\n'.join(textwrap.wrap(message_body_html, 100))
-
     # The email body for recipients with non-HTML email clients.
-    BODY_TEXT = ("A user has contacted you\r\n"
-                 "User info:\r\n"
-                 f"Email: {email} \r\n"
+    BODY_TEXT = (f"{sender_name} user has contacted you\r\n"
+                 f"{sender_name} Email: {sender_email} \r\n"
                  "Subject:\r\n"
                  f"{message_header} \r\n" 
                  "Text:\r\n"
@@ -102,20 +71,11 @@ def lambda_handler(event, context):
     message_body_html = message_body.replace('\n','</br>')
     #message_body_html = message_body_html.replace('\n','</br>')
     BODY_HTML = """
-                <html>
-                <head></head>
-                <body>
-                <h1>A user has contacted you</h1>
-                <p>User info:</p>
-                <b>Email:</b> %s</br>
-                <p>Subject:</p>
-                 %s
-                <b>Contact:</b></br></br>
-                %s
-                </br></br>
-                </body>
-                </html>
-                """ % (email,message_header,message_body_html)
+                <h2>%s contacted you</h2>
+                <p><strong>%s Email:</strong> %s</p>
+                <p><strong>Subject:</strong> %s</p>
+                <p><strong>Text:</strong> %s</p>
+                """ % (sender_name,sender_name,sender_email,message_header,message_body_html)
 
     #
     # Mail Notification
@@ -153,9 +113,17 @@ def lambda_handler(event, context):
     except ClientError as e:
         message = "Failed: "+" SES Response"+e.response['Error']['Message']
         print(message)
-        raise Exception({
-                "errorType" : "Exception",
-                "httpStatus": 500,
-                "message": message
-            })
+        return {"headers": headers,
+                "statusCode": 500,
+                "body": json.dumps({"errorType": "KeyError",
+                                    "message": message,
+                                    "statusCode": 500})
+                }
+    
+    response = {'message': "success"}
+                
+    return {"headers": headers,
+                "statusCode": 200,
+                "body": json.dumps({"statusCode": 200, "response": response})
+                }
 

@@ -61,16 +61,25 @@ class Contact extends React.Component {
   };
 
   triggerEmail = () => {
-    const _body = {}
+    console.log('sending email')
+    const _body = {
+      name: this.state.name,
+      email: this.state.email,
+      subject: this.state.subject,
+      text: this.state.text,
+      user_sub_id: this.props.userInfo.userSubId
+    }
     // send the information to the lambda function that sends an email
-    console.log(this.state)
-    API.post('ReSoBuAPI', '/sending-contact-email ', {
+    API.post('ReSoBuAPI', '/send-contact-email ', {
       body: _body
     })
     .then(response => {
       console.log(response)
-      // const resultList = response['Items']
-      // this.setState({peopleList: resultList})
+      if (response['statusCode'] === 200) {
+        toast.success("Successfully sent! Someone will be in contact shortly!", {
+            position: toast.POSITION.TOP_RIGHT
+        })
+      }
       this.setState({
         submitted: true
       })
