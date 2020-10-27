@@ -25,6 +25,8 @@ import '../../App.css'
 import Spinner from '../../Components/Common/Spinner';
 const __ISMSIE__ = navigator.userAgent.match(/Trident/i) ? true : false;
 
+const MAX_FILE_SIZE= 7000000
+
 class BusinessAccount extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +45,8 @@ class BusinessAccount extends React.Component {
       isLoadingMeetingInfoList: true,
 
       showAddPeopleDialog: false,
+      showUploadEmailsDialog: false,
+      uploadedEmails: [],
       emailList: '',
 
       showEditPersonDialog: false,
@@ -215,7 +219,7 @@ class BusinessAccount extends React.Component {
 
   checkEnteredEmails = () => {
     // TODO: check for weird characters
-    if (this.state.emailList=== '') {
+    if (this.state.emailList === '') {
       toast.warning("Oops, you haven't entered any emails yet.", {
         position: toast.POSITION.TOP_RIGHT
       })
@@ -293,11 +297,96 @@ class BusinessAccount extends React.Component {
     
       this.setState({
         showAddPeopleDialog: false,
+        showUploadEmailsDialog : false,
         emailList: ''
       })
     }
   } 
 
+  showUploadPeopleDialog = () => {
+    this.setState({
+      showAddPeopleDialog: false,
+      showUploadEmailsDialog: true})
+  }  
+
+    // Check file size and reads it
+  isFileSizeWithinLimits(file) {
+    if (file && file.size > MAX_FILE_SIZE)
+        return false;
+    return true;
+  }
+  // from https://blog.mounirmesselmeni.de/2012/11/20/reading-csv-file-with-javascript-and-html5-file-api/
+  handleFileRead = (event) => {
+    const content = event.target.result
+    var allTextLines = content.split(/\r\n|\n/);
+    console.log(allTextLines)
+    // check if the first column is labeled emails
+    if (allTextLines[0].substring(0,6).toLowerCase() !== 'emails') {
+      toast.warning(`First column is not labeled Emails`, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return
+    }
+    var emails = '';
+    for (var i=1; i<allTextLines.length; i++) {
+        var data = allTextLines[i].split(',')
+        emails = emails + data[0] + ','
+    }
+    this.uploadPeople(emails.substring(0,emails.length-2))
+  }
+
+  handleError () {
+    toast.warning(`Cannot read the file`, {
+      position: toast.POSITION.TOP_RIGHT
+    })
+  }
+
+  handleFileChosen = (e) => {
+    let inputFile = e.target.files[0];
+
+    if (!this.isFileSizeWithinLimits(inputFile)) {
+      toast.warning(`Please pick a file smaller than ${MAX_FILE_SIZE/1000000} MB.`, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+      return
+    }
+
+    let fileFormat = ((inputFile.name).split('.'))[1]
+    let fileName = ((inputFile.name).split('.'))[0]
+
+    if (fileFormat === 'csv') {
+        try {
+            this.setState({filename: fileName})
+            let fileReader = new FileReader()
+            fileReader.readAsText(inputFile)
+            fileReader.onload = this.handleFileRead
+            fileReader.onerror = this.handleError
+        }
+        catch(e) {
+          toast.warning(`This CSV file does not work, make sure that the first column conatins the emails and is labeled Emails`, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        }
+    }
+  }
+
+  createUploadedEmails = () => {
+    const uploadedEmailHTML = this.state.uploadedEmails.map((item, index) => {
+        return <li key= {item}> 
+                {item}
+               </li>
+    })
+    return uploadedEmailHTML
+  }
+
+  uploadPeople = (emails) => {
+    const emailList = emails.split(',')
+    // show a preview of the uploaded emails by setting the state
+    this.setState({
+      uploadedEmails: emailList,
+      emailList: emails
+    })
+  }
 
   triggerOpenEditDialog = () => {
     const currentState = _.cloneDeep(this.state)
@@ -382,7 +471,6 @@ class BusinessAccount extends React.Component {
       }
     })
     return teamListHTML
-    
   }
 
   createProjectHTML = () => {
@@ -1183,10 +1271,13 @@ class BusinessAccount extends React.Component {
           </div>      
         </div>
         <Dialog open={this.state.showAddPeopleDialog} >
-          <DialogTitle>Add Employeess</DialogTitle>
+          <DialogTitle>{this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Either enter a list of emails separated by a comma or just a single one. You cann add project and team colleagues later by editing single entries. 
+              Either go ahead and upload a csv file or enter a list of emails separated by a comma or just a single one below.
+              {this.props.userInfo.groupType === 'Business' ? 'You can add project and team colleagues later by editing single entries. ' 
+              : 'You can add already connected people later by editing single entries. '}
+               
             </DialogContentText>
             <TextField
               autoFocus
@@ -1202,8 +1293,40 @@ class BusinessAccount extends React.Component {
             />
           </DialogContent>
           <DialogActions>
+            <Button onClick={this.showUploadPeopleDialog} className="actionButton leftSideButton">
+              {this.props.userInfo.groupType === 'Business' ? 'Upload Employees' : 'Upload People'}
+            </Button>
             <Button onClick={this.addPeople} className="actionButton">
-              Add Employees
+              {this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}
+            </Button>
+            <Button onClick={this.cancelChange} className="ghostButton">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={this.state.showUploadEmailsDialog} >
+          <DialogTitle>Upload a CSV file with emails</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Make sure the first column of the csv file is named 'Emails'
+            </DialogContentText>
+            <input
+              className="csvInput"
+              accept=".csv"
+              type="file"
+              id="file"
+              placeholder={null}
+              onChange={e => this.handleFileChosen(e)}
+            />
+            <div>
+              <ul style= {{listStyle: 'none'}}>
+              {this.createUploadedEmails()}
+              </ul>  
+            </div>  
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.addPeople} className="actionButton">
+              {this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}
             </Button>
             <Button onClick={this.cancelChange} className="ghostButton">
               Cancel

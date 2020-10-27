@@ -180,6 +180,10 @@
   animation: backgroundAnimated 3s ease infinite !important;
 }
 
+.leftSideButton {
+  margin-right: 220px !important
+}
+
 @-webkit-keyframes backgroundAnimated {
   0% {background-color: purple}
   50% {background-color: #b148d2}
