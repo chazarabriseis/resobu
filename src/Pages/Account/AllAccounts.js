@@ -270,6 +270,13 @@ class BusinessAccount extends React.Component {
     const emails = value[0]
     const newPeopleList = value[1]
     if (emails.length === 0) {
+      this.setState({
+        showUploadEmailsDialog : false,
+        emailList: ''
+      })
+      toast.warning('Ooops, all these emails already existed.', {
+        position: toast.POSITION.TOP_RIGHT
+      })  
       return
     } else {
       const _body = {
@@ -292,13 +299,12 @@ class BusinessAccount extends React.Component {
         } else {
           //this.fetchPeopleList()
           this.setState({peopleList: newPeopleList})
+          this.setState({
+            showAddPeopleDialog: false,
+            showUploadEmailsDialog : false,
+            emailList: ''
+          })
         }
-      })
-    
-      this.setState({
-        showAddPeopleDialog: false,
-        showUploadEmailsDialog : false,
-        emailList: ''
       })
     }
   } 
@@ -329,7 +335,7 @@ class BusinessAccount extends React.Component {
     }
     var emails = '';
     for (var i=1; i<allTextLines.length; i++) {
-        var data = allTextLines[i].split(',')
+        let data = allTextLines[i].split(','|';')
         emails = emails + data[0] + ','
     }
     this.uploadPeople(emails.substring(0,emails.length-2))
@@ -341,8 +347,8 @@ class BusinessAccount extends React.Component {
     })
   }
 
-  handleFileChosen = (e) => {
-    let inputFile = e.target.files[0];
+  handleFileChosen = (event) => {
+    let inputFile = event.target.files[0];
 
     if (!this.isFileSizeWithinLimits(inputFile)) {
       toast.warning(`Please pick a file smaller than ${MAX_FILE_SIZE/1000000} MB.`, {
@@ -1275,6 +1281,7 @@ class BusinessAccount extends React.Component {
           <DialogContent>
             <DialogContentText>
               Either go ahead and upload a csv file or enter a list of emails separated by a comma or just a single one below.
+              All duplicates and already existing emails will be ignored.
               {this.props.userInfo.groupType === 'Business' ? 'You can add project and team colleagues later by editing single entries. ' 
               : 'You can add already connected people later by editing single entries. '}
                
@@ -1308,7 +1315,7 @@ class BusinessAccount extends React.Component {
           <DialogTitle>Upload a CSV file with emails</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Make sure the first column of the csv file is named 'Emails'
+              Make sure the first column of the csv file is named 'Emails'. All duplicates and already existing emails will be ignored.
             </DialogContentText>
             <input
               className="csvInput"

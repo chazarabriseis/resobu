@@ -28,6 +28,6 @@ export const groupTypes = [
 
 export const userTypes = [
     "-",
-    'Admin',
-    'User'
+    'Admin' //,
+    // 'User'
 ]
