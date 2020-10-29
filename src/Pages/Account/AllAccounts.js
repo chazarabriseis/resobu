@@ -272,7 +272,8 @@ class BusinessAccount extends React.Component {
     if (emails.length === 0) {
       this.setState({
         showUploadEmailsDialog : false,
-        emailList: ''
+        emailList: '',
+        uploadedEmails: []
       })
       toast.warning('Ooops, all these emails already existed.', {
         position: toast.POSITION.TOP_RIGHT
@@ -302,7 +303,8 @@ class BusinessAccount extends React.Component {
           this.setState({
             showAddPeopleDialog: false,
             showUploadEmailsDialog : false,
-            emailList: ''
+            emailList: '',
+            uploadedEmails: []
           })
         }
       })
@@ -335,7 +337,10 @@ class BusinessAccount extends React.Component {
     }
     var emails = '';
     for (var i=1; i<allTextLines.length; i++) {
-        let data = allTextLines[i].split(','|';')
+        let data = allTextLines[i].split(',')
+        if (data.length === 1) {
+          data = allTextLines[i].split(';')
+        }
         emails = emails + data[0] + ','
     }
     this.uploadPeople(emails.substring(0,emails.length-2))
@@ -1325,6 +1330,7 @@ class BusinessAccount extends React.Component {
               placeholder={null}
               onChange={e => this.handleFileChosen(e)}
             />
+
             <div>
               <ul style= {{listStyle: 'none'}}>
               {this.createUploadedEmails()}
