@@ -87,6 +87,24 @@
     text-align: center;
 }
 
+.planIncludesContainer {
+    justify-content: space-evenly;
+    text-align: left;
+}
+
+.planList {
+    /*list-style-image: url("butterfly.png");*/
+    list-style-type: none;
+    margin-bottom: 5px;
+    font-size: large;
+}
+
+.includedList {
+    flex: 1;
+    flex-grow: 6;
+    padding-left: 10px;
+}
+
 .plan {
     padding: 30px;
 }
@@ -191,6 +209,12 @@
     margin-right: 10px;
 }
 
+.subscriptionIcon {
+    filter: invert(11%) sepia(88%) saturate(2202%) hue-rotate(276deg) brightness(95%) contrast(114%);
+    flex-grow: 1;
+    flex: 1;
+}
+
 .planPricing {
     padding-top: 20px;
     flex: 1;
@@ -199,6 +223,17 @@
 .planCTA {
     padding-top: 20px;
     padding-bottom: 20px;
+    flex: 1;
+    border-color: thistle;
+    border-bottom-style: solid;
+}
+
+.planCTAThistle {
+    border-color: purple;
+    border-bottom-style: solid;
+}
+
+.planIncluded {
     flex: 1;
 }
 
