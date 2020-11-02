@@ -1184,10 +1184,16 @@ class BusinessAccount extends React.Component {
             <div className="sectionContent">
               <Tabs style={{ width: '90%'}}>
                 <TabList>
-                  <Tab> {this.props.userInfo.groupType === 'Business' ? 'Employees' : 'People'} </Tab>
-                  <Tab disabled> Connection <strong>AI</strong>ssistance </Tab>
+                  <Tab> 
+                    {this.props.userInfo.groupType === 'Business' ? 'Employees' : 'People'} 
+                  </Tab>
+                  <Tab disabled={this.props.userInfo.subscription=== 'Basic' ? true : false}> 
+                    Connection <strong>AI</strong>ssistance 
+                  </Tab>
                   {this.props.userInfo.groupType === 'Business' && 
-                    <Tab disabled> Learning <strong>AI</strong>ssistance </Tab>
+                    <Tab disabled={this.props.userInfo.subscription=== 'Business' ? false : true}> 
+                      Learning <strong>AI</strong>ssistance 
+                    </Tab>
                   }
                   <Tab> Chat Times </Tab>
                   <Tab> Chat Invite </Tab>

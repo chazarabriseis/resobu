@@ -11,7 +11,7 @@ export default class PeopleTab extends Component {
       <div className="tab">
         <div className="tabContent">
           <Button variant="contained" className="actionButton" onClick={this.props.onOpenAddPersonDialog}>{this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}</Button>   
-          <Button variant="contained" className="actionButton" onClick={this.props.onOpenEditPersonDialog}>Add/Remove Connections</Button>   
+          <Button variant="contained" className="actionButton" onClick={this.props.onOpenEditPersonDialog} disabled={this.props.userInfo.subscription=== 'Basic' ? true : false} >Add/Remove Connections</Button>   
           <Button variant="contained" className="ghostButton" onClick={this.props.onOpenDeleteDialog}>{this.props.userInfo.groupType === 'Business' ? 'Delete Selected Employee' : 'Delete Selected Person'}</Button>   
           <PeopleTable
             peopleList = {this.props.peopleList}

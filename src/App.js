@@ -42,7 +42,8 @@ class App extends React.Component {
   async signIn(username, userSubId, groupType, subscription, accountName, userType) {
     this.setState({ 
       userInfo: {email: username, userSubId: userSubId, groupType: groupType, 
-                 ubscription: subscription, accountName: accountName, userType: userType},
+                 subscription: subscription, accountName: accountName, 
+                 userType: userType},
       isAuthenticated: true
     })
   }

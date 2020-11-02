@@ -1,6 +1,6 @@
 export const subscriptionBusiness = [
     "-",
-    'Free',
+    'Basic',
     'Premium',
     'Business',
     'Enterprise'
@@ -8,13 +8,13 @@ export const subscriptionBusiness = [
 
 export const subscriptionConference = [
     "-",
-    'Standard',
+    'Basic',
     'Premium'
 ]
 
 export const subscriptionTradeshow = [
     "-",
-    'Standard',
+    'Basic',
     'Premium'
 ]
 
