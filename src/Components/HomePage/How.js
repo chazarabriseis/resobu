@@ -9,16 +9,17 @@ class How extends React.Component {
         <div className='heading3'>We organise chats either randomly or tailor them to your data with our connection and learning <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance</div>
         <div className='container'>
           <div className='card'>
-            <div className='cardTitle'>Random selection of chat partners</div>
-            <img className='cardImage imgBw' src='random.png' alt='random' />
+            <div className='cardTitle'>Random chat partner selection</div>
+            <img className='cardImage' src='random_dark.gif' alt='random' />
             <div className='cardText'> 
               From all people random chat partners will be choosen no matter if they already work together or not. 
               We will make sure that the same people are not meeting again before they have met most of the others. 
             </div>
           </div>
           <div className='card'>
-            <div className='cardTitle'>Data-driven selection of chat partners</div>
-            <img className='cardImage imgBw' src='tailored.png' alt='tailored' />
+            <div className='cardTitle'>Data-driven chat partner selection</div>
+            <img className='cardImage' src='data_driven_1_dark.gif' alt='tailored' />
+            <img className='cardImage2' src='data_driven_2_dark.gif' alt='tailored' />
             <div className='cardText'>
               <div>
                 <div className='cardTitle2'>Connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance</div>
