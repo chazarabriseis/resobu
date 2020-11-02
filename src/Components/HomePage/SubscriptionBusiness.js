@@ -67,10 +67,10 @@ class SubscriptionBusiness extends React.Component {
               {['Initial Consultation', 'Data Upload Assistance',  'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="plan planIncluded">
-            {['Initial Consultation', 'Data Upload Assistance',  'Connection AIssitance', 'Learning AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Data Upload Assistance', 'Connection AIssitance', 'Learning AIssitance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div> 
           <div className="planBorder planIncluded coniner">
-            {['Initial Consultation', 'Data Upload Assistance', 'Connection AIssitance', 'Learning AIssitance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {[].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
         </div>
       </div>

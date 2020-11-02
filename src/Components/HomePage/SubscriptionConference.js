@@ -10,7 +10,7 @@ class SubscriptionConference extends React.Component {
       <div>
         <div className="container planContainer planInfo">
           <div className="planTitle plan">
-            <div className="planHeading"> Standard</div>
+            <div className="planHeading"> Basic</div>
             <div className="planText"> For conferences with a very diverse range of attendees so random matching of chat partners is sufficient.</div>
           </div>
           <div className="planTitle planThistle">
@@ -33,8 +33,16 @@ class SubscriptionConference extends React.Component {
           <div className="planCTA plan">
             <Button className="ghostButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Standard')}>Get started</Button>  
           </div>
-          <div className="planCTA planThistle">
+          <div className="planCTA planThistle planCTAThistle">
             <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Premium')}>Get started</Button>  
+          </div>
+        </div>
+        <div className="container planIncludesContainer">
+          <div className="plan planIncluded">
+            {['Initial Consultation', 'Data Upload Assistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+          </div>
+          <div className="planThistle planIncluded">
+              {['Initial Consultation', 'Data Upload Assistance',  'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
         </div>
       </div>
