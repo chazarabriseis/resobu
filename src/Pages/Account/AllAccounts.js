@@ -92,8 +92,19 @@ class BusinessAccount extends React.Component {
       request_type: 'read_people'
     }
     let resultList = []
-    console.log('Fetching People List')
 
+/*     console.log('testing build chat groups')
+    API.post('ReSoBuAPI', '/build-chat-groups', {
+      body: {
+              "firstName":"Julia",
+              "lastName" : "ReSoBu"
+            }  
+    })
+    .then(response => {
+      console.log(response)
+    })  */
+    
+    console.log('Fetching People List')  
     //POST request to get people DB - test
     API.post('ReSoBuAPI', '/dynamodb-requests', {
       body: _body

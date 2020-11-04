@@ -31,6 +31,12 @@
             "providerPlugin": "awscloudformation",
             "service": "Lambda",
             "dependsOn": []
+        },
+        "ReSoBuLambdaBuildChatGroups": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda",
+            "dependsOn": []
         }
     },
     "api": {
@@ -49,6 +55,14 @@
                 {
                     "category": "function",
                     "resourceName": "ReSoBuLambdaSendContactEmail",
+                    "attributes": [
+                        "Name",
+                        "Arn"
+                    ]
+                },
+                {
+                    "category": "function",
+                    "resourceName": "ReSoBuLambdaBuildChatGroups",
                     "attributes": [
                         "Name",
                         "Arn"

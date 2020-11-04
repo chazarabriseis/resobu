@@ -20,6 +20,13 @@
             "privacy": {
                 "open": true
             }
+        },
+        {
+            "name": "/build-chat-groups",
+            "lambdaFunction": "ReSoBuLambdaBuildChatGroups",
+            "privacy": {
+                "open": true
+            }
         }
     ],
     "resourceName": "ReSoBuAPI",
@@ -30,6 +37,9 @@
         },
         {
             "lambdaFunction": "ReSoBuLambdaSendContactEmail"
+        },
+        {
+            "lambdaFunction": "ReSoBuLambdaBuildChatGroups"
         }
     ],
     "privacy": {
@@ -54,7 +64,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "ReSoBuLambdaBuildChatGroups",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "6962800e"
+    "uuid": "28793c8c"
 }
