@@ -104,7 +104,6 @@ class BusinessAccount extends React.Component {
       console.log(response)
     })  */
     
-    
     console.log('Fetching People List')  
     //POST request to get people DB - test
     API.post('ReSoBuAPI', '/dynamodb-requests', {
