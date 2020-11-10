@@ -69,7 +69,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-resobu-dev-101636-deployment",
-					"S3Key": "amplify-builds/ReSoBuLambdaBuildChatGroups-3031564a794142362f63-build.zip"
+					"S3Key": "amplify-builds/ReSoBuLambdaBuildChatGroups-41377836704131574232-build.zip"
 				}
 			}
 		},

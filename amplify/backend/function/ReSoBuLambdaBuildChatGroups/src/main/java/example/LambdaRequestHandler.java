@@ -40,10 +40,14 @@ public class LambdaRequestHandler implements RequestHandler<APIGatewayProxyReque
 
         logger.log("done" + result);
 
-        
+        APIGatewayProxyResponseEvent response = createAPIGatewayProxyResponseEvent();
+        response.setBody(result);
+        return response;
+    }
+
+    public static APIGatewayProxyResponseEvent createAPIGatewayProxyResponseEvent(){
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
         response.setStatusCode(200);
-        response.setBody(result);
         Map<String, String> headers = new HashMap<String, String>();
         headers.put( "Access-Control-Allow-Credentials", "True");
         headers.put("Access-Control-Allow-Headers", "Content-Type");
