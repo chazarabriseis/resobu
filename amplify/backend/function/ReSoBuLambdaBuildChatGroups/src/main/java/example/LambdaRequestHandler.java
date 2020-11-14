@@ -27,6 +27,14 @@ public class LambdaRequestHandler implements RequestHandler<APIGatewayProxyReque
         // process event
         logger.log("EVENT: " + gson.toJson(event));        
         String chatInfoString = event.getBody();
+
+        // LOGIC
+
+        // Input -> userSubId
+        // Output -> {Date: List of Groups}, updated peopleList with new contacts
+        
+        // get all information from DB to organize chats
+        // 
         
         ReSoBuChatInfo chatInfo = initializeReSuBuChatInfo(chatInfoString, context);
         logger.log("First people attributes" + chatInfo.people.get(0).attributes);
