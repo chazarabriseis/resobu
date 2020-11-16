@@ -75,6 +75,23 @@ class BusinessAccount extends React.Component {
     }
   }
 
+    /*  
+    console.log('testing sending chat invites')
+    const _body1 = {
+      senderName: 'UIIN',
+      recipientsEmails: ['julia.s.baldauf@gmail.com', 'meerman@uiin.org' ],
+      chatInviteSubject: 'UIIN Remote Social Butterfly Chat - automated test email :)',
+      chatInviteText: this.state.meetingInfo.inviteText,
+      chatDate: this.state.meetingInfo.chats[0]
+    }
+
+    API.post('ReSoBuAPI', '/send-invite-emails', {
+      body: _body1
+    })
+    .then(response => {
+      console.log(response)
+    })*/
+
   async componentDidMount () {
     window.scrollTo(0, 0);
     await this.fetchPeopleList();  
@@ -228,7 +245,9 @@ class BusinessAccount extends React.Component {
       initialState: currentState
     })
 
-    console.log('testing sending chat invites')
+
+    
+    console.log('testing chat orga lambda')
     const _body1 = {
       senderName: 'UIIN',
       recipientsEmails: ['julia.s.baldauf@gmail.com', 'meerman@uiin.org' ],
@@ -237,7 +256,7 @@ class BusinessAccount extends React.Component {
       chatDate: this.state.meetingInfo.chats[0]
     }
 
-    API.post('ReSoBuAPI', '/send-invite-emails', {
+    API.post('ReSoBuAPI', '/chat-orga-logic', {
       body: _body1
     })
     .then(response => {

@@ -69,7 +69,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-resobu-dev-101636-deployment",
-					"S3Key": "amplify-builds/ReSoBuChatOrgaLogic-53303435457449326136-build.zip"
+					"S3Key": "amplify-builds/ReSoBuChatOrgaLogic-6b2f2f4d53493764436a-build.zip"
 				}
 			}
 		},
