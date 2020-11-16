@@ -93,7 +93,7 @@ class BusinessAccount extends React.Component {
     }
     let resultList = []
 
-/*     console.log('testing build chat groups')
+    /* console.log('testing build chat groups')
     API.post('ReSoBuAPI', '/build-chat-groups', {
       body: {
               "firstName":"Julia",
