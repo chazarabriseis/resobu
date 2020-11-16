@@ -29,16 +29,16 @@
 				"aws:asset:property": "Code"
 			},
 			"Properties": {
-				"Handler": "example.LambdaRequestHandler::handleRequest",
+				"Handler": "index.handler",
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"ReSoBuLambdaBuildChatGroups",
+						"ReSoBuChatOrgaLogic",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"ReSoBuLambdaBuildChatGroups",
+									"ReSoBuChatOrgaLogic",
 									"-",
 									{
 										"Ref": "env"
@@ -64,12 +64,12 @@
 						"Arn"
 					]
 				},
-				"Runtime": "java11",
+				"Runtime": "python3.8",
 				"Layers": [],
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-resobu-dev-101636-deployment",
-					"S3Key": "amplify-builds/ReSoBuLambdaBuildChatGroups-4873742f4f6c34573854-build.zip"
+					"S3Key": "amplify-builds/ReSoBuChatOrgaLogic-53303435457449326136-build.zip"
 				}
 			}
 		},
@@ -79,12 +79,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"resobuLambdaRole6e5334e6",
+						"resobuLambdaRole70ec0e21",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"resobuLambdaRole6e5334e6",
+									"resobuLambdaRole70ec0e21",
 									"-",
 									{
 										"Ref": "env"
@@ -154,6 +154,45 @@
 					]
 				}
 			}
+		},
+		"CloudWatchEvent": {
+			"Type": "AWS::Events::Rule",
+			"Properties": {
+				"Description": "Schedule rule for Lambda",
+				"ScheduleExpression": {
+					"Ref": "CloudWatchRule"
+				},
+				"State": "ENABLED",
+				"Targets": [
+					{
+						"Arn": {
+							"Fn::GetAtt": [
+								"LambdaFunction",
+								"Arn"
+							]
+						},
+						"Id": {
+							"Ref": "LambdaFunction"
+						}
+					}
+				]
+			}
+		},
+		"PermissionForEventsToInvokeLambda": {
+			"Type": "AWS::Lambda::Permission",
+			"Properties": {
+				"FunctionName": {
+					"Ref": "LambdaFunction"
+				},
+				"Action": "lambda:InvokeFunction",
+				"Principal": "events.amazonaws.com",
+				"SourceArn": {
+					"Fn::GetAtt": [
+						"CloudWatchEvent",
+						"Arn"
+					]
+				}
+			}
 		}
 	},
 	"Outputs": {
@@ -178,6 +217,11 @@
 		"LambdaExecutionRole": {
 			"Value": {
 				"Ref": "LambdaExecutionRole"
+			}
+		},
+		"CloudWatchEventRule": {
+			"Value": {
+				"Ref": "CloudWatchEvent"
 			}
 		}
 	}

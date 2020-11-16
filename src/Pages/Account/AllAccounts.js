@@ -103,7 +103,7 @@ class BusinessAccount extends React.Component {
     .then(response => {
       console.log(response)
     })  */
-    
+
     
     console.log('Fetching People List')  
     //POST request to get people DB - test
@@ -227,6 +227,23 @@ class BusinessAccount extends React.Component {
       showAddPeopleDialog: true,
       initialState: currentState
     })
+
+    console.log('testing sending chat invites')
+    const _body1 = {
+      senderName: 'UIIN',
+      recipientsEmails: ['julia.s.baldauf@gmail.com', 'meerman@uiin.org' ],
+      chatInviteSubject: 'UIIN Remote Social Butterfly Chat - automated test email :)',
+      chatInviteText: this.state.meetingInfo.inviteText,
+      chatDate: this.state.meetingInfo.chats[0]
+    }
+
+    API.post('ReSoBuAPI', '/send-invite-emails', {
+      body: _body1
+    })
+    .then(response => {
+      console.log(response)
+    })
+
   }
 
   checkEnteredEmails = () => {
@@ -968,15 +985,13 @@ class BusinessAccount extends React.Component {
 
   saveChangeInviteText = () => {
     // first check that the text contains all placeholders
-    if (this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$NAME$') 
-        && this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$CHATLENGTH$')
-        && this.state.meetingInfo.inviteText.includes('$CHATPARTNER$')) {
+    if (this.state.meetingInfo.inviteText.includes('$DATE$') && this.state.meetingInfo.inviteText.includes('$TIME$') && this.state.meetingInfo.inviteText.includes('$CHATLENGTH$')) {
           console.log('triggering to send meeting changes to DB')
           const changes =  this.state.meetingInfo
           this.editTableEntry('SocialButterflyChatsTable', this.props.userInfo.userSubId, changes)
           this.setState({changeInvite: false})
     } else {
-      toast.warning("Hmm, you are missing one of the placeholders: $NAME$, $DATE$, $DATE$, $CHATLENGTH$ or $CHATPARTNER$.", {
+      toast.warning("Hmm, you are missing one of the placeholders: $DATE$, $TIME$ or $CHATLENGTH$.", {
         position: toast.POSITION.TOP_RIGHT
       })
     }

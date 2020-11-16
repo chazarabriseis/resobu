@@ -29,16 +29,16 @@
 				"aws:asset:property": "Code"
 			},
 			"Properties": {
-				"Handler": "example.LambdaRequestHandler::handleRequest",
+				"Handler": "index.handler",
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"ReSoBuLambdaBuildChatGroups",
+						"ReSoBuLambdaSendInviteEmails",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"ReSoBuLambdaBuildChatGroups",
+									"ReSoBuLambdaSendInviteEmails",
 									"-",
 									{
 										"Ref": "env"
@@ -64,12 +64,12 @@
 						"Arn"
 					]
 				},
-				"Runtime": "java11",
+				"Runtime": "python3.8",
 				"Layers": [],
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-resobu-dev-101636-deployment",
-					"S3Key": "amplify-builds/ReSoBuLambdaBuildChatGroups-4873742f4f6c34573854-build.zip"
+					"S3Key": "amplify-builds/ReSoBuLambdaSendInviteEmails-764b45702f4c51446e53-build.zip"
 				}
 			}
 		},
@@ -79,12 +79,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"resobuLambdaRole6e5334e6",
+						"resobuLambdaRoled6db6a37",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"resobuLambdaRole6e5334e6",
+									"resobuLambdaRoled6db6a37",
 									"-",
 									{
 										"Ref": "env"

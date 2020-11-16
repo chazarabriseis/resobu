@@ -27,6 +27,20 @@
             "privacy": {
                 "open": true
             }
+        },
+        {
+            "name": "/send-invite-emails",
+            "lambdaFunction": "ReSoBuLambdaSendInviteEmails",
+            "privacy": {
+                "open": true
+            }
+        },
+        {
+            "name": "/chat-orga-logic",
+            "lambdaFunction": "ReSoBuChatOrgaLogic",
+            "privacy": {
+                "open": true
+            }
         }
     ],
     "resourceName": "ReSoBuAPI",
@@ -40,6 +54,12 @@
         },
         {
             "lambdaFunction": "ReSoBuLambdaBuildChatGroups"
+        },
+        {
+            "lambdaFunction": "ReSoBuLambdaSendInviteEmails"
+        },
+        {
+            "lambdaFunction": "ReSoBuChatOrgaLogic"
         }
     ],
     "privacy": {
@@ -72,7 +92,23 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "ReSoBuLambdaSendInviteEmails",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "ReSoBuChatOrgaLogic",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "54e3df64"
+    "uuid": "1c277f32"
 }
