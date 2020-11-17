@@ -262,7 +262,6 @@ class BusinessAccount extends React.Component {
       console.log(response)
     })
     */
-
   }
 
   checkEnteredEmails = () => {
