@@ -245,8 +245,7 @@ class BusinessAccount extends React.Component {
       initialState: currentState
     })
 
-
-    
+    /*
     console.log('testing chat orga lambda')
     const _body1 = {
       senderName: 'UIIN',
@@ -262,6 +261,7 @@ class BusinessAccount extends React.Component {
     .then(response => {
       console.log(response)
     })
+    */
 
   }
 
