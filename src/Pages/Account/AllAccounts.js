@@ -262,7 +262,7 @@ class BusinessAccount extends React.Component {
       console.log(response)
     })
     */
-   
+
   }
 
   checkEnteredEmails = () => {
@@ -1186,7 +1186,6 @@ class BusinessAccount extends React.Component {
 
 
   render() {
-
     const PurpleSwitch = withStyles({
       switchBase: {
         color: purple[300],
