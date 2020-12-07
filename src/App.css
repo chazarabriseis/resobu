@@ -103,8 +103,41 @@
 .topSection {
   text-align: center;
   align-items: center;
-  padding-top: 160px;
+  padding-top: 120px;
   padding-bottom: 90px;
+}
+
+.contentSection {
+  padding-bottom: 360px;
+}
+
+/* css for small screens */
+@media (max-width: 600px) {
+  .contentSection{
+    padding-bottom: 80px;
+  }
+}
+
+/* css for small screens */
+@media (max-width: 600px) {
+  .topSection{
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+}
+
+.inputform {
+  padding-left: 30%;
+  padding-right: 30%;
+  padding-bottom: 20px;
+}
+
+/* css for small screens */
+@media (max-width: 600px) {
+  .inputform{
+      padding-left: 10%;
+      padding-right: 10%;
+  }
 }
 
 .topSectionAccount{
@@ -182,15 +215,26 @@
 
 .headerButton {
   margin: 0px;
+  color: #282c34 !important;
 }
 
 .headerButton:hover {
   background-color: white !important;
+  color: gray !important;
 }
 
 .container {
   display: flex; /* or inline-flex */
+  align-items: stretch;
+
 }
+
+.containerRow{
+  display: flex; /* or inline-flex */
+  flex-flow: column;
+  flex-grow: 1; /* default 0 */
+}
+
 
 .buttonExplantion {
   margin-top: 40px;

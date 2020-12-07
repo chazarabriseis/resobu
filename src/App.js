@@ -5,10 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import Account from './Pages/Account/Account'
 import Home from './Pages/Home/Home'
-import HomeBusiness from './Pages/Home/HomeBusiness'
-import HomeConference from './Pages/Home/HomeConference'
-import HomeTradeshow from './Pages/Home/HomeTradeshow'
-import HomeWorkshop from './Pages/Home/HomeWorkshop'
+import HomeOrganization from './Pages/Home/HomeOrganization'
+import HomeEvents from './Pages/Home/HomeEvents'
 import AboutUs from './Pages/AboutUs/AboutUs'
 import Contact from './Pages/Contact/Contact'
 import Header from './Components/Header/Header'
@@ -91,13 +89,13 @@ class App extends React.Component {
                   <Home />
                 </Route>
                 <Route exact path="/organizations" > 
-                  <HomeBusiness
+                  <HomeOrganization
                     onsetGroupType = {this.setGroupType}
                     onSetSubscription = {this.setSubscription}
                   />
                 </Route>
                 <Route exact path="/events" > 
-                  <HomeConference
+                  <HomeEvents
                    onsetGroupType = {this.setGroupType}
                    onSetSubscription = {this.setSubscription}
                   />
