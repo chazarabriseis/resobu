@@ -93,7 +93,7 @@ class Contact extends React.Component {
 
   render () {
     return (
-      <div className="contact">
+      <div>
         <div className="topSection">
           <div className="heading1"> Contact us</div>
           <div className="heading2">Send us your questions and feedback.</div>
@@ -104,7 +104,7 @@ class Contact extends React.Component {
           </div>  
         ) 
         : (
-          <div className="contactform">  
+          <div className="inputform">  
             <div className="input"> 
               <div className="inputDescription">Name </div>
               <TextField 

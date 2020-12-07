@@ -1,3 +1,127 @@
+.pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-flow: row;
+    grid-auto-rows: auto;
+}
+
+/* css for small screens */
+@media (max-width: 600px) {
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        border-top: 1px solid #d5dce0;
+        border-bottom: 1px solid #d5dce0;
+    }
+
+    .one {
+        grid-row: 1;
+    }
+
+    .two {
+        grid-row: 2;
+    }
+
+    .three {
+        grid-row: 3;
+    }
+
+    .four {
+        grid-row: 4;
+    }
+
+    .five {
+        grid-row: 5;
+    }
+
+    .six {
+        grid-row: 6;
+    }
+
+    .seven {
+        grid-row: 7;
+    }
+
+    .eight {
+        grid-row: 8;
+    }
+
+    .nine {
+        grid-row: 9;
+    }
+
+    .ten {
+        grid-row: 10;
+    }
+
+    .eleven {
+        grid-row: 11;
+    }
+
+    .twelve {
+        grid-row: 12;
+    }
+
+    .thirteen {
+        grid-row: 13;
+    }
+
+    .fourteen {
+        grid-row: 14;
+    }
+
+    .fivteen {
+        grid-row: 15;
+    }
+
+    .sixteen {
+        grid-row: 16;
+    }
+
+    #basic-checkbox:checked ~ .planHeading:after {
+        content: "-";
+        font-size: 36px;
+        color: #151b26;
+        transform: translateX(-180%);
+    }
+
+    #premium-checkbox:checked ~ .planHeading:after {
+        content: "-";
+        font-size: 36px;
+        color: #151b26;
+        transform: translateX(-180%);
+    }
+
+    #business-checkbox:checked ~ .planHeading:after {
+        content: "-";
+        font-size: 36px;
+        color: #151b26;
+        transform: translateX(-180%);
+    }
+
+    #enterprise-checkbox:checked ~ .planHeading:after {
+        content: "-";
+        font-size: 36px;
+        color: #151b26;
+        transform: translateX(-180%);
+    }
+
+    .planHeading:after {
+        content: "+";
+        font-size: 36px;
+        font-weight: 300;
+        color: #b7bfc6;
+        line-height: 36px;
+        position: absolute;
+        right: 0; 
+        transform: translateX(-120%);
+    }
+}
+
+.checkbox-invisible{
+    display: none;
+}
+
 .contentContainer {
     margin: auto;
     max-width: 1312px;
@@ -140,6 +264,7 @@
     font-size: large;
     font-weight: lighter;
     padding-bottom: 20px;
+    padding-top: 30px;
 }
 
 .planPrice {
@@ -188,6 +313,7 @@
 
 .planIncluded {
     flex: 1;
+    text-align: left;
 }
 
 
