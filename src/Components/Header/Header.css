@@ -12,6 +12,10 @@
 
 .header {
   background: white !important;
+  max-height: 64px;
+  min-height: 64px;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 
 .leftSide {
@@ -22,4 +26,18 @@
 .headerContainer {
   margin: auto;
   max-width: 1442px;
+}
+
+/* css for small screens */
+@media (min-width: 900px) {
+  .mobile-view{
+    display: none !important;
+  }
+}
+
+/* css for small screens */
+@media (max-width: 901px) {
+  .pc-view{
+    display: none !important;
+  }
 }
