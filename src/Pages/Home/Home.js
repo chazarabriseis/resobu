@@ -19,28 +19,26 @@ class Home extends React.Component {
   render () {
     return (
       <div>        
-        <div className="topSection">
-          <div className="heading1"> Let's create networks</div>
+        <div className="topSection contentContainer">
+          <div className="heading1"> Tailoring communication to your needs </div>
           <div className="heading2">
-            We believe that diverse, connected and cohesive teams and networks are the cornerstone to success and innovation. 
-            Remote Social Butterfly enables the formation of such teams and networks through chance or tailored encounters across the people 
-            in your company, at your workshops, your conference or tradeshow.
+            We believe that communication is the key to healthy organization culture and networks which in turn is the key to innovation and success.
           </div>
  
           <Button className="actionButtonAnimated" variant='contained' size="large" onClick={() => {this.props.history.push('/signup/')}}>GET STARTED</Button>  
         </div>
 
-        <div className="infoBox infoBoxWhite"> 
+        <div className="infoBox infoBoxWhite contentContainer"> 
           <WhyForWho 
             onGotoSignUp = {this.gotoSignUp}
           />         
         </div>
 
-        <div className="infoBox infoBoxWhite"> 
+        <div className="infoBox infoBoxWhite contentContainer"> 
           <WhatDiagram />          
         </div>
         
-        <div className="infoBox infoBoxwhite"> 
+        <div className="infoBox infoBoxwhite contentContainer"> 
           <How />
         </div>
        

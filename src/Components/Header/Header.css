@@ -18,3 +18,8 @@
   display: flex;
   flex-grow: 1;
 }
+
+.headerContainer {
+  margin: auto;
+  max-width: 1442px;
+}

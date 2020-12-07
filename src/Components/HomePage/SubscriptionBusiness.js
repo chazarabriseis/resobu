@@ -12,11 +12,11 @@ class SubscriptionBusiness extends React.Component {
         <div className="container planContainer planInfo">
           <div className="planTitle plan">
             <div className="planHeading"> Basic</div>
-            <div className="planText"> For fast growing teams where it is difficult to keep track of all the new awesome employees joining every month. Data-driven chat partner selection is not as crucial.</div>
+            <div className="planText"> For fast growing teams where it is difficult to keep track of all the new awesome employees joining every month..</div>
           </div>
           <div className="planTitle planThistle">
             <div className="planHeading"> Premium</div>
-            <div className="planText">For more established teams that want to break up silos and create connections throughout the company. Data-driven chat partner selection will help to connect the right people.</div>
+            <div className="planText">For more established teams that want to break up silos and create connections throughout the company.</div>
           </div>
           <div className="planTitle plan">
             <div className="planHeading"> Business</div>
@@ -61,13 +61,13 @@ class SubscriptionBusiness extends React.Component {
         </div>
         <div className="container planIncludesContainer">
           <div className="plan planIncluded">
-            {['Initial Consultation'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Team and project attributes included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="planThistle planIncluded">
-              {['Initial Consultation', 'Data Upload Assistance',  'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+              {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="plan planIncluded">
-            {['Initial Consultation', 'Data Upload Assistance', 'Connection AIssitance', 'Learning AIssitance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssitance', 'Learning AIssitance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div> 
           <div className="planBorder planIncluded coniner">
             {[].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}

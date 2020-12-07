@@ -11,11 +11,11 @@ class SubscriptionConference extends React.Component {
         <div className="container planContainer planInfo">
           <div className="planTitle plan">
             <div className="planHeading"> Basic</div>
-            <div className="planText"> For conferences with a very diverse range of attendees so random matching of chat partners is sufficient.</div>
+            <div className="planText"> For conferences with a very diverse range of attendees so the organisation as only attribute is sufficient.</div>
           </div>
           <div className="planTitle planThistle">
             <div className="planHeading"> Premium</div>
-            <div className="planText">For conferences with existing networks so tailored matching ensures that people meet strangers.</div>
+            <div className="planText">For conferences that want to offer more tailored matching based on attributes like common interest etc.</div>
           </div>
         </div>
         <div className="container planContainer">
@@ -39,10 +39,10 @@ class SubscriptionConference extends React.Component {
         </div>
         <div className="container planIncludesContainer">
           <div className="plan planIncluded">
-            {['Initial Consultation', 'Data Upload Assistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Data Upload Assistance', 'Organization attribute included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="planThistle planIncluded">
-              {['Initial Consultation', 'Data Upload Assistance',  'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+              {['Initial Consultation', 'Data Upload Assistance',  'Limitless attributes', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
         </div>
       </div>

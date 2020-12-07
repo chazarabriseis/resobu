@@ -37,7 +37,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className="wrapper headerContainer">
         <AppBar position="fixed" className='header'>
           <Toolbar className="header">
               <div className="leftSide">
@@ -49,36 +49,18 @@ class Header extends React.Component {
                   <div style={{display: 'inline', marginLeft: '10px'}}>Remote Social Butterfly</div>
                 </Button>
                 <Button 
-                  onClick={this.handleMenuClick}
-                  label="menu"
+                  onClick={() => {this.props.history.push('/organizations')}}
                   className="headerButton"
-                  aria-controls="simple-menu" 
-                  aria-haspopup="true"
-                >
-                  <FontAwesomeIcon icon='bars'/>
-                </Button> 
-                <Menu
-                  id="menu"
-                  anchorEl={this.state.anchorEl}
-                  keepMounted
-                  open={Boolean(this.state.anchorEl)}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left'
-                  }}
-                  getContentAnchorEl={null}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left'
-                  }}
-                  elevation={0}
-                  onClose={this.closeMenu}
-                >
-                  <MenuItem component={Link} to="/business" onClick={this.closeMenu}> for Businesses</MenuItem>
-                  <MenuItem component={Link} to="/workshop" onClick={this.closeMenu}>for Workshops</MenuItem>
-                  <MenuItem component={Link} to="/conference" onClick={this.closeMenu}>for Conferences</MenuItem>
-                  <MenuItem component={Link} to="/tradeshow" onClick={this.closeMenu}>for Tradeshows</MenuItem>
-                </Menu>
+                > 
+                  <div style={{display: 'inline', marginLeft: '10px', color: 'gray'}}>For Organizations</div>
+                </Button>
+                <Button 
+                  onClick={() => {this.props.history.push('/events')}}
+                  className="headerButton"
+                > 
+                  <div style={{display: 'inline', marginLeft: '10px', color: 'gray'}}>For Events</div>
+                </Button>
+        
               </div>
               <Button 
                 onClick={() => {this.props.history.push('/contact')}}

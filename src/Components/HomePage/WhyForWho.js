@@ -17,53 +17,31 @@ class WhyForWho extends React.Component {
 
         <div className="container planContainer">
             <div className="whoTitle plan">
-                <div className="whoHeading"> Business </div>
+                <div className="whoHeading"> Organizations </div>
             </div>
             <div className="whoTitle plan">
-                <div className="whoHeading"> Workshops </div>
-            </div>
-            <div className="whoTitle plan">
-                <div className="whoHeading"> Conference </div>
-            </div>
-            <div className="whoTitle plan">
-                <div className="whoHeading"> Tradeshow </div>
+                <div className="whoHeading"> Events </div>
             </div>
         </div>
 
         <div className="container planContainer">
-          <div className="whoIcon">
-          <FontAwesomeIcon icon='building'/> 
+          <div className="whoIcon plan">
+            <FontAwesomeIcon icon='building'/> 
           </div>
-          <div className="whoIcon">
-          <FontAwesomeIcon icon='comments'/> 
-          </div>
-          <div className="whoIcon">
-          <FontAwesomeIcon icon='link'/> 
-          </div>
-          <div className="whoIcon">
-          <FontAwesomeIcon icon='handshake'/> 
+          <div className="whoIcon plan">
+            <FontAwesomeIcon icon='link'/> 
           </div>
         </div>
-        <div className="container">
-            <div className="whoText">
+        <div className="container planContainer">
+            <div className="whoText plan">
                 <div className="planText"> 
-                    Are you missing that employees mingle at random watercooler like conversations in your company?
+                    Do you feel your organization is missing communication across departements and locations?
                 </div>
             </div>
-            <div className="whoText">
+            <div className="whoText plan">
                 <div className="planText">
-                    Are you missing that people with the same interest start chating during the coffee break at your workshop?
-                </div>
-            </div>
-            <div className="whoText">
-                <div className="planText">
-                    Are you missing that attendees of your conference can keep on discussing the presentation they just went to?
+                    Would you like that attendees of your remote events have the chance to find new connections?
                </div>
-            </div>
-            <div className="whoText">
-                <div className="planText">
-                    Are you missing that exhibitors at your tradeshow are meeting new potential clients?   
-                </div>
             </div>
         </div>
     
@@ -72,14 +50,8 @@ class WhyForWho extends React.Component {
             <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/business/')}}>More Info </Button>  
           </div>
           <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/workshop/')}}>More Info </Button>  
-          </div>
-          <div className="planCTA plan whoButton">
             <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/conference/')}}>More Info</Button>  
           </div> 
-          <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/tradeshow/')}}>More Info </Button>  
-          </div>
         </div>
       </div>
     )

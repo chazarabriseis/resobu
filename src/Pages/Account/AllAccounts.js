@@ -14,6 +14,8 @@ import BusinessChatTab from '../../Components/AccountPage/BusinessChatTab'
 import ChatTab from '../../Components/AccountPage/ChatTab'
 import InviteTab from '../../Components/AccountPage/InviteTab'
 import TodoTab from '../../Components/AccountPage/TodoTab'
+import ConnectionAI from '../../Components/AccountPage/ConnectionAI'
+import LearningAI from '../../Components/AccountPage/LearningAI'
 
 import { businessChatInfo, conferenceChatInfo } from '../../Components/AccountPage/AccountPageFunctions'
 
@@ -129,6 +131,8 @@ class BusinessAccount extends React.Component {
     })
     .then(response => {
       resultList = response['response'][0]['Items']
+      console.log('hallo')
+      console.log(resultList)
       for (const result in resultList) { 
         resultList[result]["personEmail"] = resultList[result]["TypeInfo"].replace("PERSON#", "") 
         resultList[result]["personKey"] = result 
@@ -261,7 +265,19 @@ class BusinessAccount extends React.Component {
     .then(response => {
       console.log(response)
     })
-    */
+
+   console.log('testing chat orga lambda')
+   const _body1 = {
+     message: 'hello new python lambda function'
+   }
+
+   API.post('ReSoBuAPI', '/check-for-chats', {
+     body: _body1
+   })
+   .then(response => {
+     console.log(response)
+   })
+   */
 
   }
 
@@ -1256,11 +1272,15 @@ class BusinessAccount extends React.Component {
                   />
                 </TabPanel>
                 <TabPanel>
-                  Connection <strong>AI</strong>ssistance
+                    <ConnectionAI 
+                      userInfo={this.props.userInfo}
+                    />
                 </TabPanel>
                 {this.props.userInfo.groupType === 'Business' && 
                   <TabPanel>
-                    Learning <strong>AI</strong>ssistance
+                      <LearningAI 
+                        userInfo={this.props.userInfo}
+                      />
                   </TabPanel>
                 }
                 <TabPanel>

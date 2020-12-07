@@ -1,3 +1,8 @@
+.contentContainer {
+    margin: auto;
+    max-width: 1312px;
+}
+
 .infoBoxes {
     padding-top: 10px;
     padding-bottom: 40px;
@@ -29,6 +34,16 @@
     padding-bottom: 90px;
 }
 
+.infoBoxHeader {
+    font-size: larger;
+    margin-bottom: 50px;
+    margin-left: 30px;
+}
+
+.infoBoxText {
+    margin-bottom: 15px;
+}
+
 .infoBoxContent {
     padding-left: 40px;
     padding-right: 40px;
@@ -42,16 +57,6 @@
 .infoBoxInfo {
     margin-left: 15px;
     width: 95%;
-}
-
-.infoBoxHeader {
-    font-size: larger;
-    margin-bottom: 50px;
-    margin-left: 30px;
-}
-
-.infoBoxText {
-    margin-bottom: 15px;
 }
 
 .stepContainer {
@@ -126,27 +131,15 @@
     font-weight: 200;
 }
 
-.whoHeading {
-    font-size: xx-large;
-    font-weight: 200;
+.planTitle {
+    padding-top: 20px;
+    flex: 1;
 }
 
 .planText {
     font-size: large;
     font-weight: lighter;
     padding-bottom: 20px;
-}
-
-.whoText {
-    flex: 1;
-    border-color: thistle;
-    border-width: thin;
-    border-left-style: solid;
-    border-right-style: solid;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: 10px;
-    display: block;
 }
 
 .planPrice {
@@ -167,46 +160,6 @@
 .planPriceInfo {
     padding-bottom: 40px;
     font-size: small;
-}
-
-.planTitle {
-    padding-top: 20px;
-    flex: 1;
-}
-
-.whoTitle {
-    padding-top: 20px;
-    flex: 1;
-    border-color: thistle;
-    border-width: thin;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-top-style: solid;
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
-    margin-right: 10px;
-}
-
-.whoIcon {
-    flex: 1;
-    border-color: thistle;
-    border-width: thin;
-    border-left-style: solid;
-    border-right-style: solid;
-    font-size: xxx-large;
-    padding-bottom: 30px;
-    margin-right: 10px;
-}
-
-.whoButton {
-    border-color: thistle;
-    border-width: thin;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-bottom-style: solid;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    margin-right: 10px;
 }
 
 .subscriptionIcon {
@@ -235,6 +188,66 @@
 
 .planIncluded {
     flex: 1;
+}
+
+
+.whoHeading {
+    font-size: xx-large;
+    font-weight: 200;
+}
+
+.whoTitle {
+    padding-top: 20px;
+    flex: 1;
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-style: solid;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    margin-right: 10px;
+    min-width: 340px;
+    max-width: 500px;
+}
+
+.whoIcon {
+    flex: 1;
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    font-size: xxx-large;
+    padding-bottom: 30px;
+    margin-right: 10px;
+    min-width: 340px;
+    max-width: 500px;
+}
+
+
+.whoText {
+    flex: 1;
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    margin-right: 10px;
+    display: block;
+    min-width: 340px;
+    max-width: 500px;
+}
+
+.whoButton {
+    border-color: thistle;
+    border-width: thin;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin-right: 10px;
+    min-width: 340px;
+    max-width: 500px;
 }
 
 .whyContent {
@@ -274,44 +287,6 @@
 
 .endCOA {
     justify-content: center;
-}
-
-.card {
-    flex-grow: 1;
-    padding: 20px;
-    border-color: purple;
-    border-style: solid;
-    border-width: thin;
-    margin-right: 20px;
-    border-radius: 10px;
-}
-
-.cardTitle {
-    font-weight: bold;
-    margin-bottom: 10px;
-    font-size: large;
-}
-
-.cardTitle2 {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.cardText {
-    font-size: medium;
-    font-weight: lighter;
-    margin-bottom: 5px;
-}
-
-.cardImage {
-    height: 200px;
-    margin-bottom: 20px;
-}
-
-.cardImage2 {
-    height: 200px;
-    margin-bottom: 20px;
-    margin-left: 50px;
 }
 
 .grayBackground {

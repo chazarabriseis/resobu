@@ -90,28 +90,16 @@ class App extends React.Component {
                 <Route exact path="/" > 
                   <Home />
                 </Route>
-                <Route exact path="/business" > 
+                <Route exact path="/organizations" > 
                   <HomeBusiness
                     onsetGroupType = {this.setGroupType}
                     onSetSubscription = {this.setSubscription}
                   />
                 </Route>
-                <Route exact path="/workshop" > 
-                  <HomeWorkshop
-                    onsetGroupType = {this.setGroupType}
-                    onSetSubscription = {this.setSubscription}
-                  />
-                </Route>
-                <Route exact path="/conference" > 
+                <Route exact path="/events" > 
                   <HomeConference
                    onsetGroupType = {this.setGroupType}
                    onSetSubscription = {this.setSubscription}
-                  />
-                </Route>
-                <Route exact path="/tradeshow" > 
-                  <HomeTradeshow
-                    onsetGroupType = {this.setGroupType}
-                    onSetSubscription = {this.setSubscription}
                   />
                 </Route>
                 <Route exact path="/aboutus" > 
