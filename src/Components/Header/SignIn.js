@@ -143,36 +143,38 @@ class SignIn extends React.Component {
 
     render () {
         return (
-            <div className="contact">
+            <div>
                 <div className="flier"><img alt="appIcon" width="50" src="butterfly-animated_purple.gif" /></div>
                 {this.state.forgotPassword ? (
                     <div>
                         <div className="topSection">
                             <div className="heading1"> Reset password </div>
                         </div>
-                        <div className="contactform">  
-                            <div className="input"> 
-                                <div className="inputDescription">Email Address</div>
-                                <TextField 
-                                    id="email" 
-                                    size="small" 
-                                    fullWidth
-                                    required
-                                    variant="outlined"  
-                                    value={this.state.email}
-                                    onChange={event => this.setState({ email: event.target.value })}
-                                    error={!this.state.email.includes('@') || this.state.email.length < 1} 
-                                    helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
-                                />
-                            </div>                   
-                            <Button 
-                                variant="contained"
-                                className="actionButton"
-                                onClick={this.forgotPasswordTrigger}
-                                label="resetPassword"
-                            >
-                                Reset password 
-                            </Button>  
+                        <div className="contentSection">
+                            <div className="inputform">  
+                                <div className="input"> 
+                                    <div className="inputDescription">Email Address</div>
+                                    <TextField 
+                                        id="email" 
+                                        size="small" 
+                                        fullWidth
+                                        required
+                                        variant="outlined"  
+                                        value={this.state.email}
+                                        onChange={event => this.setState({ email: event.target.value })}
+                                        error={!this.state.email.includes('@') || this.state.email.length < 1} 
+                                        helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
+                                    />
+                                </div>                   
+                                <Button 
+                                    variant="contained"
+                                    className="actionButton"
+                                    onClick={this.forgotPasswordTrigger}
+                                    label="resetPassword"
+                                >
+                                    Reset password 
+                                </Button>  
+                            </div> 
                         </div>  
                     </div> 
                 ) : (  
@@ -181,143 +183,147 @@ class SignIn extends React.Component {
                         <div className="topSection">
                             <div className="heading1"> Reset password  </div>
                         </div>
-                        <div className="contactform">  
-                            <div className="input"> 
-                                <div className="inputDescription">Email Address</div>
-                                <TextField 
-                                    id="email" 
-                                    size="small" 
-                                    fullWidth
-                                    required
-                                    variant="outlined"  
-                                    value={this.state.email}
-                                    onChange={event => this.setState({ email: event.target.value })}
-                                    error={!this.state.email.includes('@') || this.state.email.length < 1} 
-                                    helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
-                                />
-                            </div>
-                            <div className="input">
-                                <div className="inputDescription"> Confirmation Code  </div>   
-                                <TextField 
-                                    id="code" 
-                                    size="small" 
-                                    fullWidth   
-                                    variant="outlined"  
-                                    value={this.state.code}
-                                    onChange={event => this.setState({code: event.target.value })}
-                                    error={this.state.code.length < 1} 
-                                    helperText={this.state.code.length < 1 ? 'You must enter a code' : ' '} 
-                                />
-                            </div>
-                            <div className="input">
-                                <div className="inputDescription"> New Password  </div>   
-                                <TextField 
-                                        id="password" 
+                        <div className="contentSection">
+                            <div className="inputform">  
+                                <div className="input"> 
+                                    <div className="inputDescription">Email Address</div>
+                                    <TextField 
+                                        id="email" 
+                                        size="small" 
+                                        fullWidth
+                                        required
+                                        variant="outlined"  
+                                        value={this.state.email}
+                                        onChange={event => this.setState({ email: event.target.value })}
+                                        error={!this.state.email.includes('@') || this.state.email.length < 1} 
+                                        helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
+                                    />
+                                </div>
+                                <div className="input">
+                                    <div className="inputDescription"> Confirmation Code  </div>   
+                                    <TextField 
+                                        id="code" 
                                         size="small" 
                                         fullWidth   
                                         variant="outlined"  
+                                        value={this.state.code}
+                                        onChange={event => this.setState({code: event.target.value })}
+                                        error={this.state.code.length < 1} 
+                                        helperText={this.state.code.length < 1 ? 'You must enter a code' : ' '} 
+                                    />
+                                </div>
+                                <div className="input">
+                                    <div className="inputDescription"> New Password  </div>   
+                                    <TextField 
+                                            id="password" 
+                                            size="small" 
+                                            fullWidth   
+                                            variant="outlined"  
+                                            type={this.state.showPassword ? 'text' : 'password'}
+                                            value={this.state.password}
+                                            onChange={event => this.setState({password: event.target.value })}
+                                            error={this.state.password.length < 8}
+                                            helperText={this.state.password.length < 8 && 'Password needs to be at least 8 characters long'} 
+                                            InputProps={{
+                                                endAdornment: <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={this.handleShowPassword}
+                                                        >
+                                                        {this.state.showPassword ? <FontAwesomeIcon icon='eye'/>: <FontAwesomeIcon icon='eye-slash'/>}
+                                                    </IconButton>
+                                                </InputAdornment>,
+                                            }}
+                                    />
+                                </div>
+                                <div className="input">
+                                    <div className="inputDescription"> Confirm Password  </div>   
+                                    <TextField 
+                                        id="passwordConfirm" 
+                                        size="small" 
+                                        fullWidth   
+                                        variant="outlined"  
+                                        value={this.state.passwordConfirm}
+                                        onChange={event => this.setState({ passwordConfirm: event.target.value })}
+                                        error={this.state.passwordConfirm !== this.state.password}
+                                        helperText={this.state.passwordConfirm !== this.state.password && 'Passwords must match'} 
                                         type={this.state.showPassword ? 'text' : 'password'}
-                                        value={this.state.password}
-                                        onChange={event => this.setState({password: event.target.value })}
-                                        error={this.state.password.length < 8}
-                                        helperText={this.state.password.length < 8 && 'Password needs to be at least 8 characters long'} 
-                                        InputProps={{
-                                            endAdornment: <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={this.handleShowPassword}
-                                                    >
-                                                    {this.state.showPassword ? <FontAwesomeIcon icon='eye'/>: <FontAwesomeIcon icon='eye-slash'/>}
-                                                </IconButton>
-                                            </InputAdornment>,
-                                        }}
-                                />
-                            </div>
-                            <div className="input">
-                                <div className="inputDescription"> Confirm Password  </div>   
-                                <TextField 
-                                    id="passwordConfirm" 
-                                    size="small" 
-                                    fullWidth   
-                                    variant="outlined"  
-                                    value={this.state.passwordConfirm}
-                                    onChange={event => this.setState({ passwordConfirm: event.target.value })}
-                                    error={this.state.passwordConfirm !== this.state.password}
-                                    helperText={this.state.passwordConfirm !== this.state.password && 'Passwords must match'} 
-                                    type={this.state.showPassword ? 'text' : 'password'}
-                                />
-                            </div>
-                            <Button 
-                                variant="contained"
-                                className="actionButton"
-                                onClick={this.onSubmit}
-                                label="forgotPasswordSubmit"
-                            >
-                                Submit new Password 
-                            </Button>  
-                        </div>  
+                                    />
+                                </div>
+                                <Button 
+                                    variant="contained"
+                                    className="actionButton"
+                                    onClick={this.onSubmit}
+                                    label="forgotPasswordSubmit"
+                                >
+                                    Submit new Password 
+                                </Button>  
+                            </div>  
+                        </div>    
                     </div>
                 ) : (
                     <div>
                         <div className="topSection">
                             <div className="heading1"> Sign in to your account </div>
                         </div>
-                        <div className="contactform">  
-                            <div className="input"> 
-                                <div className="inputDescription">Email Address</div>
-                                <TextField 
-                                    id="email" 
-                                    size="small" 
-                                    fullWidth
-                                    required
-                                    variant="outlined"  
-                                    value={this.state.email}
-                                    onChange={event => this.setState({ email: event.target.value })}
-                                    error={!this.state.email.includes('@') || this.state.email.length < 1} 
-                                    helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
-                                />
-                            </div>
-                            <div className="input">
-                                <div className="inputDescription"> Password  </div>   
-                                <TextField 
-                                        id="password" 
+                        <div className="contentSection">
+                            <div className="inputform">  
+                                <div className="input"> 
+                                    <div className="inputDescription">Email Address</div>
+                                    <TextField 
+                                        id="email" 
                                         size="small" 
-                                        fullWidth   
+                                        fullWidth
+                                        required
                                         variant="outlined"  
-                                        type={this.state.showPassword ? 'text' : 'password'}
-                                        value={this.state.password}
-                                        onChange={event => this.setState({password: event.target.value })}
-                                        error={this.state.password.length < 8}
-                                        helperText={this.state.password.length < 8 && 'Password needs to be at least 8 characters long'} 
-                                        InputProps={{
-                                            endAdornment: <InputAdornment position="end">
-                                                <IconButton
-                                                    onClick={this.handleShowPassword}
-                                                    >
-                                                    {this.state.showPassword ? <FontAwesomeIcon icon='eye'/>: <FontAwesomeIcon icon='eye-slash'/>}
-                                                </IconButton>
-                                            </InputAdornment>,
-                                        }}
+                                        value={this.state.email}
+                                        onChange={event => this.setState({ email: event.target.value })}
+                                        error={!this.state.email.includes('@') || this.state.email.length < 1} 
+                                        helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
                                     />
                                 </div>
-                            <div className="container">
-                                <Button 
-                                    variant="contained"
-                                    className="actionButton"
-                                    onClick={this.signIn}
-                                    label="signIn"
-                                >
-                                    Sign In 
-                                </Button>  
-                                <Button 
-                                    variant="contained"
-                                    className="ghostButton"
-                                    onClick={this.forgotPassword}
-                                    label="signIn"
-                                >
-                                    Forgot Password 
-                                </Button>  
-                            </div>
-                        </div>  
+                                <div className="input">
+                                    <div className="inputDescription"> Password  </div>   
+                                    <TextField 
+                                            id="password" 
+                                            size="small" 
+                                            fullWidth   
+                                            variant="outlined"  
+                                            type={this.state.showPassword ? 'text' : 'password'}
+                                            value={this.state.password}
+                                            onChange={event => this.setState({password: event.target.value })}
+                                            error={this.state.password.length < 8}
+                                            helperText={this.state.password.length < 8 && 'Password needs to be at least 8 characters long'} 
+                                            InputProps={{
+                                                endAdornment: <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={this.handleShowPassword}
+                                                        >
+                                                        {this.state.showPassword ? <FontAwesomeIcon icon='eye'/>: <FontAwesomeIcon icon='eye-slash'/>}
+                                                    </IconButton>
+                                                </InputAdornment>,
+                                            }}
+                                        />
+                                    </div>
+                                <div className="container">
+                                    <Button 
+                                        variant="contained"
+                                        className="actionButton"
+                                        onClick={this.signIn}
+                                        label="signIn"
+                                    >
+                                        Sign In 
+                                    </Button>  
+                                    <Button 
+                                        variant="contained"
+                                        className="ghostButton"
+                                        onClick={this.forgotPassword}
+                                        label="signIn"
+                                    >
+                                        Forgot Password 
+                                    </Button>  
+                                </div>
+                            </div>  
+                        </div>
                     </div>
                 ))}   
             <ToastContainer />

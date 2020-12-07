@@ -181,7 +181,7 @@ class SignUp extends React.Component {
 
     render () {
         return (
-            <div className="contact">
+            <div>
                 <div className="flier"><img alt="appIcon" width="50" src="butterfly-animated_purple.gif" /></div>
                 <div className="topSection">
                     <div className="heading1"> Create a new account </div>
@@ -189,202 +189,208 @@ class SignUp extends React.Component {
                 { this.state.submitted ? (
                     <div>   
                         {this.state.codeAlreadySent ? 
-                            <div className="buttonExplantion"> 
+                            <div className="inputform"> 
                                 You already signed up, if you have not confirmed the email address yet please go ahead now, the code should be in your inbox. 
                                 If you already did that, just <div onClick={function(){this.props.history.push('/signin')}.bind(this)} style={{fontWeight:"bold", display: "inline", cursor: "pointer"}}>Sign Up </div> or <div onClick={function(){this.props.history.push('/signin')}.bind(this)} style={{fontWeight:"bold", display: "inline", cursor: "pointer"}}>reset your password</div>.
                             </div>
                             : 
-                            <div className="buttonExplantion"> 
+                            <div className="inputform"> 
                                 Check your inbox to get the confirmation code.
                             </div>
                         }
-                        <div className="input">
-                            <TextField 
-                                id="email" 
-                                size="small" 
-                                fullWidth   
-                                required
-                                variant="outlined"  
-                                value={this.state.email}
-                                onChange={event => this.setState({ email: event.target.value })}
-                                error={!this.state.email.includes('@') || this.state.email.length < 1} 
-                                helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
-                            />
-                            <TextField 
-                                id="code" 
-                                size="small" 
-                                label='Enter confirmation code here'
-                                fullWidth   
-                                variant="outlined"  
-                                value={this.state.code}
-                                onChange={event => this.setState({code: event.target.value })}
-                                error={this.state.code.length < 1} 
-                                helperText={this.state.code.length < 1 ? 'You must enter a code' : ' '} 
-                            />
-                            </div>
-                            <Button 
-                                variant="contained"
-                                className="actionButton"
-                                onClick={this.confirmSignUp}
-                                label="submit"
-                            >
-                                Send code
-                            </Button>  
-                            {this.state.codeAlreadySent ?
-                                <div>
-                                    <div className='buttonExplantion'>
-                                        Can't find the code or signed up more than one week ago?
+                        <div className="contentSection">
+                            <div className="inputform">
+                                <div className="input">
+                                    <TextField 
+                                        id="email" 
+                                        size="small" 
+                                        fullWidth   
+                                        required
+                                        variant="outlined"  
+                                        value={this.state.email}
+                                        onChange={event => this.setState({ email: event.target.value })}
+                                        error={!this.state.email.includes('@') || this.state.email.length < 1} 
+                                        helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
+                                    />
+                                    <TextField 
+                                        id="code" 
+                                        size="small" 
+                                        label='Enter confirmation code here'
+                                        fullWidth   
+                                        variant="outlined"  
+                                        value={this.state.code}
+                                        onChange={event => this.setState({code: event.target.value })}
+                                        error={this.state.code.length < 1} 
+                                        helperText={this.state.code.length < 1 ? 'You must enter a code' : ' '} 
+                                    />
                                     </div>
                                     <Button 
                                         variant="contained"
-                                        className="ghostButton"
-                                        onClick={this.resendConfirmationCode}
+                                        className="actionButton"
+                                        onClick={this.confirmSignUp}
                                         label="submit"
                                     >
-                                        Resend code
-                                    </Button> 
-                                </div>:
-                                <div></div>
-                            }
-                        </div>  
-                ) : (
-                    <div className="contactform">  
-                        <div className="input"> 
-                            <div className="inputDescription">Email Address</div>
-                            <TextField 
-                                id="email" 
-                                size="small" 
-                                fullWidth   
-                                required
-                                variant="outlined"  
-                                value={this.state.email}
-                                onChange={this.setSignUpInput}
-                                error={!this.state.email.includes('@') || this.state.email.length < 1} 
-                                helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
-                            />
-                        </div>
-                        <div className="input"> 
-                            <div className="inputDescription">Where do you want to connect people</div>
-                            <FormControl variant="outlined" error ={this.state.groupType=== "-"} >
-                                <Select
-                                    native
-                                    value={this.state.groupType}
-                                    onChange={this.setSignUpInput}
-                                    id='groupType'
-                                >
-                                {groupTypes.map((item) => <option key={item} value={item}>{item}</option>)}
-                                </Select>
-                                {this.state.groupType=== "-" && <FormHelperText>You need to choose an option</FormHelperText>}
-                            </FormControl>
-                        </div>
-                        <div className="input"> 
-                            <div className="inputDescription">
-                                {this.state.groupType === 'Business' ? ('Company Name') : ('Event Name')} 
-                            </div>
-                            <TextField 
-                                id="accountName" 
-                                size="small" 
-                                fullWidth   
-                                required
-                                variant="outlined"  
-                                value={this.state.accountName}
-                                onChange={this.setSignUpInput}
-                                error={this.state.accountName.length < 1} 
-                                helperText={this.state.accountName.length < 1 ? 'Please enter a name' : ' '} 
-                            />
-                        </div>
-                        <div className="input"> 
-                            <div className="inputDescription">Will you be an admin or user?</div>
-                            <FormControl variant="outlined" error ={this.state.userType=== "-"} >
-                                <Select
-                                    native
-                                    value={this.state.userType}
-                                    onChange={this.setSignUpInput}
-                                    id='userType'
-                                >
-                                {userTypes.map((item) => <option key={item} value={item}>{item}</option>)}
-                                </Select>
-                                {this.state.userType=== "-" && <FormHelperText>You need to choose an option</FormHelperText>}
-                            </FormControl>
-                        </div>
-                        <div className="input"> 
-                            <div className="inputDescription">Subscription</div>
-                            <FormControl variant="outlined" error ={this.state.subscription=== "-"}>
-                                <Select
-                                    native
-                                    value={this.state.subscription}
-                                    onChange={this.setSignUpInput}
-                                    id='subscription'
-                                >
-                                { this.state.groupType === 'Business' ? (
-                                        subscriptionBusiness.map((item) => <option key={item} value={item}>{item}</option>)
-                                    ) : ( this.state.groupType === 'Conference' ? (
-                                        subscriptionConference.map((item) => <option key={item} value={item}>{item}</option>)
-                                    ) : (this.state.groupType === 'Tradeshow' ? (
-                                        subscriptionTradeshow.map((item) => <option key={item} value={item}>{item}</option>)
-                                    ) : (<option key='-' value='-'>-</option>)
-                                    ))
-                                }
-                                </Select>
-                                {this.state.subscription=== "-" && <FormHelperText>You need to choose a subscription option</FormHelperText>}
-                            </FormControl>
-                        </div>
-                        <div className="input">
-                            <div className="inputDescription"> Password  </div>   
-                            <TextField 
-                                id="password" 
-                                size="small" 
-                                fullWidth   
-                                variant="outlined"  
-                                type={this.state.showPassword ? 'text' : 'password'}
-                                value={this.state.password}
-                                onChange={event => this.setState({password: event.target.value })}
-                                error={this.state.password.length < 8}
-                                helperText={this.state.password.length < 8 && 'Password needs to be at least 8 character long'} 
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={this.handleShowPassword}
+                                        Send code
+                                    </Button>  
+                                    {this.state.codeAlreadySent ?
+                                        <div>
+                                            <div className='buttonExplantion'>
+                                                Can't find the code or signed up more than one week ago?
+                                            </div>
+                                            <Button 
+                                                variant="contained"
+                                                className="ghostButton"
+                                                onClick={this.resendConfirmationCode}
+                                                label="submit"
                                             >
-                                            {this.state.showPassword ? <FontAwesomeIcon icon='eye'/>: <FontAwesomeIcon icon='eye-slash'/>}
-                                        </IconButton>
-                                    </InputAdornment>,
-                                }}
-                            />
-                        </div>
-                        <div className="input">
-                            <div className="inputDescription"> Confirm Password  </div>   
-                            <TextField 
-                                id="passwordConfirm" 
-                                size="small" 
-                                fullWidth   
-                                variant="outlined"  
-                                value={this.state.passwordConfirm}
-                                onChange={event => this.setState({ passwordConfirm: event.target.value })}
-                                error={this.state.passwordConfirm !== this.state.password}
-                                helperText={this.state.passwordConfirm !== this.state.password && 'Passwords must match'} 
-                                type={this.state.showPassword ? 'text' : 'password'}
-                            />
-                        </div>
-                        <div>
-                            <Button 
-                                variant="contained"
-                                className="actionButton"
-                                onClick={this.onSubmit}
-                                label="submit"
-                            >
-                                Sign Up 
-                            </Button> 
-                            <Button 
-                                variant="contained"
-                                className="ghostButton"
-                                onClick={this.gotoCode}
-                                label="submitcode"
-                            >
-                                Confirm Email 
-                            </Button> 
+                                                Resend code
+                                            </Button> 
+                                        </div>:
+                                        <div></div>
+                                    }
+                                </div>
+                            </div> 
+                        </div>     
+                ) : (
+                    <div className="contentSection">
+                        <div className="inputform">  
+                            <div className="input"> 
+                                <div className="inputDescription">Email Address</div>
+                                <TextField 
+                                    id="email" 
+                                    size="small" 
+                                    fullWidth   
+                                    required
+                                    variant="outlined"  
+                                    value={this.state.email}
+                                    onChange={this.setSignUpInput}
+                                    error={!this.state.email.includes('@') || this.state.email.length < 1} 
+                                    helperText={!this.state.email.includes('@') || this.state.email.length < 1 ? 'A valid email address is required' : ' '} 
+                                />
+                            </div>
+                            <div className="input"> 
+                                <div className="inputDescription">Where do you want to connect people</div>
+                                <FormControl variant="outlined" error ={this.state.groupType=== "-"} >
+                                    <Select
+                                        native
+                                        value={this.state.groupType}
+                                        onChange={this.setSignUpInput}
+                                        id='groupType'
+                                    >
+                                    {groupTypes.map((item) => <option key={item} value={item}>{item}</option>)}
+                                    </Select>
+                                    {this.state.groupType=== "-" && <FormHelperText>You need to choose an option</FormHelperText>}
+                                </FormControl>
+                            </div>
+                            <div className="input"> 
+                                <div className="inputDescription">
+                                    {this.state.groupType === 'Business' ? ('Company Name') : ('Event Name')} 
+                                </div>
+                                <TextField 
+                                    id="accountName" 
+                                    size="small" 
+                                    fullWidth   
+                                    required
+                                    variant="outlined"  
+                                    value={this.state.accountName}
+                                    onChange={this.setSignUpInput}
+                                    error={this.state.accountName.length < 1} 
+                                    helperText={this.state.accountName.length < 1 ? 'Please enter a name' : ' '} 
+                                />
+                            </div>
+                            <div className="input"> 
+                                <div className="inputDescription">Will you be an admin or user?</div>
+                                <FormControl variant="outlined" error ={this.state.userType=== "-"} >
+                                    <Select
+                                        native
+                                        value={this.state.userType}
+                                        onChange={this.setSignUpInput}
+                                        id='userType'
+                                    >
+                                    {userTypes.map((item) => <option key={item} value={item}>{item}</option>)}
+                                    </Select>
+                                    {this.state.userType=== "-" && <FormHelperText>You need to choose an option</FormHelperText>}
+                                </FormControl>
+                            </div>
+                            <div className="input"> 
+                                <div className="inputDescription">Subscription</div>
+                                <FormControl variant="outlined" error ={this.state.subscription=== "-"}>
+                                    <Select
+                                        native
+                                        value={this.state.subscription}
+                                        onChange={this.setSignUpInput}
+                                        id='subscription'
+                                    >
+                                    { this.state.groupType === 'Business' ? (
+                                            subscriptionBusiness.map((item) => <option key={item} value={item}>{item}</option>)
+                                        ) : ( this.state.groupType === 'Conference' ? (
+                                            subscriptionConference.map((item) => <option key={item} value={item}>{item}</option>)
+                                        ) : (this.state.groupType === 'Tradeshow' ? (
+                                            subscriptionTradeshow.map((item) => <option key={item} value={item}>{item}</option>)
+                                        ) : (<option key='-' value='-'>-</option>)
+                                        ))
+                                    }
+                                    </Select>
+                                    {this.state.subscription=== "-" && <FormHelperText>You need to choose a subscription option</FormHelperText>}
+                                </FormControl>
+                            </div>
+                            <div className="input">
+                                <div className="inputDescription"> Password  </div>   
+                                <TextField 
+                                    id="password" 
+                                    size="small" 
+                                    fullWidth   
+                                    variant="outlined"  
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                    value={this.state.password}
+                                    onChange={event => this.setState({password: event.target.value })}
+                                    error={this.state.password.length < 8}
+                                    helperText={this.state.password.length < 8 && 'Password needs to be at least 8 character long'} 
+                                    InputProps={{
+                                        endAdornment: <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={this.handleShowPassword}
+                                                >
+                                                {this.state.showPassword ? <FontAwesomeIcon icon='eye'/>: <FontAwesomeIcon icon='eye-slash'/>}
+                                            </IconButton>
+                                        </InputAdornment>,
+                                    }}
+                                />
+                            </div>
+                            <div className="input">
+                                <div className="inputDescription"> Confirm Password  </div>   
+                                <TextField 
+                                    id="passwordConfirm" 
+                                    size="small" 
+                                    fullWidth   
+                                    variant="outlined"  
+                                    value={this.state.passwordConfirm}
+                                    onChange={event => this.setState({ passwordConfirm: event.target.value })}
+                                    error={this.state.passwordConfirm !== this.state.password}
+                                    helperText={this.state.passwordConfirm !== this.state.password && 'Passwords must match'} 
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                />
+                            </div>
+                            <div>
+                                <Button 
+                                    variant="contained"
+                                    className="actionButton"
+                                    onClick={this.onSubmit}
+                                    label="submit"
+                                >
+                                    Sign Up 
+                                </Button> 
+                                <Button 
+                                    variant="contained"
+                                    className="ghostButton"
+                                    onClick={this.gotoCode}
+                                    label="submitcode"
+                                >
+                                    Confirm Email 
+                                </Button> 
+                            </div> 
                         </div> 
-                    </div>     
+                    </div>    
                 )}
             <ToastContainer />
         </div>
