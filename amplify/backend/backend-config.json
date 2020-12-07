@@ -49,6 +49,12 @@
             "providerPlugin": "awscloudformation",
             "service": "Lambda",
             "dependsOn": []
+        },
+        "ReSoBuLambdaCheckForChats": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda",
+            "dependsOn": []
         }
     },
     "api": {
@@ -91,6 +97,14 @@
                 {
                     "category": "function",
                     "resourceName": "ReSoBuChatOrgaLogic",
+                    "attributes": [
+                        "Name",
+                        "Arn"
+                    ]
+                },
+                {
+                    "category": "function",
+                    "resourceName": "ReSoBuLambdaCheckForChats",
                     "attributes": [
                         "Name",
                         "Arn"

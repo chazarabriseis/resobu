@@ -41,6 +41,13 @@
             "privacy": {
                 "open": true
             }
+        },
+        {
+            "name": "/check-for-chats",
+            "lambdaFunction": "ReSoBuLambdaCheckForChats",
+            "privacy": {
+                "open": true
+            }
         }
     ],
     "resourceName": "ReSoBuAPI",
@@ -60,6 +67,9 @@
         },
         {
             "lambdaFunction": "ReSoBuChatOrgaLogic"
+        },
+        {
+            "lambdaFunction": "ReSoBuLambdaCheckForChats"
         }
     ],
     "privacy": {
@@ -108,7 +118,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "ReSoBuLambdaCheckForChats",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "1c277f32"
+    "uuid": "65d026bc"
 }
