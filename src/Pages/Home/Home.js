@@ -28,18 +28,20 @@ class Home extends React.Component {
           <Button className="actionButtonAnimated" variant='contained' size="large" onClick={() => {this.props.history.push('/signup/')}}>GET STARTED</Button>  
         </div>
 
+
         <div className="infoBox infoBoxWhite contentContainer"> 
           <WhyForWho 
             onGotoSignUp = {this.gotoSignUp}
           />         
         </div>
 
-        <div className="infoBox infoBoxWhite contentContainer"> 
-          <WhatDiagram />          
+        <div className="infoBox infoBoxGray contentContainer"> 
+          <How />
         </div>
+
         
         <div className="infoBox infoBoxwhite contentContainer"> 
-          <How />
+          <WhatDiagram />
         </div>
        
       </div>
