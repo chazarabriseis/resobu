@@ -14,44 +14,40 @@ class WhyForWho extends React.Component {
   render () {
     return(
       <div>
-
+        <div className='heading3'>Where can ReSoBu help: </div>
         <div className="container planContainer">
-            <div className="whoTitle plan">
-                <div className="whoHeading"> Organizations </div>
+          <div className="who-grid">
+            <div className="whoTitle plan one">
+                <div className="whoHeading"> In Organizations </div>
             </div>
-            <div className="whoTitle plan">
-                <div className="whoHeading"> Events </div>
+            <div className="whoTitle plan five">
+                <div className="whoHeading"> At Events </div>
             </div>
-        </div>
-
-        <div className="container planContainer">
-          <div className="whoIcon plan">
-            <FontAwesomeIcon icon='building'/> 
-          </div>
-          <div className="whoIcon plan">
-            <FontAwesomeIcon icon='link'/> 
-          </div>
-        </div>
-        <div className="container planContainer">
-            <div className="whoText plan">
+            <div className="whoIcon plan two">
+              <FontAwesomeIcon icon='building'/> 
+            </div>
+            <div className="whoIcon plan six">
+              <FontAwesomeIcon icon='link'/> 
+            </div>
+            <div className="whoText plan three">
                 <div className="planText"> 
-                    Do you feel your organization is missing communication across departements and locations?
+                  Global pandemic, different office locations, onboarding - all circumstances where communication is crucuial but difficult to establish. 
+                  ReSoBu can help to organise meaningful chats tailored to your circumstances to make sure communication is thriving.
                 </div>
             </div>
-            <div className="whoText plan">
+            <div className="whoText plan seven">
                 <div className="planText">
-                    Would you like that attendees of your remote events have the chance to find new connections?
-               </div>
+                    Remote Conferences, attendees not mingling - people join events because of networking but it suffers in these circumstances.
+                    ReSoBu will organise meaningful chats to foster networking distinguishing your event from others.
+                </div>
             </div>
-        </div>
-    
-        <div className="container planContainer">
-          <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/business/')}}>More Info </Button>  
+            <div className="planCTA plan whoButton four">
+              <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/business/')}}>Use Cases &amp; Pricing </Button>  
+            </div>
+            <div className="planCTA plan whoButton eight">
+              <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/conference/')}}>Use Cases &amp; Pricing</Button>  
+            </div> 
           </div>
-          <div className="planCTA plan whoButton">
-            <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/conference/')}}>More Info</Button>  
-          </div> 
         </div>
       </div>
     )

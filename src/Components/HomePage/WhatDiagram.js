@@ -13,37 +13,35 @@ class WhatDiagram extends React.Component {
       <div>
         <div className="heading3">Workflow:</div>
         <div className="container stepContainer">
-          <div className="step">
-            <FontAwesomeIcon icon='table'/> 
-            <div className="stepText">Upload emails</div>
-          </div>
-          <div className="connector">
-            <hr/>
-          </div>
-          <div className="step">
-            <FontAwesomeIcon icon='globe'/> 
-            <div className="stepText">Optional: Feed the connection and learning AIssitance with data</div>
-          </div>
-          <div className="connector">
-            <hr/>
-          </div>
-          <div className="step">
-            <FontAwesomeIcon icon='calendar-alt'/>
-            <div className="stepText">Set remote social butterfly chat times</div>
-          </div>
-          <div className="connector">
-            <hr/>
-          </div>
-          <div className="step">
-            <FontAwesomeIcon icon='envelope-open-text'/>
-            <div className="stepText">Draft an invite for the chats</div>
-          </div>
-          <div className="connector">
-            <hr/>
-          </div>
-          <div className="step">
-            <FontAwesomeIcon icon='users'/>
-            <div className="stepText">Let us do the rest to connect people</div>
+          <div className="what-grid">
+            <div className="step one">
+              <FontAwesomeIcon icon='table'/> 
+              <div className="stepText">Upload emails</div>
+            </div>
+            <div className="connector two">
+            </div>
+            <div className="step three">
+              <FontAwesomeIcon icon='globe'/> 
+              <div className="stepText">Optional: Feed the connection and learning AIssitance</div>
+            </div>
+            <div className="connector four">
+            </div>
+            <div className="step five">
+              <FontAwesomeIcon icon='calendar-alt'/>
+              <div className="stepText">Set remote social butterfly chat times</div>
+            </div>
+            <div className="connector six">
+            </div>
+            <div className="step seven">
+              <FontAwesomeIcon icon='envelope-open-text'/>
+              <div className="stepText">Draft an invite</div>
+            </div>
+            <div className="connector eight">
+            </div>
+            <div className="step nine">
+              <FontAwesomeIcon icon='users'/>
+              <div className="stepText">ReSoBu tailors and organises chats</div>
+            </div>
           </div>
         </div>
       </div>
