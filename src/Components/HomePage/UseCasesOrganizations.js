@@ -117,7 +117,7 @@ class HomeBusiness extends React.Component {
                 <label className="whoHeading uc4H" for="uc4-checkbox">Onboarding Buddy</label>
             </div>
 
-            <div className="usecaseText plan ten">
+            <div className="usecaseText plan ten uc3">
                 <div>
                     <FontAwesomeIcon icon='exclamation'/> 
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Problem</div>
@@ -128,7 +128,7 @@ class HomeBusiness extends React.Component {
                     Lack of knowledge exchange makes the organization less efficient.
                 </div>
             </div>
-            <div className="usecaseText plan fourteen">
+            <div className="usecaseText plan fourteen uc4">
                 <div>
                     <FontAwesomeIcon icon='exclamation'/> 
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Problem</div>
@@ -139,7 +139,7 @@ class HomeBusiness extends React.Component {
                 </div>
             </div>
 
-            <div className="usecaseText plan eleven">
+            <div className="usecaseText plan eleven uc3">
                 <div>
                     <FontAwesomeIcon icon='keyboard'/> 
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Input</div>
@@ -154,7 +154,7 @@ class HomeBusiness extends React.Component {
      
                 </div>
             </div>
-            <div className="usecaseText plan fifteen">
+            <div className="usecaseText plan fivteen uc4">
                 <div>
                     <FontAwesomeIcon icon='keyboard'/> 
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Input</div>
@@ -169,7 +169,7 @@ class HomeBusiness extends React.Component {
                 </div>
             </div>
 
-            <div className="usecaseBottom plan twelve">
+            <div className="usecaseBottom plan twelve uc3">
                 <div>
                     <img alt="appIcon" width="28" src="butterfly.png" />
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
@@ -178,7 +178,7 @@ class HomeBusiness extends React.Component {
                 Connection AIssitance will tailor groups and organise chats according to the input
                 </div>
             </div>
-            <div className="usecaseBottom plan sixteen-2">
+            <div className="usecaseBottom plan sixteen-2 uc4">
                 <div>
                     <img alt="appIcon" width="28" src="butterfly.png" />
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>

@@ -152,6 +152,9 @@
         grid-row: 16;
         display: none;
     }
+    .sixteen-2 {
+        grid-row: 16;
+    }
 
     .planBorder {
         border-right-style: solid;
@@ -171,15 +174,7 @@
         transform: translateX(-180%);
     }
 
-    #uc1-checkbox:not(:checked) ~ .usecaseText.plan.two.uc1 {
-        display: none;
-    }
-
-    #uc1-checkbox:not(:checked) ~ .usecaseText.plan.three.uc1 {
-        display: none;
-    }
-    
-    #uc1-checkbox:not(:checked) ~ .usecaseBottom.plan.four.uc1 {
+    #uc1-checkbox:not(:checked) ~ .uc1 {
         display: none;
     }
 
@@ -190,15 +185,29 @@
         transform: translateX(-180%);
     }
 
-    #uc2-checkbox:not(:checked) ~ .usecaseText.plan.five.uc2 {
+    #uc2-checkbox:not(:checked) ~ .uc2 {
         display: none;
     }
 
-    #uc2-checkbox:not(:checked) ~ .usecaseText.plan.six.uc2 {
+    #uc3-checkbox:checked ~ .uc3H.whoHeading:after {
+        content: "-";
+        font-size: 36px;
+        color: #151b26;
+        transform: translateX(-180%);
+    }
+
+    #uc3-checkbox:not(:checked) ~ .uc3 {
         display: none;
     }
-    
-    #uc2-checkbox:not(:checked) ~ .usecaseBottom.plan.seven.uc2 {
+
+    #uc4-checkbox:checked ~ .u4H.whoHeading:after {
+        content: "-";
+        font-size: 36px;
+        color: #151b26;
+        transform: translateX(-180%);
+    }
+
+    #uc4-checkbox:not(:checked) ~ .uc4 {
         display: none;
     }
 
