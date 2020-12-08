@@ -1,42 +1,5 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/*  change the original amplify colors for the out of the box UI  */
 :root {
   --amplify-primary-color: white;
   --amplify-primary-tint: thistle;
@@ -59,17 +22,6 @@
   margin-right: 10px;
 }
 
-/* css for small screens */
-@media (max-width: 600px) {
-  .heading1{
-    font-size: 30px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-}
-
 .heading2 {
   font-size: 25px;
   font-weight: lighter;
@@ -78,19 +30,14 @@
   margin-bottom: 30px;
 }
 
-/* css for small screens */
-@media (max-width: 600px) {
-  .heading2{
-    font-size: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-}
-
 .heading3 {
   font-size: x-large;
   font-weight: inherit;
   margin-bottom: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .heading4 {
@@ -111,21 +58,6 @@
   padding-bottom: 360px;
 }
 
-/* css for small screens */
-@media (max-width: 600px) {
-  .contentSection{
-    padding-bottom: 80px;
-  }
-}
-
-/* css for small screens */
-@media (max-width: 600px) {
-  .topSection{
-    padding-top: 100px;
-    padding-bottom: 50px;
-  }
-}
-
 .inputform {
   padding-left: 30%;
   padding-right: 30%;
@@ -134,9 +66,32 @@
 
 /* css for small screens */
 @media (max-width: 600px) {
+  .heading1{
+    font-size: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .heading2{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .contentSection{
+    padding-bottom: 80px;
+  }
+
+  .topSection{
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+
   .inputform{
-      padding-left: 10%;
-      padding-right: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
   }
 }
 
@@ -157,7 +112,6 @@
   color: purple;
 
 }
-
 .accountDeactivated {
   color: gray;
 }
@@ -228,13 +182,6 @@
   align-items: stretch;
 
 }
-
-.containerRow{
-  display: flex; /* or inline-flex */
-  flex-flow: column;
-  flex-grow: 1; /* default 0 */
-}
-
 
 .buttonExplantion {
   margin-top: 40px;
