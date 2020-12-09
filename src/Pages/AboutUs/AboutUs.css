@@ -1,3 +1,15 @@
 .contactContent {
-    padding-bottom: 500px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.team-image {
+    width: 50%;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .team-image {
+        width: 100% !important;
+    }
 }
