@@ -248,6 +248,10 @@
         transform: translateX(-180%);
     }
 
+    #enterprise-checkbox:not(:checked) ~ .planBorder {
+        border-bottom-style: solid;
+    }
+
     .planHeading:after {
         content: "+";
         font-size: 36px;
@@ -777,36 +781,35 @@
 .usecaseTitle {
     padding-top: 20px;
     flex: 1;
-    border-color: lightblue;
-    border-width: thick;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-top-style: solid;
+    border-color: purple;
+    border-width: 2px;
+    border-style: solid;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     margin-right: 30px;
     min-width: 200px;
     max-width: 500px;
     margin-top: 20px;
-    background-color: cornflowerblue;
-    color: white;
+    background-color: thistle;
+    color: purple;
 }
 
 .usecaseText {
     flex: 1;
-    border-color: lightblue;
-    border-width: thick;
+    border-color: purple;
+    border-width: 2px;
     border-left-style: solid;
     border-right-style: solid;
     margin-right: 30px;
     display: block;
     min-width: 200px;
     max-width: 500px;
+    background-color: lightgray;
 }
 
 .usecaseBottom {
-    border-color: lightblue;
-    border-width: thick;
+    border-color: purple;
+    border-width: 2px;
     border-left-style: solid;
     border-right-style: solid;
     border-bottom-style: solid;
@@ -815,6 +818,7 @@
     margin-right: 30px;
     min-width: 200px;
     max-width: 500px;
+    background-color: lightgray;
 }
 
 ol li {
