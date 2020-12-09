@@ -164,7 +164,7 @@ export default class PeopleTable extends Component {
             classes='peopleTable'
             keyField="personKey"
             data={ this.props.peopleList }
-            columns={ this.props.userInfo.groupType === 'Business' ? this.columnsEmployees : this.columnsPeople }
+            columns={ this.props.userInfo.groupType === 'Organization' ? this.columnsEmployees : this.columnsPeople }
             columnToggle
           >
             {props => (
@@ -190,7 +190,7 @@ export default class PeopleTable extends Component {
                     ) : this.props.peopleList.length === 0 ? (
                     <div>
                         <p className='nodata-indication'>
-                    Use the <strong>Add {this.props.userInfo.groupType === "Business" ? "Employees" : "People"}</strong> button above to add people
+                    Use the <strong>Add {this.props.userInfo.groupType === "Organization" ? "Employees" : "People"}</strong> button above to add people
                         </p>
                     </div>
                     ) : (

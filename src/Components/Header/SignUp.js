@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { subscriptionBusiness, subscriptionConference, subscriptionTradeshow, groupTypes, userTypes } from '../Common/Variables'
+import { subscriptionOrganization, subscriptionEvent, groupTypes, userTypes } from '../Common/Variables'
 import '../../App.css'
 
 library.add(fas)
@@ -284,7 +284,7 @@ class SignUp extends React.Component {
                             </div>
                             <div className="input"> 
                                 <div className="inputDescription">
-                                    {this.state.groupType === 'Business' ? ('Company Name') : ('Event Name')} 
+                                    {this.state.groupType === 'Organization' ? ('Organization Name') : ('Event Name')} 
                                 </div>
                                 <TextField 
                                     id="accountName" 
@@ -321,14 +321,11 @@ class SignUp extends React.Component {
                                         onChange={this.setSignUpInput}
                                         id='subscription'
                                     >
-                                    { this.state.groupType === 'Business' ? (
-                                            subscriptionBusiness.map((item) => <option key={item} value={item}>{item}</option>)
-                                        ) : ( this.state.groupType === 'Conference' ? (
-                                            subscriptionConference.map((item) => <option key={item} value={item}>{item}</option>)
-                                        ) : (this.state.groupType === 'Tradeshow' ? (
-                                            subscriptionTradeshow.map((item) => <option key={item} value={item}>{item}</option>)
-                                        ) : (<option key='-' value='-'>-</option>)
-                                        ))
+                                    { this.state.groupType === 'Organization' ? (
+                                            subscriptionOrganization.map((item) => <option key={item} value={item}>{item}</option>)
+                                        ) : ( this.state.groupType === 'Event') && (
+                                            subscriptionEvent.map((item) => <option key={item} value={item}>{item}</option>)
+                                        ) 
                                     }
                                     </Select>
                                     {this.state.subscription=== "-" && <FormHelperText>You need to choose a subscription option</FormHelperText>}

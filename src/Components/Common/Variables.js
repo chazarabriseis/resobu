@@ -1,4 +1,4 @@
-export const subscriptionBusiness = [
+export const subscriptionOrganization = [
     "-",
     'Basic',
     'Premium',
@@ -6,13 +6,7 @@ export const subscriptionBusiness = [
     'Enterprise'
 ]
 
-export const subscriptionConference = [
-    "-",
-    'Basic',
-    'Premium'
-]
-
-export const subscriptionTradeshow = [
+export const subscriptionEvent = [
     "-",
     'Basic',
     'Premium'
@@ -20,10 +14,8 @@ export const subscriptionTradeshow = [
 
 export const groupTypes = [
     "-",
-    'Business',
-    'Workshop',
-    'Conference',
-    'Tradeshow'
+    'Organization',
+    'Event'
 ]
 
 export const userTypes = [

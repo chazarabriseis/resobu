@@ -22,7 +22,7 @@ class HomeBusiness extends React.Component {
   }
 
   gotoSignUp = (value) => {
-    this.props.onsetGroupType('Business')
+    this.props.onsetGroupType('Organization')
     this.props.onSetSubscription(value)
     this.props.history.push('/signup/')
   }

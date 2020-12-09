@@ -171,7 +171,7 @@ class BusinessAccount extends React.Component {
     .then(response => {
       const resultList = response['response'][0]['Items']
       if (resultList.length === 0) {
-        if (!this.state.meetingInfo && this.props.userInfo.groupType === 'Business') {
+        if (!this.state.meetingInfo && this.props.userInfo.groupType === 'Organization') {
           this.createMeetingBusiness()
         } else if (!this.state.meetingInfo) {
           this.createMeeting()
@@ -478,7 +478,7 @@ class BusinessAccount extends React.Component {
     })
     // get information depending on business or other
     const selectedEmailTableId = peopleList.findIndex(person => person.personEmail === this.state.selectedEmail[0])
-    if (this.props.userInfo.groupType === 'Business') { 
+    if (this.props.userInfo.groupType === 'Organization') { 
       const teamList = peopleList[selectedEmailTableId].teamColleagues
       const projectList = peopleList[selectedEmailTableId].projectColleagues
 
@@ -1070,6 +1070,7 @@ class BusinessAccount extends React.Component {
   }
 
   createChatHTML = () => {
+    console.log(this.state.meetingInfo)
     if (this.state.meetingInfo.chats.length === 0 ) {
       return <p> Please go ahead and add chat times</p>
     } else {
@@ -1218,10 +1219,10 @@ class BusinessAccount extends React.Component {
 
     return (
       <div>
-        <div className="topSectionAccount">
+        <div className="topSection">
           <div className="heading1"> Your remote social butterfly chats</div>
         </div>
-        <div className='container whyContent'>
+        <div className='container activateContent'>
           {!this.state.isLoadingMeetingInfoList && this.state.meetingInfo.chatActivation ?
             <div className='accountStatus accountActivated'> Activated, move switch to stop sending invites out </div>
             :
@@ -1246,13 +1247,13 @@ class BusinessAccount extends React.Component {
               <Tabs style={{ width: '90%'}}>
                 <TabList>
                   <Tab> 
-                    {this.props.userInfo.groupType === 'Business' ? 'Employees' : 'People'} 
+                    {this.props.userInfo.groupType === 'Organization' ? 'Employees' : 'People'} 
                   </Tab>
                   <Tab disabled={this.props.userInfo.subscription=== 'Basic' ? true : false}> 
                     Connection <strong>AI</strong>ssistance 
                   </Tab>
-                  {this.props.userInfo.groupType === 'Business' && 
-                    <Tab disabled={this.props.userInfo.subscription=== 'Business' ? false : true}> 
+                  {this.props.userInfo.groupType === 'Organization' && 
+                    <Tab disabled={this.props.userInfo.subscription=== 'Organization' ? false : true}> 
                       Learning <strong>AI</strong>ssistance 
                     </Tab>
                   }
@@ -1276,7 +1277,7 @@ class BusinessAccount extends React.Component {
                       userInfo={this.props.userInfo}
                     />
                 </TabPanel>
-                {this.props.userInfo.groupType === 'Business' && 
+                {this.props.userInfo.groupType === 'Organization' && 
                   <TabPanel>
                       <LearningAI 
                         userInfo={this.props.userInfo}
@@ -1288,7 +1289,7 @@ class BusinessAccount extends React.Component {
                     <Spinner /> 
                     :
                     <div>
-                      {this.props.userInfo.groupType === 'Business' ?
+                      {this.props.userInfo.groupType === 'Organization' ?
                       <BusinessChatTab
                         changeMeetingTime={this.state.changeMeetingTime}
                         peopleList={this.state.peopleList}
@@ -1353,12 +1354,12 @@ class BusinessAccount extends React.Component {
           </div>      
         </div>
         <Dialog open={this.state.showAddPeopleDialog} >
-          <DialogTitle>{this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}</DialogTitle>
+          <DialogTitle>{this.props.userInfo.groupType === 'Organization' ? 'Add Employees' : 'Add People'}</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Either go ahead and upload a csv file or enter a list of emails separated by a comma or just a single one below.
               All duplicates and already existing emails will be ignored.
-              {this.props.userInfo.groupType === 'Business' ? 'You can add project and team colleagues later by editing single entries. ' 
+              {this.props.userInfo.groupType === 'Organization' ? 'You can add project and team colleagues later by editing single entries. ' 
               : 'You can add already connected people later by editing single entries. '}
                
             </DialogContentText>
@@ -1377,10 +1378,10 @@ class BusinessAccount extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.showUploadPeopleDialog} className="actionButton leftSideButton">
-              {this.props.userInfo.groupType === 'Business' ? 'Upload Employees' : 'Upload People'}
+              {this.props.userInfo.groupType === 'Organization' ? 'Upload Employees' : 'Upload People'}
             </Button>
             <Button onClick={this.addPeople} className="actionButton">
-              {this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}
+              {this.props.userInfo.groupType === 'Organization' ? 'Add Employees' : 'Add People'}
             </Button>
             <Button onClick={this.cancelChange} className="ghostButton">
               Cancel
@@ -1410,7 +1411,7 @@ class BusinessAccount extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.addPeople} className="actionButton">
-              {this.props.userInfo.groupType === 'Business' ? 'Add Employees' : 'Add People'}
+              {this.props.userInfo.groupType === 'Organization' ? 'Add Employees' : 'Add People'}
             </Button>
             <Button onClick={this.cancelChange} className="ghostButton">
               Cancel

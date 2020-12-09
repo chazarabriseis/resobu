@@ -18,7 +18,7 @@ class SubscriptionBusiness extends React.Component {
           <input type="checkbox" class="checkbox-invisible" id="premium-checkbox" name="pricing-grid"/>
           <div className="planTitle planThistle planInfo five">
             <label className="planHeading premium" for="premium-checkbox">Premium</label>
-            <div className="planText premiumInfo">For organizations that want to break up silos and create connections throughout the organizations.</div>
+            <div className="planText premiumInfo">For organizations that want to break up silos and create connections throughout the organization.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="business-checkbox" name="pricing-grid"/>
           <div className="planTitle plan planInfo nine">
@@ -28,7 +28,7 @@ class SubscriptionBusiness extends React.Component {
           <input type="checkbox" class="checkbox-invisible" id="enterprise-checkbox" name="pricing-grid"/>
           <div className="planTitle planBorder planInfo thirteen">
             <label className="planHeading enterprise" for="enterprise-checkbox">Enterprise</label>
-            <div className="planText enterpriseInfo">For large organizations that need additional security, control, and support to handle their overwhelming data that could flow into personalising the chat partner selection.</div>
+            <div className="planText enterpriseInfo">For large organizations that need additional control and support to handle their overwhelming data that could flow into personalising the chat partner selection.</div>
           </div>
           <div className="planPricing plan two basicInfo">
             <div className="planPrice"> XX &euro;</div>
@@ -60,13 +60,13 @@ class SubscriptionBusiness extends React.Component {
             <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/contact/')}}>Get in contact</Button>  
           </div>
           <div className="basicInfo plan planIncluded four basicInfo">
-            {['Initial Consultation', 'Team and project attributes included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Team and project attributes included', 'Connection AIssistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="planThistle planIncluded eight premiumInfo">
-              {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+              {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="plan planIncluded twelve businessInfo">
-            {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssitance', 'Learning AIssitance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssistance', 'Learning AIssistance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
           </div> 
           <div className="planBorder planIncluded sixteen enterpriseInfo">
             {[].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
