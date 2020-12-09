@@ -13,17 +13,17 @@ class SubscriptionBusiness extends React.Component {
           <input type="checkbox" class="checkbox-invisible" id="basic-checkbox" name="pricing-grid"/>
           <div className="planTitle plan planInfo one">
             <label className="planHeading basic" for="basic-checkbox">Basic</label>
-            <div className="planText basicInfo"> For fast growing teams where it is difficult to keep track of all the new awesome employees joining every month..</div>
+            <div className="planText basicInfo"> For fast growing teams or large organizations where it is difficult to integrate new employees in the entire orginzation.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="premium-checkbox" name="pricing-grid"/>
           <div className="planTitle planThistle planInfo five">
             <label className="planHeading premium" for="premium-checkbox">Premium</label>
-            <div className="planText premiumInfo">For more established teams that want to break up silos and create connections throughout the company.</div>
+            <div className="planText premiumInfo">For organizations that want to break up silos and create connections throughout the organizations.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="business-checkbox" name="pricing-grid"/>
           <div className="planTitle plan planInfo nine">
             <label className="planHeading business" for="business-checkbox">Business</label>
-            <div className="planText businessInfo">For more established company structures that want to rekindle an innovative culture and get the most out of their diverse employees. Tapping into metadata and collecting feedback to improve the chat partner selection chat by chat.</div>
+            <div className="planText businessInfo">For organizations with very established structures that want to rekindle an innovative culture and get the most out of their diverse employees. Tapping into metadata and collecting feedback to improve chat partner selection chat by chat.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="enterprise-checkbox" name="pricing-grid"/>
           <div className="planTitle planBorder planInfo thirteen">
@@ -33,6 +33,7 @@ class SubscriptionBusiness extends React.Component {
           <div className="planPricing plan two basicInfo">
             <div className="planPrice"> XX &euro;</div>
             <div className="planPriceInfo"> Per user, per month billed annually. Free for teams smaller than 40 people</div>
+            <div className="planPriceInfoExtra"> XX &euro; billed monthly </div>
           </div>
           <div className="planPricing planThistle six premiumInfo">
             <div className="planPrice"> XX &euro; </div>

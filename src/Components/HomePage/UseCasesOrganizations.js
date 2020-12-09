@@ -11,7 +11,7 @@ library.add(fas)
 
 
 
-class HomeBusiness extends React.Component {
+class UseCaseOrganization extends React.Component {
 
   componentDidMount () {
     window.scrollTo(0, 0);
@@ -95,7 +95,7 @@ class HomeBusiness extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
                 </div>
                 <div className="planText">
-                Connection AIssitance will tailor groups and organise chats according to the input
+                Connection AIssitance will tailor groups and organize chats according to the input
                 </div>
             </div>
             <div className="usecaseBottom plan eight uc2">
@@ -104,7 +104,7 @@ class HomeBusiness extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
                 </div>
                 <div className="planText">
-                Connection AIssitance will tailor groups and organise chats according to the input
+                Connection AIssitance will tailor groups and organize chats according to the input
                 </div>
             </div>
             
@@ -123,7 +123,7 @@ class HomeBusiness extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Problem</div>
                 </div>
                 <div className="problemText"> 
-                    Problem3 A project manager is facing a roadblock or problem.
+                    A project manager is facing a roadblock or problem.
                     Most likely someone in the organization was facing a similar problem but the project manager doesn’t know about  that person. 
                     Lack of knowledge exchange makes the organization less efficient.
                 </div>
@@ -134,7 +134,7 @@ class HomeBusiness extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Problem</div>
                 </div>
                 <div className="problemText"> 
-                    Problem4 Fast growing organizations struggle to include new hires and make sure they get to see the entire organizations.
+                    Fast growing organizations struggle to include new hires and make sure they get to see the entire organizations.
                     Social events are not happening monthly to take care of this plus normally people who already know each other stick together and don’t mingle.
                 </div>
             </div>
@@ -175,7 +175,7 @@ class HomeBusiness extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
                 </div>
                 <div className="planText">
-                Connection AIssitance will tailor groups and organise chats according to the input
+                Connection AIssitance will tailor groups and organize chats according to the input
                 </div>
             </div>
             <div className="usecaseBottom plan sixteen-2 uc4">
@@ -184,7 +184,7 @@ class HomeBusiness extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
                 </div>
                 <div className="planText">
-                Connection AIssitance will tailor groups and organise chats according to the input
+                Connection AIssitance will tailor groups and organize chats according to the input
                 </div>
             </div>
 
@@ -195,4 +195,4 @@ class HomeBusiness extends React.Component {
   }
 }
 
-export default withRouter(HomeBusiness);
+export default withRouter(UseCaseOrganization);
