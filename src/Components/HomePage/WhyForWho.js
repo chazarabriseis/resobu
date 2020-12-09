@@ -42,10 +42,10 @@ class WhyForWho extends React.Component {
                 </div>
             </div>
             <div className="planCTA plan whoButton four">
-              <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/business/')}}>Use Cases &amp; Pricing </Button>  
+              <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/organizations/')}}>Use Cases &amp; Pricing </Button>  
             </div>
             <div className="planCTA plan whoButton eight">
-              <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/conference/')}}>Use Cases &amp; Pricing</Button>  
+              <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/events/')}}>Use Cases &amp; Pricing</Button>  
             </div> 
           </div>
         </div>
