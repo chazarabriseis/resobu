@@ -22,7 +22,7 @@ class WhatDiagram extends React.Component {
             </div>
             <div className="step three">
               <FontAwesomeIcon icon='globe'/> 
-              <div className="stepText">Optional: Feed the connection and learning AIssitance</div>
+              <div className="stepText">Optional: Feed the Connection and Learning AIssitance</div>
             </div>
             <div className="connector four">
             </div>

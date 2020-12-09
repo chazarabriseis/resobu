@@ -31,14 +31,14 @@ class WhyForWho extends React.Component {
             </div>
             <div className="whoText plan three">
                 <div className="planText"> 
-                  Global pandemic, different office locations, onboarding - all circumstances where communication is crucuial but difficult to establish. 
-                  ReSoBu can help to organise meaningful chats tailored to your circumstances to make sure communication is thriving.
+                  <div style={{display: "inline", fontWeight:  "bolder"}}> Global pandemic, different office locations, onboarding </div> - all circumstances where communication is crucial but difficult to establish. 
+                  ReSoBu will organize meaningful chats tailored to your circumstances to make sure <div style={{display: "inline", fontWeight:  "bolder"}}>communication is thriving </div>in your organization.
                 </div>
             </div>
             <div className="whoText plan seven">
                 <div className="planText">
-                    Remote Conferences, attendees not mingling - people join events because of networking but it suffers in these circumstances.
-                    ReSoBu will organise meaningful chats to foster networking distinguishing your event from others.
+                  <div style={{display: "inline", fontWeight:  "bolder"}}> Remote Conferences, attendees not mingling </div> - under these circumstances networking is suffering, but networking is a main reason why people join events.
+                    ReSoBu will automatically organize meaningful chats to <div style={{display: "inline", fontWeight:  "bolder"}}> foster networking </div> distinguishing your event from others.
                 </div>
             </div>
             <div className="planCTA plan whoButton four">

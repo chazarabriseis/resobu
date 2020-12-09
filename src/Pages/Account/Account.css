@@ -17,6 +17,7 @@
     padding-left: 40px;
     padding-right: 40px;
     display: flex;
+    min-width: 800px;
 }
 
 .sectionHeader {
@@ -63,4 +64,11 @@
     outline: none;
     color: white;
     border-color: thistle;
+}
+
+.activateContent {
+    justify-content: center;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
 }

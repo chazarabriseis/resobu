@@ -11,7 +11,7 @@ class How extends React.Component {
   render () {
     return(
       <div>
-        <div className='heading3'>ReSoBu's Connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssitance - Data-driven chat partner selection</div>
+        <div className='heading3'>ReSoBu's Connection <div style={{display: 'inline', fontWeight: '500'}}>AI</div>ssistance - data-driven chat partner selection</div>
         <div className="container stepContainer">
           <div className="how-grid">
             <div className="how-input one">
@@ -57,7 +57,7 @@ class How extends React.Component {
               <FontAwesomeIcon icon='chevron-right'/> 
             </div>
             <div className="how-output five">
-                Tailored Chat Groups will be formed and automated invites sent out
+                Tailored chat groups will be formed and automated invites sent out
             </div>
           </div>
         </div>

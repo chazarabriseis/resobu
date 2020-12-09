@@ -91,19 +91,19 @@ class UseCasesEvents extends React.Component {
             <div className="usecaseBottom plan four uc1">
                 <div>
                     <img alt="appIcon" width="28" src="butterfly.png" />
-                    <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
+                    <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                Connection AIssitance will tailor groups and organize chats according to the input
+                ReSoBu's Connection AIssitance will tailor groups and organize chats according to the input
                 </div>
             </div>
             <div className="usecaseBottom plan eight uc2">
                 <div>
                     <img alt="appIcon" width="28" src="butterfly.png" />
-                    <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>ReSoBu</div>
+                    <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                Connection AIssitance will tailor groups and organize chats according to the input
+                ReSoBu's Connection AIssitance will tailor groups and organize chats according to the input
                 </div>
             </div>
 
