@@ -57,7 +57,7 @@ class How extends React.Component {
               <FontAwesomeIcon icon='chevron-right'/> 
             </div>
             <div className="how-output five">
-                Automated Email Invites to each Chat Participants
+                Tailored Chat Groups will be formed and automated invites sent out
             </div>
           </div>
         </div>
