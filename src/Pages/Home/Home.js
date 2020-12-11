@@ -22,7 +22,7 @@ class Home extends React.Component {
         <div className="topSection contentContainer">
           <div className="heading1"> Tailoring communication to your needs </div>
           <div className="heading2">
-            We believe that healthy and innovative networks and organization culture is fostered by communication across events and the entire organization
+            Let us take care of fostering communication accross your organization or at your event. Enabling a healthy culture and thriving networks which are crucial to innovation and success. 
           </div>
  
           <Button className="actionButtonAnimated" variant='contained' size="large" onClick={() => {this.props.history.push('/signup/')}}>GET STARTED</Button>  
