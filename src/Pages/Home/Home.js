@@ -20,9 +20,9 @@ class Home extends React.Component {
     return (
       <div>        
         <div className="topSection contentContainer">
-          <div className="heading1"> Tailoring communication to your needs </div>
+          <div className="heading1"> Enabling successful networking </div>
           <div className="heading2">
-            Let us take care of fostering communication accross your organization or at your event. Enabling a healthy culture and thriving networks which are crucial to innovation and success. 
+            Tailoring meaningful communication to your needs accross your organization or at your event. Leading to a healthy culture and thriving networks which are crucial to innovation and success. 
           </div>
  
           <Button className="actionButtonAnimated" variant='contained' size="large" onClick={() => {this.props.history.push('/signup/')}}>GET STARTED</Button>  
