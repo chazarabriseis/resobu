@@ -1,210 +1,75 @@
 import React, { Component } from 'react';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import { withStyles } from '@material-ui/core/styles';
 
-import BootstrapTable from 'react-bootstrap-table-next';
-// import paginationFactory from 'react-bootstrap-table2-paginator';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 
-import Spinner from '../../Components/Common/Spinner';
-import './PeopleTable.css';
+const HeadRow = withStyles({
+  root: {
+    boxShadow: '0 3px 5px 2px rgba(128,0,128, .3)',
+  }
+})(TableHead);
 
+const HeadCell = withStyles({
+  root: {
+    fontWeight: 'bold',
+  }
+})(TableCell);
 
-export default class PeopleTable extends Component {
-    constructor(props) {
-        super(props) 
+export default class PeopleTab extends Component {
+  constructor(props) {
+    super(props);
 
-        this.columnsPeople = [
-            {
-              key: 'personKey',
-              dataField: 'personKey',
-              text: 'Person ID',
-              headerFormatter: this.headerFormatter,
-              hidden: true
-            },
-            {
-              key: 'personEmail',
-              dataField: 'personEmail',
-              text: 'Email',
-              headerFormatter: this.headerFormatter,
-              filter: textFilter({
-                placeholder: 'Search'
-              }),
-              sort: true
-            },
-            {
-              key: 'connectedColleagues',
-              dataField: 'connectedColleagues',
-              text: 'Connected People',
-              headerFormatter: this.headerFormatter
-            }
-        ]
+    this.rows = [
+      {'email' : 'employee_1@resobu.com', 'attribute1': 'Marketing', 'attribute2': 'Munich', 'attribute3': ['skill1',' skill3']},
+      {'email' : 'employee_2@resobu.com', 'attribute1': 'RnD', 'attribute2': 'Munich', 'attribute3': ['skill1',' skill3','skill2']}
+    ];
 
-        this.columnsEmployees = [
-          {
-            key: 'personKey',
-            dataField: 'personKey',
-            text: 'Key',
-            headerFormatter: this.headerFormatter,
-            hidden: true
-          },
-          {
-            key: 'personEmail',
-            dataField: 'personEmail',
-            text: 'Email',
-            headerFormatter: this.headerFormatter,
-            filter: textFilter({
-              placeholder: 'Search'
-            }),
-            sort: true
-          },
-          {
-            key: 'teamColleagues',
-            dataField: 'teamColleagues',
-            text: 'Team Colleagues',
-            headerFormatter: this.headerFormatter
-          },
-          {
-            key: 'projectColleagues',
-            dataField: 'projectColleagues',
-            text: 'Project Colleagues',
-            headerFormatter: this.headerFormatter,
-          },
-          // {
-          //  key: 'officeLocation',
-          //  dataField: 'officeLocation',
-          //  text: 'Office Location',
-          //  headerFormatter: this.headerFormatter,
-          //},
-          {
-            key: 'connectedColleagues',
-            dataField: 'connectedColleagues',
-            text: 'Connected Colleagues',
-            headerFormatter: this.headerFormatter
-          }
-      ]
-    }
+    this.columns = [
+      { id: 'email', label: 'Email', minWidth: 170 },
+      { id: 'attribute1', label: 'Department', minWidth: 100 },
+      { id: 'attribute2', label: 'Location', minWidth: 170},
+      { id: 'attribute3', label: 'Skillset', minWidth: 170}
+    ]
+  }
 
-    headerFormatter = (column, colIndex, { sortElement, filterElement }) => {
-        return (
-            <div style={ { 'display': 'table-caption' } }>
-                <h5 style= {{ 
-                    'color' : '#0E253A',
-                    'fontSize' : '17px',
-                    'paddingBottom': '18px',
-                    'fontWeight' : '400',
-                    'width' : '215px',
-                    'overflowWrap': 'break-word',
-                    'textAlign': 'left'
-                    }}>{ column.text }{ sortElement }<br/>
-                    { filterElement }</h5>
-            </div>
-        )
-    }
-
-    handleSingleSelect = (row) => {
-      const personEmail = [row.personEmail]
-      this.props.onUpdateSelectedEmail(personEmail)
-    }
-
-    handleNextPage = ({
-      page,
-      onPageChange
-    }) => () => {onPageChange(page + 1);}
-    
-    handlePrevPage = ({ 
-        page, 
-        onPageChange
-    }) => () => {onPageChange(page - 1);}
-
-    render() {
-        const indexSorted = [{dataField: 'personEmail', order:'asc'}];
-
-        /*
-        const customTotal = (from, to, size) => (
-          <span className="react-bootstrap-table-pagination-total">
-          Showing { from } to { to } of { size } search results
-          </span>
-        )
-        
-        const optionsPag = {
-            page: this.props.currentPage,
-            firstPageText: 'First',
-            prePageText: 'Back',
-            nextPageText: 'Next',
-            lastPageText: 'Last',
-            nextPageTitle: 'First page',
-            prePageTitle: 'Pre page',
-            firstPageTitle: 'Next page',
-            lastPageTitle: 'Last page',
-            showTotal: true,
-            onPageChange: this.props.onPageChange,
-            // paginationTotalRenderer: customTotal,
-            sizePerPageList: [{
-                text: '10', value: 10
-            }, {
-                text: '25', value: 25
-            }, {
-                text: '50', value: 50
-            }
-            ]
-        }  
-        */
-
-        const selectRowSingle = {
-          mode: 'radio',
-          clickToSelect: true,
-          hideSelectColumn: true,
-          selected: this.props.selectedEmail,
-          style: { backgroundColor: 'purple', color: 'white' },
-          onSelect: this.handleSingleSelect
-      }
-
-        let peopleTable = (
-          <ToolkitProvider
-            classes='peopleTable'
-            keyField="personKey"
-            data={ this.props.peopleList }
-            columns={ this.props.userInfo.groupType === 'Organization' ? this.columnsEmployees : this.columnsPeople }
-            columnToggle
-          >
-            {props => (
-                <div>
-                    <BootstrapTable
-                        filter={ filterFactory() }
-                        // pagination={ paginationFactory(optionsPag) }
-                        selectRow={selectRowSingle}
-                        defaultSorted={indexSorted}
-                        noDataIndication='Email does not exist in this table.'
-                        { ...props.baseProps }
-                        bordered={ false } 
-                    />
-                </div>
-                )
-            }
-          </ToolkitProvider>)
-
-        return (
-            <div className='peopleTable'>
-                {this.props.isLoadingPeopleList ? (
-                    <Spinner />
-                    ) : this.props.peopleList.length === 0 ? (
-                    <div>
-                        <p className='nodata-indication'>
-                    Use the <strong>Add {this.props.userInfo.groupType === "Organization" ? "Employees" : "People"}</strong> button above to add people
-                        </p>
-                    </div>
-                    ) : (
-                    <div className='row-table' style={{backgroundColor: '#fff', display: 'flex'}}>
-                        <div style={{width: '100%'}}>
-                            <div className='tablePeople'>
-                                {peopleTable}
-                            </div>
-                        </div>
-                    </div>
-                    )
-                }
-            </div>
-        )
-    }
+  render() {  
+    return (
+      <div>
+      <TableContainer>
+        <Table className='table-tab' stickyHeader aria-label="sticky table">
+          <HeadRow className='table-header'>
+            <TableRow>
+            {this.columns.map((column) => (
+                <HeadCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </HeadCell>
+              ))}
+            </TableRow>
+          </HeadRow>
+          <TableBody>
+            {this.rows.map((row) => (
+              <TableRow key={row.email}>
+                <TableCell component="th" scope="row">
+                  {row.email}
+                </TableCell>
+                <TableCell>{row.department}</TableCell>
+                <TableCell>{row.location}</TableCell>
+                <TableCell>{row.skillset}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      </div>
+    )
+  }
 }
-

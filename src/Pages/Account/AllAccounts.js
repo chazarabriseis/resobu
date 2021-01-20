@@ -591,6 +591,7 @@ class BusinessAccount extends React.Component {
   }
 
   editPersonEntry = (e) => {
+      console.log(this.state.peopleList)
       // change the peopleList and the teamList/projectListStates accordingly
       const personEmail = this.state.selectedEmail[0]
       const connectedEmail = e.target.value
@@ -1274,6 +1275,8 @@ class BusinessAccount extends React.Component {
                 </TabPanel>
                 <TabPanel>
                     <ConnectionAI 
+                      peopleList={this.state.peopleList}
+                      isLoadingPeopleList={this.state.isLoadingPeopleList}
                       userInfo={this.props.userInfo}
                     />
                 </TabPanel>

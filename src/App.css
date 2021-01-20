@@ -219,10 +219,6 @@
   background-color: gray !important;
 }
 
-.butterflyBackground {
-  background-image: url("/public/butterfly.png");
-}
-
 .flier {
 	pointer-events: none;
 }
