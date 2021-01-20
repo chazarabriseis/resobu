@@ -21,6 +21,7 @@ class Home extends React.Component {
       <div>        
         <div className="topSection contentContainer">
           <div className="heading1"> Enabling successful networking </div>
+          <img className="logo-image" src="logo_resobu_no_text.png" />
           <div className="heading2">
             Tailoring meaningful communication to your needs accross your organization or at your event. Leading to a healthy culture and thriving networks which are crucial to innovation and success. 
           </div>

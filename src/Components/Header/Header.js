@@ -48,7 +48,7 @@ class Header extends React.Component {
                   className="headerButton"
                   onClick={() => {this.props.history.push('/')}}
                 > 
-                  <img alt="appIcon" width="28" src="butterfly.png" />
+                  <img alt="appIcon" width="28" src="logo_resobu_no_text.png" />
                   <div style={{display: 'inline', marginLeft: '10px'}}>Remote Social Butterfly</div>
                 </Button>
 
