@@ -74,6 +74,11 @@
 
 /* css for small screens */
 @media (max-width: 600px) {
+    .subscriptionIcon {
+
+    }
+    
+    
     .logo-image {
         max-width: 50%;
     }
@@ -599,7 +604,6 @@
 }
 
 .subscriptionIcon {
-    filter: invert(11%) sepia(88%) saturate(2202%) hue-rotate(276deg) brightness(95%) contrast(114%);
     flex-grow: 1;
     flex: 1;
 }

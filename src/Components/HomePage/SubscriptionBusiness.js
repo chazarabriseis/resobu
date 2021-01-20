@@ -60,16 +60,16 @@ class SubscriptionBusiness extends React.Component {
             <Button className="ghostButton" variant="contained" size="large" onClick={() => {this.props.history.push('/contact/')}}>Get in contact</Button>  
           </div>
           <div className="basicInfo plan planIncluded four basicInfo">
-            {['Initial Consultation', 'Team and project attributes included', 'Connection AIssistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Team and project attributes included', 'Connection AIssistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="planThistle planIncluded eight premiumInfo">
-              {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+              {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssistance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
           <div className="plan planIncluded twelve businessInfo">
-            {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssistance', 'Learning AIssistance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {['Initial Consultation', 'Data Upload Assistance', 'Limitless attributes', 'Connection AIssistance', 'Learning AIssistance', 'API Integration of Other Services'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px"className="subscriptionIcon" src="butterfly_transformation.png" /> <div className="includedList"> {item}</div></div>})}
           </div> 
           <div className="planBorder planIncluded sixteen enterpriseInfo">
-            {[].map((item, index) => { return <div className="container"><img alt="appIcon" width="12" className="subscriptionIcon" src="butterfly.png" /> <div className="includedList"> {item}</div></div>})}
+            {[].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png" /> <div className="includedList"> {item}</div></div>})}
           </div>
         </div>
       </div>
