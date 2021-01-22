@@ -79,7 +79,7 @@ class Header extends React.Component {
                   onClose={this.closeMenu}
                 >
                   <MenuItem component={Link} to="/organizations" onClick={this.closeMenu}  className="headerButton"> 
-                    For Organizations
+                    For Organisations
                   </MenuItem>
                   <MenuItem component={Link} to="/events" onClick={this.closeMenu}  className="headerButton">
                     For Events
@@ -113,7 +113,7 @@ class Header extends React.Component {
                   className="headerButton pc-view"
                   onClick={() => {this.props.history.push('/organizations')}}
                 > 
-                  <div style={{display: 'inline', marginLeft: '10px'}}>For Organizations</div>
+                  <div style={{display: 'inline', marginLeft: '10px'}}>For Organisations</div>
                 </Button>
                 <Button 
                   className="headerButton pc-view"

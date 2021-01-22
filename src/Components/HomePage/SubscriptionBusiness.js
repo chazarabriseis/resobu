@@ -13,22 +13,22 @@ class SubscriptionBusiness extends React.Component {
           <input type="checkbox" class="checkbox-invisible" id="basic-checkbox" name="pricing-grid"/>
           <div className="planTitle plan planInfo one">
             <label className="planHeading basic" for="basic-checkbox">Basic</label>
-            <div className="planText basicInfo"> For fast growing teams or large organizations where it is difficult to integrate new employees in the entire orginzation.</div>
+            <div className="planText basicInfo"> For fast growing teams or large organisations where it is difficult to integrate new employees in the entire orginzation.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="premium-checkbox" name="pricing-grid"/>
           <div className="planTitle planThistle planInfo five">
             <label className="planHeading premium" for="premium-checkbox">Premium</label>
-            <div className="planText premiumInfo">For organizations that want to break up silos and create connections throughout the organization.</div>
+            <div className="planText premiumInfo">For organisations that want to break up silos and create connections throughout the organisation.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="business-checkbox" name="pricing-grid"/>
           <div className="planTitle plan planInfo nine">
             <label className="planHeading business" for="business-checkbox">Business</label>
-            <div className="planText businessInfo">For organizations with very established structures that want to rekindle an innovative culture and get the most out of their diverse employees. Tapping into metadata and collecting feedback to improve chat partner selection chat by chat.</div>
+            <div className="planText businessInfo">For organisations with very established structures that want to rekindle an innovative culture and get the most out of their diverse employees. Tapping into metadata and collecting feedback to improve chat partner selection chat by chat.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="enterprise-checkbox" name="pricing-grid"/>
           <div className="planTitle planBorder planInfo thirteen">
             <label className="planHeading enterprise" for="enterprise-checkbox">Enterprise</label>
-            <div className="planText enterpriseInfo">For large organizations that need additional control and support to handle their overwhelming data that could flow into personalising the chat partner selection.</div>
+            <div className="planText enterpriseInfo">For large organisations that need additional control and support to handle their overwhelming data that could flow into personalising the chat partner selection.</div>
           </div>
           <div className="planPricing plan two basicInfo">
             <div className="planPrice"> XX &euro;</div>

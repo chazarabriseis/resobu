@@ -95,7 +95,7 @@ class UseCaseOrganization extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                    ReSoBu's Connection AIssistance will tailor groups and organize chats according to the input
+                    ReSoBu's Connection AIssistance will tailor groups and organise chats according to the input
                 </div>
             </div>
             <div className="usecaseBottom plan eight uc2">
@@ -104,7 +104,7 @@ class UseCaseOrganization extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                ReSoBu's Connection AIssistance will tailor groups and organize chats according to the input
+                ReSoBu's Connection AIssistance will tailor groups and organise chats according to the input
                 </div>
             </div>
             
@@ -124,8 +124,8 @@ class UseCaseOrganization extends React.Component {
                 </div>
                 <div className="problemText"> 
                     A project manager is facing a roadblock or problem.
-                    Most likely someone in the organization was facing a similar problem but the project manager doesn’t know about that person. 
-                    Lack of knowledge exchange makes the organization less efficient.
+                    Most likely someone in the organisation was facing a similar problem but the project manager doesn’t know about that person. 
+                    Lack of knowledge exchange makes the organisation less efficient.
                 </div>
             </div>
             <div className="usecaseText plan fourteen uc4">
@@ -134,7 +134,7 @@ class UseCaseOrganization extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Problem</div>
                 </div>
                 <div className="problemText"> 
-                    Fast growing and large organizations struggle to include new hires and make sure they get to meet people from the entire organization.
+                    Fast growing and large organisations struggle to include new hires and make sure they get to meet people from the entire organisation.
                     Social events are not happening enough to take care of this plus normally people who already know each other stick together and don’t mingle.
                 </div>
             </div>
@@ -175,7 +175,7 @@ class UseCaseOrganization extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                ReSoBu's Connection AIssistance will tailor groups and organize chats according to the input
+                Remote Social Butterfly's Connection AIssistance will tailor groups and organise chats according to the input
                 </div>
             </div>
             <div className="usecaseBottom plan sixteen-2 uc4">
@@ -184,7 +184,7 @@ class UseCaseOrganization extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                ReSoBu's Connection AIssistance will tailor groups and organize chats according to the input
+                Remote Social Butterfly's Connection AIssistance will tailor groups and organise chats according to the input
                 </div>
             </div>
 

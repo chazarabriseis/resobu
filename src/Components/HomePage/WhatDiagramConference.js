@@ -40,7 +40,7 @@ class WhatDiagram extends React.Component {
             </div>
             <div className="step nine">
               <FontAwesomeIcon icon='users'/>
-              <div className="stepText">ReSoBu tailors and organises chats</div>
+              <div className="stepText">Remote Social Butterfly tailors and organises chats</div>
             </div>
           </div>
         </div>

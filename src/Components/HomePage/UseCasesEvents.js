@@ -66,8 +66,8 @@ class UseCasesEvents extends React.Component {
                 </div>
                 <div className="inputText">
                     <ol>
-                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>People Attributes:</div> Organization, Interest</li>
-                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>Constraints: </div> Everyone except from the same organization but with the same interest</li>
+                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>People Attributes:</div> Organisation, Interest</li>
+                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>Constraints: </div> Everyone except from the same organisation but with the same interest</li>
                         <li><div style={{display: 'inline', fontWeight: 'bold'}}>Meeting time:</div>  Networking session</li>
                         <li><div style={{display: 'inline', fontWeight: 'bold'}}>Chat Size:</div>  3</li>
                     </ol>
@@ -80,8 +80,8 @@ class UseCasesEvents extends React.Component {
                 </div>
                 <div className="inputText">
                     <ol>
-                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>People Attributes:</div> Organization, Position, Field</li>
-                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>Constraints: </div> Everyone except same organization but with similar position and work in same field</li>
+                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>People Attributes:</div> Organisation, Position, Field</li>
+                        <li><div style={{display: 'inline', fontWeight: 'bold'}}>Constraints: </div> Everyone except same organisation but with similar position and work in same field</li>
                         <li><div style={{display: 'inline', fontWeight: 'bold'}}>Meeting time:</div> Networking session</li>
                         <li><div style={{display: 'inline', fontWeight: 'bold'}}>Chat Size:</div> 2</li>
                     </ol>
@@ -94,7 +94,7 @@ class UseCasesEvents extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                ReSoBu's Connection AIssitance will tailor groups and organize chats according to the input
+                Remote Social Butterfly's Connection AIssitance will tailor groups and organise chats according to the input
                 </div>
             </div>
             <div className="usecaseBottom plan eight uc2">
@@ -103,7 +103,7 @@ class UseCasesEvents extends React.Component {
                     <div className="heading3"  style={{display: 'inline', marginLeft: '10px'}}>Solution</div>
                 </div>
                 <div className="planText">
-                ReSoBu's Connection AIssitance will tailor groups and organize chats according to the input
+                Remote Social Butterfly's Connection AIssitance will tailor groups and organise chats according to the input
                 </div>
             </div>
 

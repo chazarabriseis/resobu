@@ -12,7 +12,7 @@ class SubscriptionConference extends React.Component {
           <input type="checkbox" class="checkbox-invisible" id="basic-checkbox" name="pricing-grid"/>
           <div className="planTitle plan planInfo one">
             <label className="planHeading basic" for="basic-checkbox">Basic</label>
-            <div className="planText basicInfo"> For conferences with a very diverse range of attendees so the organization as only attribute is sufficient.</div>
+            <div className="planText basicInfo"> For conferences with a very diverse range of attendees so the organisation as only attribute is sufficient.</div>
           </div>
           <input type="checkbox" class="checkbox-invisible" id="premium-checkbox" name="pricing-grid"/>
           <div className="planTitle planThistle planInfo five">
@@ -34,7 +34,7 @@ class SubscriptionConference extends React.Component {
             <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Premium')}>Get started</Button>  
           </div>
           <div className="basicInfo plan planIncluded four basicInfo">
-          {['Initial Consultation', 'Data Upload Assistance', 'Organization attribute included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
+          {['Initial Consultation', 'Data Upload Assistance', 'Organisation attribute included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
            </div>
           <div className="planThistle planIncluded eight premiumInfo">
           {['Initial Consultation', 'Data Upload Assistance',  'Limitless attributes', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
