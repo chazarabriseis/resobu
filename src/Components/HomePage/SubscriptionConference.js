@@ -34,10 +34,10 @@ class SubscriptionConference extends React.Component {
             <Button className="actionButton" variant="contained" size="large" onClick={this.props.onGotoSignUp.bind(this, 'Premium')}>Get started</Button>  
           </div>
           <div className="basicInfo plan planIncluded four basicInfo">
-          {['Initial Consultation', 'Data Upload Assistance', 'Organisation attribute included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
+          {['Initial Consultation', 'Data Upload Assistance', 'Organisation attribute included', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
            </div>
           <div className="planThistle planIncluded eight premiumInfo">
-          {['Initial Consultation', 'Data Upload Assistance',  'Limitless attributes', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="subscriptionIcon" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
+          {['Initial Consultation', 'Data Upload Assistance',  'Limitless attributes', 'Connection AIssitance'].map((item, index) => { return <div className="container"><img alt="appIcon" width="30px" height="27px" className="" src="butterfly_transformation.png"  /> <div className="includedList"> {item}</div></div>})}
          </div>
         </div>
       </div>
