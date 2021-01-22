@@ -32,7 +32,7 @@ class HomeBusiness extends React.Component {
       <div>
         <div className="topSection">
           <div className="heading1"> Let's connect your team</div>
-          <div className="heading1"> <FontAwesomeIcon icon='building'/> </div>
+          <img className="logo-image" src="logo_resobu_no_text.png" />
           <div className="heading2">Remote Social Butterfly organises tailored chats to your needs to enable networking, knowledge transfer and an innovative culture.</div>
           <Button value= '-' className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>

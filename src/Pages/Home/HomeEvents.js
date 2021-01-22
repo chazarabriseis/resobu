@@ -30,7 +30,7 @@ class HomeConference extends React.Component {
       <div>
         <div className="topSection">
           <div className="heading1"> Let's enable networking at your event</div>
-          <div className="heading1"> <FontAwesomeIcon icon='link'/>  </div>
+          <img className="logo-image" src="logo_resobu_no_text.png" />
           <div className="heading2">Remote Social Butterfly automatically organises tailored chats to enable networking and knowledge transfer at for example conferences, workshops or tradeshows.</div>
           <Button className="actionButtonAnimated" size="large" onClick={this.gotoSignUp.bind(this, '-')}>GET STARTED</Button>  
         </div>
